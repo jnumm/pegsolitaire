@@ -1,11 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
-## Created by Anjuta
-
 gladedir = $(datadir)/pegsolitaire/glade
 glade_DATA = pegsolitaire.glade
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
@@ -32,7 +30,7 @@ pegsolitaire_SOURCES = \
     gridframe.h \
 	main.c
 
-pegsolitaire_LDFLAGS = 
+pegsolitaire_LDFLAGS =
 
 pegsolitaire_LDADD = $(PEGSOLITAIRE_LIBS)
 
@@ -45,4 +43,3 @@ SUBDIRS = \
 ## intltool-extract --type="gettext/glade" pegsolitaire.glade
 ## mv pegsolitaire.glade.h glade-strings.c
 ##
-

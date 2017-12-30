@@ -1,33 +1,21 @@
-dnl Process this file with autoconf to produce a configure script.
-dnl Created by Anjuta application wizard.
+AC_INIT([pegsolitaire], [0.0.4])
 
-AC_INIT(pegsolitaire, 0.0.4)
+AC_CONFIG_MACRO_DIRS([m4])
+AC_CONFIG_SRCDIR([src/main.c])
+AC_CONFIG_HEADERS([config.h])
 
-AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
-AM_CONFIG_HEADER(config.h)
+AM_INIT_AUTOMAKE([-Wall foreign])
 AM_MAINTAINER_MODE
 
-AC_ISC_POSIX
 AC_PROG_CC
-AM_PROG_CC_STDC
 AC_HEADER_STDC
 
 
-
-
-dnl ***************************************************************************
-dnl Internatinalization
-dnl ***************************************************************************
 GETTEXT_PACKAGE=pegsolitaire
 AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
-AM_GLIB_GNU_GETTEXT
-IT_PROG_INTLTOOL([0.35.0])
-
-
-
-AM_PROG_LIBTOOL
-
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [GETTEXT package name])
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.18])
 
 
 PKG_CHECK_MODULES(PEGSOLITAIRE, [libgnome-2.0 >= 2.14 libgnomeui-2.0 >= 2.14 libglade-2.0 >= 2.6.0    ])
@@ -35,12 +23,12 @@ AC_SUBST(PEGSOLITAIRE_CFLAGS)
 AC_SUBST(PEGSOLITAIRE_LIBS)
 
 
-
-
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 src/Makefile
 src/pixmaps/Makefile
 po/Makefile.in
 help/Makefile
 ])
+
+AC_OUTPUT
