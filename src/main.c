@@ -16,8 +16,10 @@
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
+
 #include <stdio.h>
-#include <gnome.h>
+#include <stdlib.h> // for exit()
+
 #include <gtk/gtk.h>
 
 #include "interface.h"
@@ -99,23 +101,13 @@ create_statusbar (void)
   moveswidget = gtk_label_new ("");
   gtk_box_pack_end (GTK_BOX (statusbar), moveswidget, FALSE, FALSE, 0);
 }
-/* Session Options */
-
-static const GOptionEntry options[] = {
-  {"x", 'x', 0, G_OPTION_ARG_INT, &session_xpos, N_("X location of window"),
-   N_("X")},
-  {"y", 'y', 0, G_OPTION_ARG_INT, &session_ypos, N_("Y location of window"),
-   N_("Y")},
-  {NULL}
-};
 
 GamesPreimage *
 load_image (char *filename)
 {
   char *fname;
   GamesPreimage *preimage;
-  fname = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_APP_PIXMAP,
-				     filename, FALSE, NULL);
+  fname = g_build_filename (PKGDATADIR, filename, NULL);
   if (g_file_test (fname, G_FILE_TEST_EXISTS)) 
 		{
       preimage = games_preimage_new_from_file (fname, NULL);
@@ -140,34 +132,21 @@ load_image (char *filename)
 int
 main (int argc, char *argv[])
 {
-	GnomeProgram *program;
-	GOptionContext *context;
 	GtkWidget *w;
-	GnomeClient *client;
 	
 #ifdef ENABLE_NLS
-  bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 #endif
-	context = g_option_context_new ("");
-  g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
-  program = gnome_program_init (PACKAGE, VERSION, LIBGNOMEUI_MODULE,
-				                        argc, argv,
-				                        GNOME_PARAM_GOPTION_CONTEXT, context,
-				                        GNOME_PARAM_APP_DATADIR, PACKAGE_DATA_DIR, 
-	                              GNOME_PARAM_NONE);
-	client = gnome_master_client ();
-	
+
   gtk_set_locale ();
   gtk_init (&argc, &argv);
 
-  add_pixmap_directory (PACKAGE_DATA_DIR "/pixmaps/" PACKAGE);
-
   pegSolitaireWindow = create_pegSolitaireWindow ();
 	
-	peg_preimage = load_image (PACKAGE "/peg.svg");
-	hole_preimage = load_image (PACKAGE "/hole.svg");
+	peg_preimage = load_image ("peg.svg");
+	hole_preimage = load_image ("hole.svg");
 
 	create_boardDrawingArea ();
 	create_statusbar ();
@@ -176,7 +155,7 @@ main (int argc, char *argv[])
 	w = lookup_widget (pegSolitaireWindow, "pegSolitaireVBox");
 
 	gtk_box_pack_start (GTK_BOX (w), gameframe, TRUE, TRUE, 0);
-	gtk_box_pack_end (GTK_BOX (w), statusbar, FALSE, FALSE, GNOME_PAD);
+	gtk_box_pack_end (GTK_BOX (w), statusbar, FALSE, FALSE, 8);
   	
 	game_new ();
 	
@@ -192,6 +171,5 @@ main (int argc, char *argv[])
   resize_all_idle_id = g_idle_add ((GSourceFunc) resize_all, NULL);
 
   gtk_main ();
-	g_object_unref (program);
   return 0;
 }

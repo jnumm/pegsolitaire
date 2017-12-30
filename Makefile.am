@@ -1,29 +1,11 @@
-## Process this file with automake to produce Makefile.in
-
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src po \
-	help
+dist_doc_DATA = \
+  README \
+  COPYING \
+  AUTHORS \
+  ChangeLog \
+  INSTALL \
+  NEWS
 
-pegsolitairedocdir = ${datadir}/doc/pegsolitaire
-pegsolitairedoc_DATA = \
-	README\
-	COPYING\
-	AUTHORS\
-	ChangeLog\
-	INSTALL\
-	NEWS
-
-EXTRA_DIST = $(pegsolitairedoc_DATA) \
-             intltool-update.in \
-             intltool-extract.in \
-             intltool-merge.in
-
-# Copy all the spec files. Of course, only one is actually used.
-dist-hook:
-	for specfile in *.spec; do \
-		if test -f $$specfile; then \
-			cp -p $$specfile $(distdir); \
-		fi \
-	done
-
+SUBDIRS = src po help

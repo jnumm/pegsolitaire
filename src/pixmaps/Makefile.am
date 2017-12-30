@@ -1,9 +1,3 @@
-## File created by the gnome-build tools
+dist_pkgdata_DATA = hole.svg peg.svg
 
-
-EXTRA_DIST = $(pixmaps_DATA)
-pixmapsdir = ${datadir}/pixmaps/pegsolitaire/
-
-pixmaps_DATA = hole.svg \
-               peg.svg \
-               pegsolitaire-icon.png
+# TODO: pegsolitaire-icon.png
