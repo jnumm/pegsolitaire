@@ -1,0 +1,261 @@
+<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
+<!DOCTYPE glade-interface SYSTEM "http://glade.gnome.org/glade-2.0.dtd">
+
+<glade-interface>
+
+<widget class="GtkWindow" id="pegSolitaireWindow">
+  <property name="visible">True</property>
+  <property name="title" translatable="yes">Peg Solitaire</property>
+  <property name="type">GTK_WINDOW_TOPLEVEL</property>
+  <property name="window_position">GTK_WIN_POS_CENTER</property>
+  <property name="modal">False</property>
+  <property name="default_width">400</property>
+  <property name="default_height">400</property>
+  <property name="resizable">True</property>
+  <property name="destroy_with_parent">False</property>
+  <property name="icon">pegsolitaire-icon.png</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
+  <accessibility>
+    <atkproperty name="AtkObject::accessible_name" translatable="yes">Peg Solitaire</atkproperty>
+  </accessibility>
+  <signal name="destroy" handler="on_pegSolitaireWindow_destroy" last_modification_time="Tue, 26 Dec 2006 18:22:18 GMT"/>
+
+  <child>
+    <widget class="GtkVBox" id="pegSolitaireVBox">
+      <property name="visible">True</property>
+      <property name="homogeneous">False</property>
+      <property name="spacing">0</property>
+
+      <child>
+	<widget class="GtkMenuBar" id="pegSolitaireMenuBar">
+	  <property name="visible">True</property>
+	  <property name="pack_direction">GTK_PACK_DIRECTION_LTR</property>
+	  <property name="child_pack_direction">GTK_PACK_DIRECTION_LTR</property>
+
+	  <child>
+	    <widget class="GtkMenuItem" id="gameMenuItem">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">_Game</property>
+	      <property name="use_underline">True</property>
+
+	      <child>
+		<widget class="GtkMenu" id="gameMenuItem_menu">
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="gameRestartMenuItem">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_Restart</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_gameRestartMenuItem_activate" last_modification_time="Tue, 26 Dec 2006 18:06:28 GMT"/>
+		      <accelerator key="R" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image27">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-refresh</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkSeparatorMenuItem" id="gameSeparatorMenuItem1">
+		      <property name="visible">True</property>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="gameEnglishMenuItem">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_English Board</property>
+		      <property name="use_underline">True</property>
+
+		      <child>
+			<widget class="GtkMenu" id="gameEnglishMenuItem_menu">
+
+			  <child>
+			    <widget class="GtkMenuItem" id="gameEnglishBeginnerMenuItem">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Beginner</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_gameEnglishBeginnerMenuItem_activate" last_modification_time="Wed, 27 Dec 2006 20:01:53 GMT"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="gameEnglishIntermediateMenuItem">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Intermediate</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_gameEnglishIntermediateMenuItem_activate" last_modification_time="Wed, 27 Dec 2006 20:01:53 GMT"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="gameEnglishAdvancedMenuItem">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Advanced</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_gameEnglishAdvancedMenuItem_activate" last_modification_time="Wed, 27 Dec 2006 20:01:53 GMT"/>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="gameEuropeanMenuItem">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">E_uropean Board</property>
+		      <property name="use_underline">True</property>
+
+		      <child>
+			<widget class="GtkMenu" id="gameEuropeanMenuItem_menu">
+
+			  <child>
+			    <widget class="GtkMenuItem" id="gameEuropeanBeginnerMenuItem">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Beginner</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_gameEuropeanBeginnerMenuItem_activate" last_modification_time="Wed, 27 Dec 2006 20:01:53 GMT"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="gameEuropeanIntermediateMenuItem">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Intermediate</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_gameEuropeanIntermediateMenuItem_activate" last_modification_time="Wed, 27 Dec 2006 20:01:53 GMT"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="gameEuropeanAdvancedMenuItem">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Advanced</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_gameEuropeanAdvancedMenuItem_activate" last_modification_time="Wed, 27 Dec 2006 20:01:53 GMT"/>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkSeparatorMenuItem" id="separator1">
+		      <property name="visible">True</property>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="gameQuitMenuItem">
+		      <property name="visible">True</property>
+		      <property name="label">gtk-quit</property>
+		      <property name="use_stock">True</property>
+		      <signal name="activate" handler="on_gameQuitMenuItem_activate" last_modification_time="Tue, 26 Dec 2006 18:22:58 GMT"/>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	  </child>
+
+	  <child>
+	    <widget class="GtkMenuItem" id="helpMenuItem">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">_Help</property>
+	      <property name="use_underline">True</property>
+
+	      <child>
+		<widget class="GtkMenu" id="helpMenuItem_menu">
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="helpContentsMenuItem">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Contents</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_helpContentsMenuItem_activate" last_modification_time="Tue, 26 Dec 2006 03:26:14 GMT"/>
+		      <accelerator key="F1" modifiers="0" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image28">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-help</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkSeparatorMenuItem" id="helpSeparatorMenuItem">
+		      <property name="visible">True</property>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="helpAboutMenuItem">
+		      <property name="visible">True</property>
+		      <property name="label">gtk-about</property>
+		      <property name="use_stock">True</property>
+		      <signal name="activate" handler="on_helpAboutMenuItem_activate" last_modification_time="Sun, 31 Dec 2006 18:23:42 GMT"/>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	  </child>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">False</property>
+	  <property name="fill">False</property>
+	</packing>
+      </child>
+
+      <child>
+	<placeholder/>
+      </child>
+
+      <child>
+	<placeholder/>
+      </child>
+    </widget>
+  </child>
+</widget>
+
+<widget class="GtkAboutDialog" id="pegSolitaireAboutDialog">
+  <property name="border_width">5</property>
+  <property name="visible">True</property>
+  <property name="destroy_with_parent">True</property>
+  <property name="name" translatable="yes">Peg Solitaire</property>
+  <property name="copyright" translatable="yes">Copyright 2007 2008 Ben Asselstine</property>
+  <property name="comments" translatable="yes">This software is dedicated
+ to Mothers everywhere.</property>
+  <property name="license" translatable="yes"></property>
+  <property name="wrap_license">False</property>
+  <property name="authors">Ben Asselstine</property>
+  <property name="translator_credits" translatable="yes" comments="TRANSLATORS: Replace this string with your names, one name per line.">translator-credits</property>
+  <property name="logo">pegsolitaire-icon.png</property>
+  <signal name="close" handler="gtk_widget_destroy" last_modification_time="Mon, 08 Jan 2007 21:48:45 GMT"/>
+</widget>
+
+</glade-interface>

@@ -1,0 +1,132 @@
+# German translation for Pegsolitaire.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Pegsolitaire package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-05-01 16:21+0200\n"
+"PO-Revision-Date: 2008-05-01 14:44+0200\n"
+"Last-Translator: Mario Blättermann <mario.blaettermann@t-online.de>\n"
+"Language-Team: Deutsch <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/main.c:87
+#, c-format
+msgid "Moves: %d"
+msgstr "Züge: %d"
+
+#: ../src/main.c:105
+msgid "X location of window"
+msgstr "X Fensterposition"
+
+#: ../src/main.c:106
+msgid "X"
+msgstr "X"
+
+#: ../src/main.c:107
+msgid "Y location of window"
+msgstr "Y Fensterposition"
+
+#: ../src/main.c:108
+msgid "Y"
+msgstr "Y"
+
+#: ../src/main.c:129
+#, c-format
+msgid ""
+"Could not find the image::\n"
+"%s\n"
+"\n"
+"Please check that Peg Solitaire is installed correctly."
+msgstr ""
+"Konnte Bilddatei nicht finden::\n"
+"%s\n"
+"\n"
+"Bitte überprüfen Sie die korrekte Installation von Peg Solitaire."
+
+#: ../src/interface.c:65 ../src/interface.c:215 ../src/interface.c:266
+msgid "Peg Solitaire"
+msgstr "Peg Solitaire"
+
+#: ../src/interface.c:83
+msgid "_Game"
+msgstr "_Spiel"
+
+#: ../src/interface.c:90
+msgid "_Restart"
+msgstr "_Neu starten"
+
+#: ../src/interface.c:106
+msgid "_English Board"
+msgstr "_Englisches Brett"
+
+#: ../src/interface.c:113 ../src/interface.c:132
+msgid "Beginner"
+msgstr "Anfänger"
+
+#: ../src/interface.c:117 ../src/interface.c:136
+msgid "Intermediate"
+msgstr "Fortgeschritten"
+
+#: ../src/interface.c:121 ../src/interface.c:140
+msgid "Advanced"
+msgstr "Profi"
+
+#: ../src/interface.c:125
+msgid "E_uropean Board"
+msgstr "E_uropäisches Brett"
+
+#: ../src/interface.c:153
+msgid "_Help"
+msgstr "_Hilfe"
+
+#: ../src/interface.c:160
+msgid "Contents"
+msgstr "Inhalt"
+
+#. TRANSLATORS: Replace this string with your names, one name per line.
+#: ../src/interface.c:260
+msgid "translator-credits"
+msgstr "Deutsch: Mario Blättermann <mario.blaettermann@t-online.de>"
+
+#: ../src/interface.c:267
+msgid ""
+"This software is dedicated\n"
+" to Mothers everywhere."
+msgstr ""
+"Diese Software ist den\n"
+" Müttern der Welt gewidmet."
+
+#: ../src/game.c:394
+msgid "GENIUS"
+msgstr "GENIAL"
+
+#: ../src/game.c:395
+msgid "OUTSTANDING"
+msgstr "Außergewöhnlich"
+
+#: ../src/game.c:396
+msgid "Sensational"
+msgstr "Sensationell"
+
+#: ../src/game.c:397
+msgid "Excellent"
+msgstr "Exzellent"
+
+#: ../src/game.c:398
+msgid "Very Good"
+msgstr "Sehr gut"
+
+#: ../src/game.c:399
+msgid "Not Bad"
+msgstr "Nicht schlecht"
+
+#: ../src/game.c:400
+msgid "Better Luck Next Time"
+msgstr "Viel Glück beim nächsten Mal"

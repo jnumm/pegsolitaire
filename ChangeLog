@@ -1,0 +1,12 @@
+2008-05-01  Ben Asselstine <benasselstine@gmail.com>
+
+	* Updated translation files.
+	* Added german translation.
+
+2007-01-05  Ben Asselstine <benasselstine@gmail.com>
+
+	Regenerate files to work with Anjunta version 2.2.0.
+	* src/callbacks.c (on_helpAboutMenuItemActivate): don't just show
+	the pegSolitaireAboutDialog, but run it also so that the `close'
+	button works on the dialog.
+

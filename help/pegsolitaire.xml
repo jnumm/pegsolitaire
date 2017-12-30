@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "
+http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+<!ENTITY app "<application>Peg Solitaire</application>">
+<!ENTITY appversion "0.0.02">
+<!ENTITY date "Jan 2008">
+<!ENTITY manrevision "0.0.3">
+]>
+
+<article id="index" lang="en"> 
+
+<articleinfo> 
+	<title>Peg Solitaire Manual &manrevision;</title> 
+	<copyright> 
+		<year>2007</year>
+		<holder>Ben Asselstine</holder> 
+ 	</copyright>
+	<publisher> 
+		<publishername>Ben Asselstine</publishername> 
+	</publisher> 
+	&legal; 
+	<authorgroup> 
+		<author> 
+			<firstname>Ben</firstname> 
+			<surname>Asselstine</surname>
+			<affiliation>
+				<orgname>Peg Solitaire Development Team</orgname> 
+				<address>
+					<email>benasselstine@gmail.com</email>
+				</address>
+			</affiliation>
+		</author> 
+	</authorgroup> 
+	<releaseinfo> This manual describes version &appversion; of &app;.
+	</releaseinfo> 
+	<legalnotice id="feedback"> 
+		<title>Feedback Information</title> 
+		<para>
+			To report a bug or make a suggestion regarding this application or this documentation, see the <ulink type="help" url="ghelp:gnome-feedback">GNOME Feedback Page</ulink>.
+		</para>
+	</legalnotice>
+</articleinfo>
+
+<indexterm zone="index"> 
+	<primary>Peg Solitaire</primary> 
+</indexterm> 
+<indexterm zone="index"> 
+	<primary>pegsolitaire</primary> 
+</indexterm>
+
+<!-- ============= Introduction ============================== -->
+<!-- Use the Introduction section to give a brief overview of what
+     the application is and what it does. -->
+
+<sect1 id="pegsolitaire-introduction"> 
+	<title>Introduction</title> 
+	<para>
+Peg Solitaire is a board game for one player involving movement of pegs on a board with holes.  The first evidence of peg solitaire can be traced back to the court of Louis XIV, and the specific date of 1697.  It was made popular in more recent history by the board game marketed as Hi-Q.
+	</para>
+</sect1>
+
+<!-- =========== Objective ==================================== -->
+<sect1 id="pegsolitaire-objective">
+	<title>Objective</title>
+	<para>
+The goal of the game is to remove pegs from the board leaving a single peg in the centre hole.  Pegs are removed from the board by making "jumps".  You can jump over a peg with another peg horizontally or vertically (not diagonally!).  When you jump over a peg, it is removed from the board.  Multiple jumps with one peg are allowed.
+	</para>
+</sect1>
+<!-- =========== Getting Started ============================== -->
+<!-- Use the Getting Started section to describe the steps required
+     to start the application and to describe the user interface components
+     of the application. If there is other information that it is important
+     for readers to know before they start using the application, you should
+     also include this information here. 
+     If the information about how to get started is very short, you can 
+     include it in the Introduction and omit this section. -->
+<sect1 id="pegsolitaire-getting-started">
+	<title>Getting Started</title>
+	<para>
+		You can start &app; from the Applications menu by choosing
+		<menuchoice>
+			<guisubmenu>Games</guisubmenu>
+		    	<guimenuitem>Peg Solitaire</guimenuitem>
+		</menuchoice>.
+	</para>
+</sect1>
+
+</article>
