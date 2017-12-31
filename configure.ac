@@ -1,6 +1,5 @@
 AC_INIT([pegsolitaire], [0.0.4])
 
-AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_SRCDIR([src/main.c])
 AC_CONFIG_HEADERS([config.h])
 
@@ -8,7 +7,6 @@ AM_INIT_AUTOMAKE([-Wall foreign])
 AM_MAINTAINER_MODE([enable])
 
 AC_PROG_CC
-AC_HEADER_STDC
 
 
 GETTEXT_PACKAGE=pegsolitaire
