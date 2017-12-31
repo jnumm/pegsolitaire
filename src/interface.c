@@ -21,7 +21,7 @@
 
 #define GLADE_HOOKUP_OBJECT(component,widget,name) \
   g_object_set_data_full (G_OBJECT (component), name, \
-    gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
+    g_object_ref (widget), (GDestroyNotify) g_object_unref)
 
 #define GLADE_HOOKUP_OBJECT_NO_REF(component,widget,name) \
   g_object_set_data (G_OBJECT (component), name, widget)
@@ -69,7 +69,7 @@ create_pegSolitaireWindow (void)
   if (pegSolitaireWindow_icon_pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (pegSolitaireWindow), pegSolitaireWindow_icon_pixbuf);
-      gdk_pixbuf_unref (pegSolitaireWindow_icon_pixbuf);
+      g_object_unref (pegSolitaireWindow_icon_pixbuf);
     }
 
   pegSolitaireVBox = gtk_vbox_new (FALSE, 0);
@@ -91,7 +91,7 @@ create_pegSolitaireWindow (void)
   gtk_widget_show (gameRestartMenuItem);
   gtk_container_add (GTK_CONTAINER (gameMenuItem_menu), gameRestartMenuItem);
   gtk_widget_add_accelerator (gameRestartMenuItem, "activate", accel_group,
-                              GDK_R, (GdkModifierType) GDK_CONTROL_MASK,
+                              GDK_KEY_R, (GdkModifierType) GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
   image27 = gtk_image_new_from_stock ("gtk-refresh", GTK_ICON_SIZE_MENU);
@@ -161,7 +161,7 @@ create_pegSolitaireWindow (void)
   gtk_widget_show (helpContentsMenuItem);
   gtk_container_add (GTK_CONTAINER (helpMenuItem_menu), helpContentsMenuItem);
   gtk_widget_add_accelerator (helpContentsMenuItem, "activate", accel_group,
-                              GDK_F1, (GdkModifierType) 0,
+                              GDK_KEY_F1, (GdkModifierType) 0,
                               GTK_ACCEL_VISIBLE);
 
   image28 = gtk_image_new_from_stock ("gtk-help", GTK_ICON_SIZE_MENU);

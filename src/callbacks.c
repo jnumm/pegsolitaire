@@ -107,11 +107,11 @@ set_cursor (int cursor)
 {
 	static int prev_cursor = -1;
   if ((cursor == CURSOR_NONE) && (prev_cursor != CURSOR_NONE))
-    gdk_window_set_cursor (GDK_WINDOW (pegSolitaireWindow->window), default_cursor);
+    gdk_window_set_cursor (gtk_widget_get_window (pegSolitaireWindow), default_cursor);
   if ((cursor == CURSOR_OPEN) && (prev_cursor != CURSOR_OPEN))
-    gdk_window_set_cursor (GDK_WINDOW (pegSolitaireWindow->window), hand_open_cursor);
+    gdk_window_set_cursor (gtk_widget_get_window (pegSolitaireWindow), hand_open_cursor);
   if ((cursor == CURSOR_CLOSED) && (prev_cursor != CURSOR_CLOSED))
-    gdk_window_set_cursor (GDK_WINDOW (pegSolitaireWindow->window), hand_closed_cursor);
+    gdk_window_set_cursor (gtk_widget_get_window (pegSolitaireWindow), hand_closed_cursor);
 	prev_cursor = cursor;
 }
 static GdkCursor *
@@ -142,16 +142,18 @@ board_draw ()
 	static GdkGC *backgc = NULL;
 	GdkColor *bg_color;
 	GtkStyle *style;
+  GtkAllocation allocation;
 	
 	w = boardDrawingArea;
 	
   if (board_pixmap)
-    gdk_pixmap_unref (board_pixmap);
+    g_object_unref (board_pixmap);
 
-  board_pixmap = gdk_pixmap_new (w->window, w->allocation.width,
-                                 w->allocation.height, -1);
+  gtk_widget_get_allocation(w, &allocation);
+  board_pixmap = gdk_pixmap_new (gtk_widget_get_window (w), allocation.width,
+                                 allocation.height, -1);
 	if (!backgc)
-    backgc = gdk_gc_new (w->window);
+    backgc = gdk_gc_new (gtk_widget_get_window (w));
 	style = gtk_widget_get_style (w);
 	bg_color = gdk_color_copy (&style->bg[GTK_STATE_NORMAL]);
   gdk_gc_set_foreground (backgc, bg_color);
@@ -159,7 +161,7 @@ board_draw ()
   gdk_color_free (bg_color);
 	
   gdk_draw_rectangle (board_pixmap, backgc, TRUE, 0, 0,
-                      w->allocation.width, w->allocation.height);
+                      allocation.width, allocation.height);
 	
 	clear_buffer = clear_game = 0;
 	gtk_widget_queue_draw (w);
@@ -263,7 +265,7 @@ on_helpAboutMenuItem_activate          (GtkMenuItem     *menuitem,
   if (pixbuf)
     {
       gtk_window_set_icon (GTK_WINDOW (pegSolitaireAboutDialog), pixbuf);
-      gdk_pixbuf_unref (pixbuf);
+      g_object_unref (pixbuf);
     }
 
   gtk_widget_show_all (pegSolitaireAboutDialog);
@@ -315,7 +317,7 @@ on_pegSolitaireWindow_activate_default (GtkWindow       *window,
 }
 
 void
-on_pegSolitaireWindow_destroy          (GtkObject       *object,
+on_pegSolitaireWindow_destroy          (GObject         *object,
                                         gpointer         user_data)
 {
 	gtk_main_quit();
@@ -348,14 +350,14 @@ on_boardDrawingArea_motion_notify_event (GtkWidget       *widget,
 	if (button_down == 1)
 	  {
 			//before we draw the peg, let's expose the board again.
-			gdk_draw_pixmap (widget->window,
-			                 widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+			gdk_draw_pixmap (gtk_widget_get_window (widget),
+			                 gtk_widget_get_style (widget)->fg_gc[gtk_widget_get_state (widget)],
 											 board_pixmap, 0, 0, 
 											 0, 0,
 			                 tile_size * game_board_size, tile_size * game_board_size);
 			
-			gdk_draw_pixbuf (widget->window, 
-			                 widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+			gdk_draw_pixbuf (gtk_widget_get_window (widget),
+			                 gtk_widget_get_style (widget)->fg_gc[gtk_widget_get_state (widget)],
 			                 peg_pixbuf, 0, 0, 
 			                 event->x - (icon_size / 2), event->y - (icon_size/2), icon_size, icon_size, 
 			                 GDK_RGB_DITHER_NORMAL, 0, 0);
@@ -461,8 +463,8 @@ on_boardDrawingArea_expose_event       (GtkWidget       *widget,
 	if (clear_game)
 		return FALSE;
 	
-  gdk_draw_pixmap (widget->window,
-                   widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+  gdk_draw_pixmap (gtk_widget_get_window (widget),
+                   gtk_widget_get_style (widget)->fg_gc[gtk_widget_get_state (widget)],
                    board_pixmap,
                    event->area.x, event->area.y,
                    event->area.x, event->area.y,

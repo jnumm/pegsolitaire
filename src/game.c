@@ -358,7 +358,7 @@ game_draw_cell (GtkWidget *widget, GdkPixmap *pixmap, gint height, gint width,
     p = hole_pixbuf;
 	
 	if (!backgc)
-    backgc = gdk_gc_new (widget->window);
+    backgc = gdk_gc_new (gtk_widget_get_window (widget));
 	style = gtk_widget_get_style (widget);
 	bg_color = gdk_color_copy (&style->bg[GTK_STATE_NORMAL]);
   gdk_gc_set_foreground (backgc, bg_color);

@@ -150,12 +150,12 @@ static void
 games_grid_frame_size_request (GtkWidget * widget,
 		GtkRequisition * requisition)
 {
-	GtkWidget *child = GTK_BIN (widget)->child;
+	GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
 
 	requisition->width = 1;
 	requisition->height = 1;
 
-	if (child && GTK_WIDGET_VISIBLE (child)) {
+	if (child && gtk_widget_get_visible (child)) {
 		gtk_widget_size_request (child, requisition);
 	}
 }
@@ -165,11 +165,11 @@ games_grid_frame_size_allocate (GtkWidget * widget,
 		GtkAllocation * allocation)
 {
 	GamesGridFrame *frame = GAMES_GRID_FRAME (widget);
-	GtkWidget *child = GTK_BIN (widget)->child;
+	GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
 	GtkAllocation child_allocation;
 	gint xsize, ysize, size;
 
-	widget->allocation = *allocation;
+	gtk_widget_set_allocation (widget, allocation);
 
 	xsize = MAX (1, (allocation->width - frame->xpadding) / frame->xmult);
 	ysize = MAX (1, (allocation->height - frame->ypadding) / frame->ymult);
@@ -186,14 +186,14 @@ games_grid_frame_size_allocate (GtkWidget * widget,
 		(allocation->height - child_allocation.height) * frame->yalign +
 		allocation->y;
 
-	if (GTK_WIDGET_MAPPED (widget) &&
+	if (gtk_widget_get_mapped (widget) &&
 			(child_allocation.x != frame->old_allocation.x ||
 			 child_allocation.y != frame->old_allocation.y ||
 			 child_allocation.width != frame->old_allocation.width ||
 			 child_allocation.height != frame->old_allocation.height))
-		gdk_window_invalidate_rect (widget->window, &widget->allocation, FALSE);
+		gdk_window_invalidate_rect (gtk_widget_get_window (widget), allocation, FALSE);
 
-	if (child && GTK_WIDGET_VISIBLE (child))
+	if (child && gtk_widget_get_visible (child))
 		gtk_widget_size_allocate (child, &child_allocation);
 
 	frame->old_allocation = child_allocation;

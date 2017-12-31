@@ -14,7 +14,7 @@ on_gameRestartMenuItem_activate        (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
-on_pegSolitaireWindow_destroy          (GtkObject       *object,
+on_pegSolitaireWindow_destroy          (GObject         *object,
                                         gpointer         user_data);
 
 void
