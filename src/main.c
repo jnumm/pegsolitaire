@@ -35,7 +35,7 @@ GtkWidget *boardDrawingArea;
 GtkWidget *statusbar;
 GtkWidget *messagewidget;
 GtkWidget *moveswidget;
-GdkPixmap *board_pixmap;
+cairo_surface_t *board_surface;
 gint tile_size, prior_tile_size;
 gint height, width;
 guint redraw_all_idle_id = 0;
@@ -70,8 +70,8 @@ create_boardDrawingArea ()
 	                       GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | 
 												 GDK_BUTTON_RELEASE_MASK);
   
-	g_signal_connect (G_OBJECT (boardDrawingArea), "expose_event",
-		    G_CALLBACK (on_boardDrawingArea_expose_event), NULL);
+	//g_signal_connect (G_OBJECT (boardDrawingArea), "expose_event",
+	//	    G_CALLBACK (on_boardDrawingArea_expose_event), NULL);
   g_signal_connect (G_OBJECT (boardDrawingArea), "configure_event",
 		    G_CALLBACK (on_boardDrawingArea_configure_event), NULL);
   g_signal_connect (G_OBJECT (boardDrawingArea), "button_press_event",
@@ -94,7 +94,7 @@ update_statusbar (int moves)
 void
 create_statusbar (void)
 {
-  statusbar = gtk_hbox_new (TRUE, 0);
+  statusbar = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
   messagewidget = gtk_label_new ("");
   gtk_box_pack_start (GTK_BOX (statusbar), messagewidget, FALSE, FALSE, 0);
@@ -140,7 +140,6 @@ main (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 #endif
 
-  gtk_set_locale ();
   gtk_init (&argc, &argv);
 
   pegSolitaireWindow = create_pegSolitaireWindow ();

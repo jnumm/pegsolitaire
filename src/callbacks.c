@@ -36,7 +36,7 @@ extern GtkWidget *messagewidget;
 extern gint game_moves;
 extern gint game_board_type;
 extern gint game_board_size;
-extern GdkPixmap *board_pixmap;
+extern cairo_surface_t *board_surface;
 extern gint tile_size, prior_tile_size;
 extern gint width, height;
 extern guint redraw_all_idle_id;
@@ -78,29 +78,28 @@ static void
 board_draw ()
 {	
 	GtkWidget *w;
-	static GdkGC *backgc = NULL;
+	static cairo_t *backcr = NULL;
 	GdkColor *bg_color;
 	GtkStyle *style;
   GtkAllocation allocation;
 	
 	w = boardDrawingArea;
 	
-  if (board_pixmap)
-    g_object_unref (board_pixmap);
+  if (board_surface)
+    cairo_surface_destroy (board_surface);
 
   gtk_widget_get_allocation(w, &allocation);
-  board_pixmap = gdk_pixmap_new (gtk_widget_get_window (w), allocation.width,
-                                 allocation.height, -1);
-	if (!backgc)
-    backgc = gdk_gc_new (gtk_widget_get_window (w));
+  board_surface = gdk_window_create_similar_surface (gtk_widget_get_window (w),
+      CAIRO_CONTENT_COLOR_ALPHA,
+      allocation.width, allocation.height);
+  if (!backcr)
+    backcr = gdk_cairo_create (gtk_widget_get_window (w));
 	style = gtk_widget_get_style (w);
 	bg_color = gdk_color_copy (&style->bg[GTK_STATE_NORMAL]);
-  gdk_gc_set_foreground (backgc, bg_color);
-  gdk_gc_set_fill (backgc, GDK_SOLID);
+  gdk_cairo_set_source_color (backcr, bg_color);
   gdk_color_free (bg_color);
 	
-  gdk_draw_rectangle (board_pixmap, backgc, TRUE, 0, 0,
-                      allocation.width, allocation.height);
+  cairo_rectangle (backcr, 0, 0, allocation.width, allocation.height);
 	
 	clear_buffer = clear_game = 0;
 	gtk_widget_queue_draw (w);
@@ -111,7 +110,7 @@ static gboolean
 redraw_all (void)
 {
 	board_draw ();
-	game_draw (pegSolitaireWindow, board_pixmap, height, width, tile_size, 1);
+	game_draw (pegSolitaireWindow, board_surface, height, width, tile_size, 1);
 	return 0;
 }
 
@@ -209,7 +208,7 @@ on_helpAboutMenuItem_activate          (GtkMenuItem     *menuitem,
 
   gtk_widget_show_all (pegSolitaireAboutDialog);
   gtk_dialog_run (GTK_DIALOG(pegSolitaireAboutDialog));
-  gtk_widget_hide_all (pegSolitaireAboutDialog);
+  gtk_widget_hide (pegSolitaireAboutDialog);
 }
 
 void
@@ -288,18 +287,18 @@ on_boardDrawingArea_motion_notify_event (GtkWidget       *widget,
 	int icon_size = tile_size / 1.666;
 	if (button_down == 1)
 	  {
+      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (widget));
 			//before we draw the peg, let's expose the board again.
-			gdk_draw_pixmap (gtk_widget_get_window (widget),
+			/*gdk_draw_pixmap (gtk_widget_get_window (widget),
 			                 gtk_widget_get_style (widget)->fg_gc[gtk_widget_get_state (widget)],
 											 board_pixmap, 0, 0, 
 											 0, 0,
-			                 tile_size * game_board_size, tile_size * game_board_size);
-			
-			gdk_draw_pixbuf (gtk_widget_get_window (widget),
-			                 gtk_widget_get_style (widget)->fg_gc[gtk_widget_get_state (widget)],
-			                 peg_pixbuf, 0, 0, 
-			                 event->x - (icon_size / 2), event->y - (icon_size/2), icon_size, icon_size, 
-			                 GDK_RGB_DITHER_NORMAL, 0, 0);
+			                 tile_size * game_board_size, tile_size * game_board_size);*/
+
+      gdk_cairo_set_source_pixbuf (cr, peg_pixbuf,
+          event->x - (icon_size / 2), event->y - (icon_size / 2));
+      cairo_paint (cr);
+      cairo_destroy (cr);
 	  }
 	else
 		{
@@ -341,7 +340,7 @@ on_boardDrawingArea_button_press_event (GtkWidget       *widget,
 
 			button_down = 1;
 			game_toggle_cell (i, j);
-			game_draw (pegSolitaireWindow, board_pixmap, height, width, tile_size, 0);
+			game_draw (pegSolitaireWindow, board_surface, height, width, tile_size, 0);
 			piece_x = i;
 			piece_y = j;
 			GdkRectangle update;
@@ -373,11 +372,11 @@ on_boardDrawingArea_button_release_event (GtkWidget       *widget,
 					  {
 							//put the peg back where we started.
 							game_toggle_cell (piece_x, piece_y);
-        			game_draw (pegSolitaireWindow, board_pixmap, height, width, 
+        			game_draw (pegSolitaireWindow, board_surface, height, width, 
 			                        tile_size, 0);
 							return FALSE;
 						}
-					game_draw (pegSolitaireWindow, board_pixmap, height, width, tile_size, 
+					game_draw (pegSolitaireWindow, board_surface, height, width, tile_size, 
 					           0);
 					update_statusbar (game_moves);
 					if (is_game_end ())
@@ -402,12 +401,12 @@ on_boardDrawingArea_expose_event       (GtkWidget       *widget,
 	if (clear_game)
 		return FALSE;
 	
-  gdk_draw_pixmap (gtk_widget_get_window (widget),
+  /*gdk_draw_pixmap (gtk_widget_get_window (widget),
                    gtk_widget_get_style (widget)->fg_gc[gtk_widget_get_state (widget)],
                    board_pixmap,
                    event->area.x, event->area.y,
                    event->area.x, event->area.y,
-                   event->area.width, event->area.height);
+                   event->area.width, event->area.height);*/
   return FALSE;
 }
 

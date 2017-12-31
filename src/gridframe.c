@@ -212,7 +212,7 @@ games_grid_frame_class_init (GamesGridFrameClass * class)
 	object_class->get_property = games_grid_frame_get_property;
 
 	widget_class->size_allocate = games_grid_frame_size_allocate;
-	widget_class->size_request = games_grid_frame_size_request;
+	//widget_class->size_request = games_grid_frame_size_request;
 
 	g_object_class_install_property (object_class, PROP_X_PADDING,
 			g_param_spec_int ("x_padding",

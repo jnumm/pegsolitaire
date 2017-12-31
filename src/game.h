@@ -26,9 +26,9 @@ enum {
 
 int game_new ();
 int is_game_end ();
-int game_draw (GtkWidget *widget, GdkPixmap *pixmap, gint height, gint width,
+int game_draw (GtkWidget *widget, cairo_surface_t *surface, gint height, gint width,
                gint tile_size, int force);
-int game_draw_cell (GtkWidget *widget, GdkPixmap *pixmap, gint height, gint width,
+int game_draw_cell (GtkWidget *widget, cairo_surface_t *surface, gint height, gint width,
            gint tile_size, gint x, gint y);
 void game_toggle_cell (int i, int j);
 gboolean game_is_peg_at (int i, int j);

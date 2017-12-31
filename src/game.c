@@ -318,7 +318,7 @@ game_move (int src_x, int src_y, int dst_x, int dst_y)
 }
 
 int
-game_draw (GtkWidget *widget, GdkPixmap *pixmap, gint height, gint width,
+game_draw (GtkWidget *widget, cairo_surface_t *surface, gint height, gint width,
            gint tile_size, int force)
 {
 	int i, j;	
@@ -328,7 +328,7 @@ game_draw (GtkWidget *widget, GdkPixmap *pixmap, gint height, gint width,
 			  {
 					if ((game_board_dirty[i][j] == 1) || (force))
 					  {
-					    game_draw_cell (widget, pixmap, height, width, tile_size, i, j);
+					    game_draw_cell (widget, surface, height, width, tile_size, i, j);
 							game_board_dirty[i][j] = 0;
 						}
 			  }
@@ -339,11 +339,11 @@ game_draw (GtkWidget *widget, GdkPixmap *pixmap, gint height, gint width,
 }
 
 int
-game_draw_cell (GtkWidget *widget, GdkPixmap *pixmap, gint height, gint width,
+game_draw_cell (GtkWidget *widget, cairo_surface_t *surface, gint height, gint width,
            gint tile_size, gint x, gint y)
 {
   GdkPixbuf *p;	
-	static GdkGC *backgc = NULL;
+	static cairo_t *backcr = NULL;
 	GdkColor *bg_color;
 	GtkStyle *style;
 	if (x < 0 || y < 0)
@@ -357,29 +357,30 @@ game_draw_cell (GtkWidget *widget, GdkPixmap *pixmap, gint height, gint width,
   else
     p = hole_pixbuf;
 	
-	if (!backgc)
-    backgc = gdk_gc_new (gtk_widget_get_window (widget));
+  if (!backcr)
+    backcr = gdk_cairo_create (gtk_widget_get_window (widget));
 	style = gtk_widget_get_style (widget);
 	bg_color = gdk_color_copy (&style->bg[GTK_STATE_NORMAL]);
-  gdk_gc_set_foreground (backgc, bg_color);
-  gdk_gc_set_fill (backgc, GDK_SOLID);
+  gdk_cairo_set_source_color (backcr, bg_color);
   gdk_color_free (bg_color);
 
-	gdk_draw_rectangle (pixmap, backgc, TRUE, 
-			                    (x * tile_size), (y * tile_size), 
-			                    tile_size, tile_size);
+  cairo_rectangle (backcr,
+      (x * tile_size), (y * tile_size), 
+      tile_size, tile_size);
   int icon_size = tile_size / 1.666;
-	gdk_draw_pixbuf (pixmap, backgc, p, 0, 0, 
+	/*gdk_draw_pixbuf (surface, backgc, p, 0, 0, 
 					         (x * tile_size) + (tile_size / 2) - (icon_size / 2), 
 					         (y * tile_size) + (tile_size / 2) - (icon_size / 2),
-					         icon_size, icon_size, GDK_RGB_DITHER_NORMAL, 0, 0);
+					         icon_size, icon_size, GDK_RGB_DITHER_NORMAL, 0, 0);*/
 
+  cairo_paint (backcr);
+  
 	GdkRectangle update;
 	update.x = x * tile_size;
 	update.y = y * tile_size;
 	update.width = tile_size;
 	update.height = tile_size;
-	gtk_widget_draw (widget, &update);
+	//gtk_widget_draw (widget, &update);
 
 	return 0;
 }
