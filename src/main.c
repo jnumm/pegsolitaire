@@ -102,6 +102,16 @@ create_statusbar (void)
   gtk_box_pack_end (GTK_BOX (statusbar), moveswidget, FALSE, FALSE, 0);
 }
 
+/* Session Options */
+
+static const GOptionEntry options[] = {
+  {"x", 'x', 0, G_OPTION_ARG_INT, &session_xpos, N_("X location of window"),
+   N_("X")},
+  {"y", 'y', 0, G_OPTION_ARG_INT, &session_ypos, N_("Y location of window"),
+   N_("Y")},
+  {NULL}
+};
+
 GamesPreimage *
 load_image (char *filename)
 {
@@ -132,6 +142,8 @@ load_image (char *filename)
 int
 main (int argc, char *argv[])
 {
+  GOptionContext *context;
+  GError *error = NULL;
 	GtkWidget *w;
 
   setlocale (LC_ALL, "");
@@ -140,6 +152,15 @@ main (int argc, char *argv[])
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 #endif
+
+  context = g_option_context_new ("");
+  g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+  g_option_context_add_group (context, gtk_get_option_group (TRUE));
+
+  if (!g_option_context_parse (context, &argc, &argv, &error)) {
+    fputs (error->message, stderr);
+    exit (1);
+  }
 
   gtk_init (&argc, &argv);
 
