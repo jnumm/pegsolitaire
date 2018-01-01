@@ -270,7 +270,7 @@ on_helpAboutMenuItem_activate          (GtkMenuItem     *menuitem,
 
   gtk_widget_show_all (pegSolitaireAboutDialog);
   gtk_dialog_run (GTK_DIALOG(pegSolitaireAboutDialog));
-  gtk_widget_hide_all (pegSolitaireAboutDialog);
+  gtk_widget_hide (pegSolitaireAboutDialog);
 }
 
 void

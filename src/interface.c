@@ -263,7 +263,7 @@ create_pegSolitaireAboutDialog (void)
   pegSolitaireAboutDialog = gtk_about_dialog_new ();
   gtk_window_set_destroy_with_parent (GTK_WINDOW (pegSolitaireAboutDialog), TRUE);
   gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), VERSION);
-  gtk_about_dialog_set_name (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), _("Peg Solitaire"));
+  gtk_about_dialog_set_program_name (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), _("Peg Solitaire"));
   gtk_about_dialog_set_comments (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), _("This software is dedicated\n to Mothers everywhere."));
   gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), authors);
   gtk_about_dialog_set_translator_credits (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), translators);
