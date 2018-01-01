@@ -2,8 +2,8 @@ gladedir = $(pkgdatadir)/glade
 dist_glade_DATA = pegsolitaire.glade
 
 AM_CPPFLAGS = \
-  -DLOCALEDIR=\"$(localedir)\" \
-  -DPKGDATADIR=\"$(pkgdatadir)\"
+  -DLOCALEDIR='"$(localedir)"' \
+  -DPKGDATADIR='"$(pkgdatadir)"'
 AM_CFLAGS = -Wall -Wextra -pedantic
 AM_LDFLAGS = -Wl,--as-needed
 
