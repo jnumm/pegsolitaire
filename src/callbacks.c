@@ -282,7 +282,7 @@ on_helpContentsMenuItem_activate       (GtkMenuItem     *menuitem,
   gtk_show_uri (gtk_widget_get_screen (pegSolitaireWindow), "ghelp:pegsolitaire",
       gtk_get_current_event_time (), &err);
   if (err != NULL) {
-    g_warning ("Cannot show help: %s", err->message);
+    g_warning (_("Cannot show help: %s"), err->message);
     g_error_free (err);
   }
 }

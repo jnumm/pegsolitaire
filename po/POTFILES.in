@@ -3,3 +3,4 @@
 src/main.c
 src/interface.c
 src/game.c
+src/callbacks.c

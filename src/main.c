@@ -86,6 +86,7 @@ void
 update_statusbar (int moves)
 {
 	gchar *str;
+  // TRANSLATORS: This is the number of moves the player has made.
 	str = g_strdup_printf (_("Moves: %d"), moves);
   gtk_label_set_text (GTK_LABEL (moveswidget), str);
   g_free (str);
@@ -126,12 +127,11 @@ load_image (char *filename)
 		{
       GtkWidget *dialog;
 
-      dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, 
-			                                 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-			                                 _("Could not find the image:"
-			                                   ":\n%s\n\nPlease check that "
-			                                   "Peg Solitaire is installed "
-			                                   "correctly."), fname);
+      dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
+          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+          _("Could not find the image:\n"
+            "%s\n\n"
+            "Please check that Peg Solitaire is installed correctly."), fname);
       gtk_dialog_run (GTK_DIALOG (dialog));
       exit (1);
     }
