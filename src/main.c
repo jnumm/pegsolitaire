@@ -133,14 +133,14 @@ int
 main (int argc, char *argv[])
 {
 	GtkWidget *w;
-	
+
+  setlocale (LC_ALL, "");
 #ifdef ENABLE_NLS
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 #endif
 
-  gtk_set_locale ();
   gtk_init (&argc, &argv);
 
   pegSolitaireWindow = create_pegSolitaireWindow ();
