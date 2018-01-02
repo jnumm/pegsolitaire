@@ -17,6 +17,7 @@
 #  include <config.h>
 #endif
 
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h> // for exit()
 
