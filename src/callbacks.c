@@ -193,14 +193,14 @@ resize_all (void)
 			  {
           peg_pixbuf = games_preimage_render (peg_preimage,
 				                                	    tile_size/1.666,
-					                                    tile_size/1.666, NULL);
+					                                    tile_size/1.666);
         }
 
 			if (hole_preimage)
 			  {
           hole_pixbuf = games_preimage_render (hole_preimage,
 				                                	     tile_size/1.666,
-					                                     tile_size/1.666, NULL);
+					                                     tile_size/1.666);
         }
 
       if (peg_pixbuf == NULL || hole_pixbuf == NULL) 
