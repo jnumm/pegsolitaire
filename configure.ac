@@ -1,6 +1,6 @@
 AC_INIT([pegsolitaire], [0.0.4])
 
-AM_INIT_AUTOMAKE([-Wall foreign])
+AM_INIT_AUTOMAKE([foreign subdir-objects -Wall])
 AM_MAINTAINER_MODE([enable])
 
 AC_CONFIG_SRCDIR([src/main.c])
@@ -14,12 +14,6 @@ AM_GNU_GETTEXT_VERSION([0.19])
 
 PKG_CHECK_MODULES([GTK], [gtk+-2.0])
 
-AC_CONFIG_FILES([
-Makefile
-src/Makefile
-src/pixmaps/Makefile
-po/Makefile.in
-help/Makefile
-])
+AC_CONFIG_FILES([Makefile po/Makefile.in])
 
 AC_OUTPUT

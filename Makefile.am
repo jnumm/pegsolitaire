@@ -1,8 +1,35 @@
-dist_doc_DATA = \
-  README \
-  COPYING \
-  AUTHORS \
-  ChangeLog \
-  NEWS
+AM_CPPFLAGS = -DLOCALEDIR='"$(localedir)"' -DPKGDATADIR='"$(pkgdatadir)"'
+AM_CFLAGS = -Wall -Wextra -pedantic
+AM_LDFLAGS = -Wl,--as-needed
 
-SUBDIRS = src po help
+bin_PROGRAMS = pegsolitaire
+# $(AM_CPPFLAGS) need to be explicitly added here.
+pegsolitaire_CPPFLAGS = $(AM_CPPFLAGS) $(GTK_CFLAGS)
+pegsolitaire_LDADD = $(GTK_LIBS)
+pegsolitaire_SOURCES = \
+  src/interface.c \
+  src/interface.h \
+  src/support.c \
+  src/support.h \
+  src/callbacks.c \
+  src/callbacks.h \
+  src/preimage.c \
+  src/preimage.h \
+  src/game.c \
+  src/game.h \
+  src/gridframe.c \
+  src/gridframe.h \
+  src/main.c
+
+# Files in dist_something_DATA will be installed to $(somethingdir).
+dist_pkgdata_DATA = src/hole.svg src/peg.svg src/pegsolitaire.glade
+
+dist_doc_DATA = README COPYING AUTHORS ChangeLog NEWS
+
+pixmapsdir = $(datarootdir)/pixmaps
+dist_pixmaps_DATA = pegsolitaire.png
+
+helpdir = $(datarootdir)/gnome/help/pegsolitaire/C
+dist_help_DATA = help/legal.xml help/pegsolitaire.xml
+
+SUBDIRS = po
