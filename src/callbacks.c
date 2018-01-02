@@ -258,15 +258,8 @@ void
 on_helpAboutMenuItem_activate          (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-	GdkPixbuf *pixbuf;
   GtkWidget *pegSolitaireAboutDialog;
   pegSolitaireAboutDialog = create_pegSolitaireAboutDialog ();
-	pixbuf = create_pixbuf ("pegsolitaire-icon.png");
-  if (pixbuf)
-    {
-      gtk_window_set_icon (GTK_WINDOW (pegSolitaireAboutDialog), pixbuf);
-      g_object_unref (pixbuf);
-    }
 
   gtk_widget_show_all (pegSolitaireAboutDialog);
   gtk_dialog_run (GTK_DIALOG(pegSolitaireAboutDialog));

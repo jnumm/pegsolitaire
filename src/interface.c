@@ -31,7 +31,6 @@ create_pegSolitaireWindow (void)
 {
   GtkWidget *pegSolitaireWindow;
   AtkObject *atko;
-  GdkPixbuf *pegSolitaireWindow_icon_pixbuf;
   GtkWidget *pegSolitaireVBox;
   GtkWidget *pegSolitaireMenuBar;
   GtkWidget *gameMenuItem;
@@ -65,12 +64,7 @@ create_pegSolitaireWindow (void)
   gtk_window_set_title (GTK_WINDOW (pegSolitaireWindow), _("Peg Solitaire"));
   gtk_window_set_position (GTK_WINDOW (pegSolitaireWindow), GTK_WIN_POS_CENTER);
   gtk_window_set_default_size (GTK_WINDOW (pegSolitaireWindow), 400, 400);
-  pegSolitaireWindow_icon_pixbuf = create_pixbuf ("pegsolitaire-icon.png");
-  if (pegSolitaireWindow_icon_pixbuf)
-    {
-      gtk_window_set_icon (GTK_WINDOW (pegSolitaireWindow), pegSolitaireWindow_icon_pixbuf);
-      g_object_unref (pegSolitaireWindow_icon_pixbuf);
-    }
+  gtk_window_set_icon_name (GTK_WINDOW (pegSolitaireWindow), "pegsolitaire");
 
   pegSolitaireVBox = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (pegSolitaireVBox);
@@ -258,17 +252,16 @@ create_pegSolitaireAboutDialog (void)
   };
   /* TRANSLATORS: Replace this string with your names, one name per line. */
   gchar *translators = _("translator-credits");
-  GdkPixbuf *pegSolitaireAboutDialog_logo_pixbuf;
 
   pegSolitaireAboutDialog = gtk_about_dialog_new ();
   gtk_window_set_destroy_with_parent (GTK_WINDOW (pegSolitaireAboutDialog), TRUE);
+  gtk_window_set_icon_name (GTK_WINDOW (pegSolitaireAboutDialog), "pegsolitaire");
   gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), VERSION);
   gtk_about_dialog_set_program_name (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), _("Peg Solitaire"));
   gtk_about_dialog_set_comments (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), _("This software is dedicated\n to Mothers everywhere."));
   gtk_about_dialog_set_authors (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), authors);
   gtk_about_dialog_set_translator_credits (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), translators);
-  pegSolitaireAboutDialog_logo_pixbuf = create_pixbuf ("pegsolitaire-icon.png");
-  gtk_about_dialog_set_logo (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), pegSolitaireAboutDialog_logo_pixbuf);
+  gtk_about_dialog_set_logo_icon_name (GTK_ABOUT_DIALOG (pegSolitaireAboutDialog), "pegsolitaire");
 
   g_signal_connect ((gpointer) pegSolitaireAboutDialog, "close",
                     G_CALLBACK (gtk_widget_destroy),
