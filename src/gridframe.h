@@ -14,9 +14,7 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * License along with this library; if not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef GAMES_GRID_FRAME_H
@@ -25,41 +23,39 @@
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
+
 #define GAMES_TYPE_GRID_FRAME            (games_grid_frame_get_type ())
 #define GAMES_GRID_FRAME(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GAMES_TYPE_GRID_FRAME, GamesGridFrame))
 #define GAMES_GRID_FRAME_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GAMES_TYPE_GRID_FRAME, GamesGridFrameClass))
 #define GAMES_IS_GRID_FRAME(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GAMES_TYPE_GRID_FRAME))
 #define GAMES_IS_GRID_FRAME_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GAMES_TYPE_GRID_FRAME))
 #define GAMES_GRID_FRAME_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GAMES_TYPE_GRID_FRAME))
-typedef struct _GamesGridFrame {
-	GtkBin bin;
 
-	gint xmult;
-	gint ymult;
+typedef struct GamesGridFramePrivate GamesGridFramePrivate;
 
-	gint xpadding;
-	gint ypadding;
-
-	gfloat xalign;
-	gfloat yalign;
-
-	GtkAllocation old_allocation;
+typedef struct {
+  GtkBin bin;
+  /*< private >*/
+  GamesGridFramePrivate *priv;
 } GamesGridFrame;
 
-typedef struct _GamesGridFrameClass {
-	GtkBinClass parent;
+typedef struct {
+  GtkBinClass parent;
 } GamesGridFrameClass;
 
-GType games_grid_frame_get_type (void);
-
-GtkWidget *games_grid_frame_new (gint width, gint height);
-void games_grid_frame_set (GamesGridFrame * frame, gint width, gint height);
-void games_grid_frame_set_padding (GamesGridFrame * frame, gint xpadding,
-		gint ypadding);
-void games_grid_frame_set_alignment (GamesGridFrame * frame, gfloat xalign,
-		gfloat yalign);
+GType      games_grid_frame_get_type      (void);
+GtkWidget *games_grid_frame_new           (gint width,
+                                           gint height);
+void       games_grid_frame_set           (GamesGridFrame * frame,
+                                           gint width,
+                                           gint height);
+void       games_grid_frame_set_padding   (GamesGridFrame * frame,
+                                           gint xpadding,
+                                           gint ypadding);
+void       games_grid_frame_set_alignment (GamesGridFrame * frame,
+                                           gfloat xalign,
+                                           gfloat yalign);
 
 G_END_DECLS
 #endif /* GAMES_GRID_FRAME_H */
 /* EOF */
-
