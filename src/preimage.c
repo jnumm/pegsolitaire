@@ -48,7 +48,7 @@ struct _GamesPreimage {
   guint scalable : 1;
 };
 
-G_DEFINE_TYPE (GamesPreimage, games_preimage, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GamesPreimage, games_preimage, G_TYPE_OBJECT)
 
 static void
 games_preimage_init (GamesPreimage * preimage)
