@@ -148,13 +148,13 @@ main (int argc, char *argv[])
 
   setlocale (LC_ALL, "");
 #ifdef ENABLE_NLS
-  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-  textdomain (GETTEXT_PACKAGE);
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  bind_textdomain_codeset (PACKAGE, "UTF-8");
+  textdomain (PACKAGE);
 #endif
 
   context = g_option_context_new ("");
-  g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+  g_option_context_add_main_entries (context, options, PACKAGE);
   g_option_context_add_group (context, gtk_get_option_group (TRUE));
 
   if (!g_option_context_parse (context, &argc, &argv, &error)) {
