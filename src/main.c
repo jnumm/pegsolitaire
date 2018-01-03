@@ -14,7 +14,7 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #ifdef HAVE_CONFIG_H
-#  include <config.h>
+#include <config.h>
 #endif
 
 #include <locale.h>
@@ -55,40 +55,43 @@ GdkPixbuf *hole_pixbuf;
 
 gboolean resize_all (void);
 
-static void 
+static void
 create_boardDrawingArea ()
 {
   gameframe = games_grid_frame_new (7, 7);
   games_grid_frame_set_padding (GAMES_GRID_FRAME (gameframe), 10, 10);
   gtk_widget_set_size_request (GTK_WIDGET (gameframe), 250, 250);
-	
+
   boardDrawingArea = gtk_drawing_area_new ();
-	gtk_widget_set_name (GTK_WIDGET (boardDrawingArea), "boardDrawingArea");
-	
-	gtk_widget_set_double_buffered (boardDrawingArea, 0);
-	gtk_container_add (GTK_CONTAINER (gameframe), boardDrawingArea);
-  gtk_widget_set_events (boardDrawingArea, GDK_EXPOSURE_MASK | 
-	                       GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK | 
-												 GDK_BUTTON_RELEASE_MASK);
-  
-	g_signal_connect (G_OBJECT (boardDrawingArea), "expose_event",
-		    G_CALLBACK (on_boardDrawingArea_expose_event), NULL);
+  gtk_widget_set_name (GTK_WIDGET (boardDrawingArea), "boardDrawingArea");
+
+  gtk_widget_set_double_buffered (boardDrawingArea, 0);
+  gtk_container_add (GTK_CONTAINER (gameframe), boardDrawingArea);
+  gtk_widget_set_events (boardDrawingArea, GDK_EXPOSURE_MASK |
+                         GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK |
+                         GDK_BUTTON_RELEASE_MASK);
+
+  g_signal_connect (G_OBJECT (boardDrawingArea), "expose_event",
+                    G_CALLBACK (on_boardDrawingArea_expose_event), NULL);
   g_signal_connect (G_OBJECT (boardDrawingArea), "configure_event",
-		    G_CALLBACK (on_boardDrawingArea_configure_event), NULL);
+                    G_CALLBACK (on_boardDrawingArea_configure_event), NULL);
   g_signal_connect (G_OBJECT (boardDrawingArea), "button_press_event",
-		    G_CALLBACK (on_boardDrawingArea_button_press_event), NULL);
+                    G_CALLBACK (on_boardDrawingArea_button_press_event),
+                    NULL);
   g_signal_connect (G_OBJECT (boardDrawingArea), "button_release_event",
-		    G_CALLBACK (on_boardDrawingArea_button_release_event), NULL);
+                    G_CALLBACK (on_boardDrawingArea_button_release_event),
+                    NULL);
   g_signal_connect (G_OBJECT (boardDrawingArea), "motion_notify_event",
-		    G_CALLBACK (on_boardDrawingArea_motion_notify_event), NULL);
+                    G_CALLBACK (on_boardDrawingArea_motion_notify_event),
+                    NULL);
 }
 
-void 
+void
 update_statusbar (int moves)
 {
-	gchar *str;
+  gchar *str;
   // TRANSLATORS: This is the number of moves the player has made.
-	str = g_strdup_printf (_("Moves: %d"), moves);
+  str = g_strdup_printf (_("Moves: %d"), moves);
   gtk_label_set_text (GTK_LABEL (moveswidget), str);
   g_free (str);
 }
@@ -120,24 +123,22 @@ load_image (char *filename)
   char *fname;
   GamesPreimage *preimage;
   fname = g_build_filename (PKGDATADIR, filename, NULL);
-  if (g_file_test (fname, G_FILE_TEST_EXISTS)) 
-		{
-      preimage = games_preimage_new_from_file (fname, NULL);
-    } 
-	else 
-		{
-      GtkWidget *dialog;
+  if (g_file_test (fname, G_FILE_TEST_EXISTS)) {
+    preimage = games_preimage_new_from_file (fname, NULL);
+  } else {
+    GtkWidget *dialog;
 
-      dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
-          GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-          _("Could not find the image:\n"
-            "%s\n\n"
-            "Please check that Peg Solitaire is installed correctly."), fname);
-      gtk_dialog_run (GTK_DIALOG (dialog));
-      exit (1);
-    }
+    dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
+                                     GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                                     _("Could not find the image:\n"
+                                       "%s\n\n"
+                                       "Please check that Peg Solitaire is installed correctly."),
+                                     fname);
+    gtk_dialog_run (GTK_DIALOG (dialog));
+    exit (1);
+  }
   g_free (fname);
-	return preimage;
+  return preimage;
 }
 
 int
@@ -145,7 +146,7 @@ main (int argc, char *argv[])
 {
   GOptionContext *context;
   GError *error = NULL;
-	GtkWidget *w;
+  GtkWidget *w;
 
   setlocale (LC_ALL, "");
 #ifdef ENABLE_NLS
@@ -166,28 +167,28 @@ main (int argc, char *argv[])
   gtk_init (&argc, &argv);
 
   pegSolitaireWindow = create_pegSolitaireWindow ();
-	
-	peg_preimage = load_image ("peg.svg");
-	hole_preimage = load_image ("hole.svg");
 
-	create_boardDrawingArea ();
-	create_statusbar ();
-	update_statusbar (0);
+  peg_preimage = load_image ("peg.svg");
+  hole_preimage = load_image ("hole.svg");
 
-	w = lookup_widget (pegSolitaireWindow, "pegSolitaireVBox");
+  create_boardDrawingArea ();
+  create_statusbar ();
+  update_statusbar (0);
 
-	gtk_box_pack_start (GTK_BOX (w), gameframe, TRUE, TRUE, 0);
-	gtk_box_pack_end (GTK_BOX (w), statusbar, FALSE, FALSE, 8);
-  	
-	game_new ();
-	
+  w = lookup_widget (pegSolitaireWindow, "pegSolitaireVBox");
+
+  gtk_box_pack_start (GTK_BOX (w), gameframe, TRUE, TRUE, 0);
+  gtk_box_pack_end (GTK_BOX (w), statusbar, FALSE, FALSE, 8);
+
+  game_new ();
+
   if (session_xpos > 0 && session_ypos > 0)
-    gtk_window_move (GTK_WINDOW (pegSolitaireWindow), 
-	                   session_xpos, session_ypos);
-	
+    gtk_window_move (GTK_WINDOW (pegSolitaireWindow),
+                     session_xpos, session_ypos);
+
   gtk_widget_show_all (pegSolitaireWindow);
-  
-	if (resize_all_idle_id)
+
+  if (resize_all_idle_id)
     g_source_remove (resize_all_idle_id);
 
   resize_all_idle_id = g_idle_add ((GSourceFunc) resize_all, NULL);

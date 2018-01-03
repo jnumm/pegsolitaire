@@ -1,0 +1,4 @@
+--no-tabs
+--braces-on-if-line
+--cuddle-else
+--comment-indentation 0
