@@ -16,6 +16,7 @@
 
 #ifndef PEGSOLITAIRE_GAME_H
 #define PEGSOLITAIRE_GAME_H
+
 #include <gtk/gtk.h>
 
 enum
@@ -36,4 +37,5 @@ gboolean game_is_peg_at (int i, int j);
 gboolean game_move (int src_x, int src_y, int dst_x, int dst_y);
 int game_count_pegs_on_board ();
 gchar *game_cheese ();
-#endif
+
+#endif // PEGSOLITAIRE_GAME_H

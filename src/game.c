@@ -14,14 +14,14 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#include "game.h"
+
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include "game.h"
+
 #include "support.h"
+
 extern GdkPixbuf *peg_pixbuf;
 extern GdkPixbuf *hole_pixbuf;
 #define DEFAULT_GAME_BOARD_SIZE 7

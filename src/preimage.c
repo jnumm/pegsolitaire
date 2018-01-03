@@ -19,8 +19,6 @@
 
 /* Cache raster and vector images and render them to a specific size. */
 
-#include <config.h>
-
 #include <string.h>
 
 #include <glib.h>

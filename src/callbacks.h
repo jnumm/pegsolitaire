@@ -1,5 +1,7 @@
-#include <gtk/gtk.h>
+#ifndef PEGSOLITAIRE_CALLBACKS_H
+#define PEGSOLITAIRE_CALLBACKS_H
 
+#include <gtk/gtk.h>
 
 void
 on_helpAboutMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data);
@@ -67,3 +69,5 @@ on_boardDrawingArea_configure_event (GtkWidget * widget,
 
 void
 on_helpAboutMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data);
+
+#endif // PEGSOLITAIRE_CALLBACKS_H
