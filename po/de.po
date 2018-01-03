@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pegsolitaire 0.0.4\n"
 "Report-Msgid-Bugs-To: https://github.com/jnumm/pegsolitaire/issues\n"
-"POT-Creation-Date: 2018-01-01 14:25+0200\n"
+"POT-Creation-Date: 2018-01-03 10:00+0200\n"
 "PO-Revision-Date: 2008-05-01 14:44+0200\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@t-online.de>\n"
 "Language-Team: German\n"
@@ -17,29 +17,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: pegsolitaire.desktop.in:4 src/interface.c:64 src/interface.c:209
+#: src/interface.c:260
+msgid "Peg Solitaire"
+msgstr "Peg Solitaire"
+
+#: pegsolitaire.desktop.in:5
+msgid "Play an educational puzzle game similar to Hi-Q"
+msgstr "Spiele ein lehrreiches Knobelspiel ähnlich wie Hi-Q"
+
+#: pegsolitaire.desktop.in:10
+msgid "solitaire;peg;brainvita;solo;noble;puzzle;logic;board;"
+msgstr ""
+
 #. TRANSLATORS: This is the number of moves the player has made.
-#: src/main.c:90
+#: src/main.c:91
 #, c-format
 msgid "Moves: %d"
 msgstr "Züge: %d"
 
-#: src/main.c:109
+#: src/main.c:110
 msgid "X location of window"
 msgstr "X Fensterposition"
 
-#: src/main.c:110
+#: src/main.c:111
 msgid "X"
 msgstr "X"
 
-#: src/main.c:111
+#: src/main.c:112
 msgid "Y location of window"
 msgstr "Y Fensterposition"
 
-#: src/main.c:112
+#: src/main.c:113
 msgid "Y"
 msgstr "Y"
 
-#: src/main.c:132
+#: src/main.c:133
 #, c-format
 msgid ""
 "Could not find the image:\n"
@@ -52,52 +65,48 @@ msgstr ""
 "\n"
 "Bitte überprüfen Sie die korrekte Installation von Peg Solitaire."
 
-#: src/interface.c:65 src/interface.c:215 src/interface.c:266
-msgid "Peg Solitaire"
-msgstr "Peg Solitaire"
-
-#: src/interface.c:83
+#: src/interface.c:77
 msgid "_Game"
 msgstr "_Spiel"
 
-#: src/interface.c:90
+#: src/interface.c:84
 msgid "_Restart"
 msgstr "_Neu starten"
 
-#: src/interface.c:106
+#: src/interface.c:100
 msgid "_English Board"
 msgstr "_Englisches Brett"
 
-#: src/interface.c:113 src/interface.c:132
+#: src/interface.c:107 src/interface.c:126
 msgid "Beginner"
 msgstr "Anfänger"
 
-#: src/interface.c:117 src/interface.c:136
+#: src/interface.c:111 src/interface.c:130
 msgid "Intermediate"
 msgstr "Fortgeschritten"
 
-#: src/interface.c:121 src/interface.c:140
+#: src/interface.c:115 src/interface.c:134
 msgid "Advanced"
 msgstr "Profi"
 
-#: src/interface.c:125
+#: src/interface.c:119
 msgid "E_uropean Board"
 msgstr "E_uropäisches Brett"
 
-#: src/interface.c:153
+#: src/interface.c:147
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: src/interface.c:160
+#: src/interface.c:154
 msgid "Contents"
 msgstr "Inhalt"
 
 #. TRANSLATORS: Replace this string with your names, one name per line.
-#: src/interface.c:260
+#: src/interface.c:254
 msgid "translator-credits"
 msgstr "Deutsch: Mario Blättermann <mario.blaettermann@t-online.de>"
 
-#: src/interface.c:267
+#: src/interface.c:261
 msgid ""
 "This software is dedicated\n"
 " to Mothers everywhere."
@@ -145,7 +154,7 @@ msgstr ""
 "\n"
 "Bitte überprüfen Sie die korrekte Installation von Peg Solitaire."
 
-#: src/callbacks.c:285
+#: src/callbacks.c:278
 #, c-format
 msgid "Cannot show help: %s"
 msgstr ""

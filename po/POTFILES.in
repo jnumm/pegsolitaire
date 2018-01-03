@@ -1,5 +1,6 @@
 # List of source files containing translatable strings.
 
+pegsolitaire.desktop.in
 src/main.c
 src/interface.c
 src/game.c

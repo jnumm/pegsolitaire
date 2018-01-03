@@ -32,4 +32,12 @@ dist_pixmaps_DATA = pegsolitaire.png
 helpdir = $(datarootdir)/gnome/help/pegsolitaire/C
 dist_help_DATA = help/legal.xml help/pegsolitaire.xml
 
+EXTRA_DIST = pegsolitaire.desktop.in
+CLEANFILES = pegsolitaire.desktop
+desktopdir = $(datarootdir)/applications
+desktop_DATA = pegsolitaire.desktop
+pegsolitaire.desktop: pegsolitaire.desktop.in
+	$(MSGFMT) -c --statistics --verbose --desktop \
+	--template $< -d $(top_srcdir)/po -o $@
+
 SUBDIRS = po

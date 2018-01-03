@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Peg Solitaire
+Comment=Play an educational puzzle game similar to Hi-Q
+Icon=pegsolitaire
+Exec=pegsolitaire
+Terminal=false
+Categories=Game;LogicGame;
+Keywords=solitaire;peg;brainvita;solo;noble;puzzle;logic;board;
+StartupNotify=true

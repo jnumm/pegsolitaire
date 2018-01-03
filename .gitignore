@@ -51,6 +51,7 @@ config.status
 m4/
 .deps
 *~
+pegsolitaire.desktop
 
 # Gettext files
 ABOUT-NLS
