@@ -190,6 +190,26 @@ recalculate_size (void)
   }
 }
 
+static void
+initiate_new_game (int board_type, int board_size)
+{
+  game_board_type = board_type;
+  game_board_size = board_size;
+  update_tile_size ();
+  clear_game = 1;
+  game_new ();
+
+  gtk_label_set_text (GTK_LABEL (messagewidget), "");
+  update_statusbar (game_moves);
+
+  games_grid_frame_set (GAMES_GRID_FRAME (gameframe), board_size, board_size);
+  recalculate_size ();
+}
+
+// Following functions are gtk callbacks and all their parameters are required.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 void
 on_helpAboutMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
@@ -217,22 +237,6 @@ on_helpContentsMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data)
     g_warning (_("Cannot show help: %s"), err->message);
     g_error_free (err);
   }
-}
-
-static void
-initiate_new_game (int board_type, int board_size)
-{
-  game_board_type = board_type;
-  game_board_size = board_size;
-  update_tile_size ();
-  clear_game = 1;
-  game_new ();
-
-  gtk_label_set_text (GTK_LABEL (messagewidget), "");
-  update_statusbar (game_moves);
-
-  games_grid_frame_set (GAMES_GRID_FRAME (gameframe), board_size, board_size);
-  recalculate_size ();
 }
 
 void
@@ -461,3 +465,5 @@ on_gameEuropeanAdvancedMenuItem_activate (GtkMenuItem * menuitem,
 {
   initiate_new_game (BOARD_EUROPEAN, 15);
 }
+
+#pragma GCC diagnostic pop
