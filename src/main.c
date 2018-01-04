@@ -164,7 +164,7 @@ main (int argc, char *argv[])
 
   // TODO: gtk3: change to gtk_builder_new_from_file (filename)
   GtkBuilder *builder = gtk_builder_new ();
-  if (!gtk_builder_add_from_file (builder, PKGDATADIR "/pegsolitaire.ui", &error)) {
+  if (!gtk_builder_add_from_file (builder, PKGDATADIR "/pegsolitaire.glade", &error)) {
     fputs (error->message, stderr);
     exit (1);
   }
