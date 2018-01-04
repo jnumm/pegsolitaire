@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "support.h"
+#include "i18n.h"
 
 extern GdkPixbuf *peg_pixbuf;
 extern GdkPixbuf *hole_pixbuf;

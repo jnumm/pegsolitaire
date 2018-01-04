@@ -22,9 +22,9 @@
 
 #include "game.h"
 #include "gridframe.h"
+#include "i18n.h"
 #include "interface.h"
 #include "preimage.h"
-#include "support.h"
 
 void update_statusbar (int moves);
 

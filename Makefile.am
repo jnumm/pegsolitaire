@@ -7,19 +7,20 @@ bin_PROGRAMS = pegsolitaire
 pegsolitaire_CPPFLAGS = $(AM_CPPFLAGS) $(GTK_CFLAGS)
 pegsolitaire_LDADD = $(GTK_LIBS)
 pegsolitaire_SOURCES = \
-  src/interface.c \
-  src/interface.h \
-  src/support.c \
-  src/support.h \
   src/callbacks.c \
   src/callbacks.h \
-  src/preimage.c \
-  src/preimage.h \
   src/game.c \
   src/game.h \
   src/gridframe.c \
   src/gridframe.h \
-  src/main.c
+  src/i18n.h \
+  src/interface.c \
+  src/interface.h \
+  src/main.c \
+  src/preimage.c \
+  src/preimage.h \
+  src/support.c \
+  src/support.h
 
 # Files in dist_something_DATA will be installed to $(somethingdir).
 dist_pkgdata_DATA = src/hole.svg src/peg.svg src/pegsolitaire.glade
