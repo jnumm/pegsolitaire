@@ -2,14 +2,14 @@
 <!-- Generated with glade 3.20.0 -->
 <!--*- mode: xml -*-->
 <interface>
-  <requires lib="gtk+" version="3.16"/>
+  <!--<requires lib="gtk+" version="3.16"/>-->
   <object class="GtkAboutDialog" id="pegSolitaireAboutDialog">
-    <property name="name">Peg Solitaire</property>
+    <property name="name" translatable="yes">Peg Solitaire</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">normal</property>
-    <property name="program_name">Peg Solitaire</property>
+    <property name="program_name" translatable="yes">Peg Solitaire</property>
     <property name="copyright" translatable="yes">Copyright 2007 2008 Ben Asselstine</property>
     <property name="comments" translatable="yes">This software is dedicated
  to Mothers everywhere.</property>
@@ -20,11 +20,11 @@ Juhani Numminen</property>
     <property name="license_type">gpl-3-0</property>
     <signal name="close" handler="gtk_widget_destroy" swapped="no"/>
     <child internal-child="vbox">
-      <object class="GtkBox">
+      <object class="GtkVBox" id="internalBox">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child internal-child="action_area">
-          <object class="GtkButtonBox">
+          <object class="GtkButtonBox" id="internalButtonBox">
             <property name="can_focus">False</property>
           </object>
           <packing>
@@ -46,11 +46,18 @@ Juhani Numminen</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-refresh</property>
   </object>
-  <object class="GtkApplicationWindow" id="pegSolitaireWindow">
+  <object class="GtkWindow" id="pegSolitaireWindow">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Peg Solitaire</property>
+    <!-- TODO: either "center" or "GTK_WIN_POS_CENTER" don't seem to work for me
+               on KDE Plasma 5, investigate! -->
+    <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <property name="default_width">400</property>
+    <property name="default_height">400</property>
+    <signal name="destroy" handler="on_pegSolitaireWindow_destroy"/>
     <child>
-      <object class="GtkBox" id="pegSolitaireBox">
+      <object class="GtkVBox" id="pegSolitaireVBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
@@ -62,7 +69,7 @@ Juhani Numminen</property>
               <object class="GtkMenuItem" id="gameMenuItem">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Game</property>
+                <property name="label" translatable="yes">_Game</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="gameMenu">
@@ -70,15 +77,16 @@ Juhani Numminen</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkImageMenuItem" id="gameRestartMenuItem">
-                        <property name="label" translatable="yes">Restart</property>
+                        <property name="label" translatable="yes">_Restart</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="image">stockRefreshImage</property>
                         <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_gameRestartMenuItem_activate"/>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem">
+                      <object class="GtkSeparatorMenuItem" id="sep1">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                       </object>
@@ -87,7 +95,7 @@ Juhani Numminen</property>
                       <object class="GtkMenuItem" id="gameEnglishMenuItem">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label">English Board</property>
+                        <property name="label" translatable="yes">_English Board</property>
                         <child type="submenu">
                           <object class="GtkMenu" id="gameEnglishMenu">
                             <property name="visible">True</property>
@@ -97,6 +105,7 @@ Juhani Numminen</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Beginner</property>
+                                <signal name="activate" handler="on_gameEnglishBeginnerMenuItem_activate"/>
                               </object>
                             </child>
                             <child>
@@ -104,6 +113,7 @@ Juhani Numminen</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Intermediate</property>
+                                <signal name="activate" handler="on_gameEnglishIntermediateMenuItem_activate" />
                               </object>
                             </child>
                             <child>
@@ -111,6 +121,7 @@ Juhani Numminen</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Advanced</property>
+                                <signal name="activate" handler="on_gameEnglishAdvancedMenuItem_activate"/>
                               </object>
                             </child>
                           </object>
@@ -121,7 +132,7 @@ Juhani Numminen</property>
                       <object class="GtkMenuItem" id="gameEuropeanMenuItem">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label">European Board</property>
+                        <property name="label" translatable="yes">E_uropean Board</property>
                         <child type="submenu">
                           <object class="GtkMenu" id="gameEuropeanMenu">
                             <property name="visible">True</property>
@@ -131,6 +142,7 @@ Juhani Numminen</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Beginner</property>
+                                <signal name="activate" handler="on_gameEuropeanBeginnerMenuItem_activate"/>
                               </object>
                             </child>
                             <child>
@@ -138,6 +150,7 @@ Juhani Numminen</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Intermediate</property>
+                                <signal name="activate" handler="on_gameEuropeanIntermediateMenuItem_activate"/>
                               </object>
                             </child>
                             <child>
@@ -145,6 +158,7 @@ Juhani Numminen</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Advanced</property>
+                                <signal name="activate" handler="on_gameEuropeanAdvancedMenuItem_activate"/>
                               </object>
                             </child>
                           </object>
@@ -152,7 +166,7 @@ Juhani Numminen</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSeparatorMenuItem">
+                      <object class="GtkSeparatorMenuItem" id="sep2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                       </object>
@@ -164,6 +178,7 @@ Juhani Numminen</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="on_gameQuitMenuItem_activate"/>
                       </object>
                     </child>
                   </object>
@@ -174,7 +189,7 @@ Juhani Numminen</property>
               <object class="GtkMenuItem" id="helpMenuItem">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Help</property>
+                <property name="label" translatable="yes">_Help</property>
                 <property name="use_underline">True</property>
                 <child type="submenu">
                   <object class="GtkMenu" id="helpMenu">
@@ -182,11 +197,12 @@ Juhani Numminen</property>
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkImageMenuItem" id="helpContentsMenuItem">
-                        <property name="label">Contents</property>
+                        <property name="label" translatable="yes">Contents</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="image">stockHelpImage</property>
                         <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_helpContentsMenuItem_activate"/>
                       </object>
                     </child>
                     <child>
@@ -196,6 +212,7 @@ Juhani Numminen</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="activate" handler="on_helpAboutMenuItem_activate"/>
                       </object>
                     </child>
                   </object>

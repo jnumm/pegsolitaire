@@ -14,13 +14,9 @@ pegsolitaire_SOURCES = \
   src/gridframe.c \
   src/gridframe.h \
   src/i18n.h \
-  src/interface.c \
-  src/interface.h \
   src/main.c \
   src/preimage.c \
-  src/preimage.h \
-  src/support.c \
-  src/support.h
+  src/preimage.h
 
 # Files in dist_something_DATA will be installed to $(somethingdir).
 dist_pkgdata_DATA = src/hole.svg src/peg.svg src/pegsolitaire.glade

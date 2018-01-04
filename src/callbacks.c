@@ -20,10 +20,10 @@
 
 #include <gtk/gtk.h>
 
+#include "config.h"
 #include "game.h"
 #include "gridframe.h"
 #include "i18n.h"
-#include "interface.h"
 #include "preimage.h"
 
 void update_statusbar (int moves);
@@ -193,12 +193,17 @@ recalculate_size (void)
 void
 on_helpAboutMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
-  GtkWidget *pegSolitaireAboutDialog;
-  pegSolitaireAboutDialog = create_pegSolitaireAboutDialog ();
-
-  gtk_widget_show_all (pegSolitaireAboutDialog);
-  gtk_dialog_run (GTK_DIALOG (pegSolitaireAboutDialog));
-  gtk_widget_hide (pegSolitaireAboutDialog);
+  // TODO: request the pegSolitaireAboutDialog from GtkBuilder
+  const char *authors[] = { "Ben Asselstine", NULL };
+  gtk_show_about_dialog (GTK_WINDOW (pegSolitaireWindow),
+      "program-name", _("Peg Solitaire"),
+      "version", VERSION,
+      "logo-icon-name", "pegsolitaire",
+      "authors", authors,
+      "translator-credits", _("translator-credits"),
+      "comments", _("This software is dedicated\n to Mothers everywhere."),
+      NULL
+  );
 }
 
 void

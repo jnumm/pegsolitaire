@@ -25,9 +25,7 @@
 #include "game.h"
 #include "gridframe.h"
 #include "i18n.h"
-#include "interface.h"
 #include "preimage.h"
-#include "support.h"
 
 GtkWidget *pegSolitaireWindow;
 GtkWidget *gameframe;
@@ -145,7 +143,6 @@ main (int argc, char *argv[])
 {
   GOptionContext *context;
   GError *error = NULL;
-  GtkWidget *w;
 
   setlocale (LC_ALL, "");
 #ifdef ENABLE_NLS
@@ -165,7 +162,16 @@ main (int argc, char *argv[])
 
   gtk_init (&argc, &argv);
 
-  pegSolitaireWindow = create_pegSolitaireWindow ();
+  // TODO: gtk3: change to gtk_builder_new_from_file (filename)
+  GtkBuilder *builder = gtk_builder_new ();
+  if (!gtk_builder_add_from_file (builder, PKGDATADIR "/pegsolitaire.ui", &error)) {
+    fputs (error->message, stderr);
+    exit (1);
+  }
+
+  gtk_builder_connect_signals (builder, NULL);
+
+  pegSolitaireWindow = GTK_WIDGET (gtk_builder_get_object (builder, "pegSolitaireWindow"));
 
   peg_preimage = load_image ("peg.svg");
   hole_preimage = load_image ("hole.svg");
@@ -174,7 +180,7 @@ main (int argc, char *argv[])
   create_statusbar ();
   update_statusbar (0);
 
-  w = lookup_widget (pegSolitaireWindow, "pegSolitaireVBox");
+  GObject *w = gtk_builder_get_object(builder, "pegSolitaireVBox");
 
   gtk_box_pack_start (GTK_BOX (w), gameframe, TRUE, TRUE, 0);
   gtk_box_pack_end (GTK_BOX (w), statusbar, FALSE, FALSE, 8);
