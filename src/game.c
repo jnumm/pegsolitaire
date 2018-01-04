@@ -377,5 +377,5 @@ game_cheese ()
     else
       i = 0;
   }
-  return cheese[i];
+  return gettext (cheese[i]);
 }
