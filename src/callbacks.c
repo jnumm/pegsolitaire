@@ -358,10 +358,7 @@ on_boardDrawingArea_button_release_event (GtkWidget * widget,
                  0);
       update_statusbar (game_moves);
       if (is_game_end ()) {
-        gchar *str;
-        str = g_strdup_printf ("%s!", game_cheese ());
-        gtk_label_set_text (GTK_LABEL (messagewidget), str);
-        g_free (str);
+        gtk_label_set_text (GTK_LABEL (messagewidget), game_cheese ());
       } else
         set_cursor (CURSOR_OPEN);
     }

@@ -359,13 +359,13 @@ game_cheese ()
   int i = 6;
   int pegs_left = game_count_pegs_on_board ();
   static gchar *cheese[] = {
-    N_("GENIUS"),
-    N_("OUTSTANDING"),
-    N_("Sensational"),
-    N_("Excellent"),
-    N_("Very Good"),
-    N_("Not Bad"),
-    N_("Better Luck Next Time"),
+    N_("GENIUS!"),
+    N_("OUTSTANDING!"),
+    N_("Sensational!"),
+    N_("Excellent!"),
+    N_("Very Good!"),
+    N_("Not Bad!"),
+    N_("Better Luck Next Time!"),
   };
   if (pegs_left > 6)
     i = 6;
