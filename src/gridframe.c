@@ -78,15 +78,15 @@ void
 games_grid_frame_set_alignment (GamesGridFrame * frame, gfloat xalign,
 				gfloat yalign)
 {
-  if (xalign < 0.0)
-    xalign = 0.0;
-  else if (xalign > 1.0)
-    xalign = 1.0;
+  if (xalign < 0.0f)
+    xalign = 0.0f;
+  else if (xalign > 1.0f)
+    xalign = 1.0f;
 
-  if (yalign < 0.0)
-    yalign = 0.0;
-  else if (yalign > 1.0)
-    yalign = 1.0;
+  if (yalign < 0.0f)
+    yalign = 0.0f;
+  else if (yalign > 1.0f)
+    yalign = 1.0f;
 
   frame->priv->xalign = xalign;
   frame->priv->yalign = yalign;
@@ -235,12 +235,12 @@ games_grid_frame_class_init (GamesGridFrameClass * class)
 						     G_PARAM_WRITABLE));
   g_object_class_install_property (object_class, PROP_X_ALIGN,
                                    g_param_spec_float ("xalign", "X Alignment", "X Alignment",
-						       0.0, 1.0, 0.5,
+						       0.0f, 1.0f, 0.5f,
 						       G_PARAM_READABLE |
 						       G_PARAM_WRITABLE));
   g_object_class_install_property (object_class, PROP_Y_ALIGN,
                                    g_param_spec_float ("yalign", "Y Alignment", "Y Alignment",
-						       0.0, 1.0, 0.5,
+						       0.0f, 1.0f, 0.5f,
 						       G_PARAM_READWRITE |
 						       G_PARAM_WRITABLE));
 }
@@ -253,8 +253,8 @@ games_grid_frame_init (GamesGridFrame * frame)
   frame->priv->xmult = 1;
   frame->priv->ymult = 1;
 
-  frame->priv->xalign = 0.5;
-  frame->priv->yalign = 0.5;
+  frame->priv->xalign = 0.5f;
+  frame->priv->yalign = 0.5f;
 }
 
 GtkWidget *
