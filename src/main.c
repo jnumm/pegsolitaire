@@ -26,16 +26,16 @@
 #include "gridframe.h"
 #include "i18n.h"
 #include "preimage.h"
+#include "share.h"
 
+// Exposed through share.h
 GtkWidget *pegSolitaireWindow;
 GtkWidget *gameframe;
 GtkWidget *boardDrawingArea;
-GtkWidget *statusbar;
 GtkWidget *messagewidget;
-GtkWidget *moveswidget;
 GdkPixmap *board_pixmap;
 gint tile_size, prior_tile_size;
-gint height, width;
+gint width, height;
 guint redraw_all_idle_id = 0;
 guint resize_all_idle_id = 0;
 gboolean clear_game = 1;
@@ -43,12 +43,16 @@ gboolean clear_buffer = 1;
 gint piece_x;
 gint piece_y;
 gint button_down;
-gint session_xpos = 0;
-gint session_ypos = 0;
 GamesPreimage *peg_preimage;
 GamesPreimage *hole_preimage;
 GdkPixbuf *peg_pixbuf;
 GdkPixbuf *hole_pixbuf;
+// End of globals exposed through share.h
+
+GtkWidget *statusbar;
+GtkWidget *moveswidget;
+gint session_xpos = 0;
+gint session_ypos = 0;
 
 gboolean resize_all (void);
 

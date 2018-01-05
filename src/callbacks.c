@@ -25,30 +25,9 @@
 #include "gridframe.h"
 #include "i18n.h"
 #include "preimage.h"
+#include "share.h"
 
 void update_statusbar (int moves);
-
-extern GtkWidget *pegSolitaireWindow;
-extern GtkWidget *boardDrawingArea;
-extern GtkWidget *messagewidget;
-extern gint game_moves;
-extern gint game_board_type;
-extern gint game_board_size;
-extern GdkPixmap *board_pixmap;
-extern gint tile_size, prior_tile_size;
-extern gint width, height;
-extern guint redraw_all_idle_id;
-extern guint resize_all_idle_id;
-extern gboolean clear_game;
-extern gboolean clear_buffer;
-extern GtkWidget *gameframe;
-extern gint piece_x;
-extern gint piece_y;
-extern gint button_down;
-extern GamesPreimage *peg_preimage;
-extern GamesPreimage *hole_preimage;
-extern GdkPixbuf *peg_pixbuf;
-extern GdkPixbuf *hole_pixbuf;
 
 GdkCursor *hand_closed_cursor = NULL;
 GdkCursor *hand_open_cursor = NULL;

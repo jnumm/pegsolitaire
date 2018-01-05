@@ -21,9 +21,8 @@
 #include <string.h>
 
 #include "i18n.h"
+#include "share.h"
 
-extern GdkPixbuf *peg_pixbuf;
-extern GdkPixbuf *hole_pixbuf;
 #define DEFAULT_GAME_BOARD_SIZE 7
 #define DEFAULT_GAME_BOARD_TYPE BOARD_ENGLISH
 gchar **game_board;
@@ -35,9 +34,11 @@ gchar **game_board_mask;
 gchar **game_board_dirty;
 // 7x7, 1 means the cell needs to be redrawn, 0 means not.
 
+// Globals that are exposed through share.h
 gint game_moves;
 gint game_board_size = DEFAULT_GAME_BOARD_SIZE;
 gint game_board_type = 0;       // 0 = english, 1 = european
+// End of globals that are exposed through share.h
 
 static int
 create_game_board_mask ()

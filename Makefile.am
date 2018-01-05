@@ -16,7 +16,8 @@ pegsolitaire_SOURCES = \
   src/i18n.h \
   src/main.c \
   src/preimage.c \
-  src/preimage.h
+  src/preimage.h \
+  src/share.h
 
 # Files in dist_something_DATA will be installed to $(somethingdir).
 dist_pkgdata_DATA = data/hole.svg data/peg.svg data/pegsolitaire.glade
