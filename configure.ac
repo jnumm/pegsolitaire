@@ -8,6 +8,9 @@ AC_CONFIG_HEADERS([config.h])
 
 AC_PROG_CC
 
+dnl Add here the compilation flags that might cause an error on some compilers.
+AX_APPEND_COMPILE_FLAGS([-Wmissing-variable-declarations])
+
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.19])
 

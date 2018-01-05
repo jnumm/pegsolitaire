@@ -1,5 +1,6 @@
 AM_CPPFLAGS = -DLOCALEDIR='"$(localedir)"' -DPKGDATADIR='"$(pkgdatadir)"'
-AM_CFLAGS = -Wall -Wextra -pedantic
+AM_CFLAGS = -Wall -Wextra -Wpedantic -Wmissing-prototypes -Wunused-macros \
+            -Wdouble-promotion -Wfloat-conversion -Wshadow
 AM_LDFLAGS = -Wl,--as-needed
 
 bin_PROGRAMS = pegsolitaire
