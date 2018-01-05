@@ -19,21 +19,21 @@ pegsolitaire_SOURCES = \
   src/preimage.h
 
 # Files in dist_something_DATA will be installed to $(somethingdir).
-dist_pkgdata_DATA = src/hole.svg src/peg.svg src/pegsolitaire.glade
+dist_pkgdata_DATA = data/hole.svg data/peg.svg data/pegsolitaire.glade
 
 dist_doc_DATA = README COPYING AUTHORS ChangeLog NEWS
 
 pixmapsdir = $(datarootdir)/pixmaps
-dist_pixmaps_DATA = pegsolitaire.png
+dist_pixmaps_DATA = data/pegsolitaire.png
 
 helpdir = $(datarootdir)/gnome/help/pegsolitaire/C
 dist_help_DATA = help/legal.xml help/pegsolitaire.xml
 
-EXTRA_DIST = pegsolitaire.desktop.in
+EXTRA_DIST = data/pegsolitaire.desktop.in
 CLEANFILES = pegsolitaire.desktop
 desktopdir = $(datarootdir)/applications
 desktop_DATA = pegsolitaire.desktop
-pegsolitaire.desktop: pegsolitaire.desktop.in
+pegsolitaire.desktop: data/pegsolitaire.desktop.in
 	$(MSGFMT) -c --statistics --verbose --desktop \
 	--template $< -d $(top_srcdir)/po -o $@
 
