@@ -292,14 +292,13 @@ game_move (int src_x, int src_y, int dst_x, int dst_y)
 }
 
 int
-game_draw (GtkWidget * widget, GdkPixmap * pixmap, gint height, gint width,
-           gint tile_size, int force)
+game_draw (GtkWidget * widget, GdkPixmap * pixmap, gint tile_size, int force)
 {
   int i, j;
   for (i = 0; i < game_board_size; i++) {
     for (j = 0; j < game_board_size; j++) {
       if ((game_board_dirty[i][j] == 1) || (force)) {
-        game_draw_cell (widget, pixmap, height, width, tile_size, i, j);
+        game_draw_cell (widget, pixmap, tile_size, i, j);
         game_board_dirty[i][j] = 0;
       }
     }
@@ -310,8 +309,8 @@ game_draw (GtkWidget * widget, GdkPixmap * pixmap, gint height, gint width,
 }
 
 int
-game_draw_cell (GtkWidget * widget, GdkPixmap * pixmap, gint height,
-                gint width, gint tile_size, gint x, gint y)
+game_draw_cell (GtkWidget * widget, GdkPixmap * pixmap, gint tile_size,
+                gint x, gint y)
 {
   GdkPixbuf *p;
   static GdkGC *backgc = NULL;

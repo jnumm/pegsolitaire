@@ -92,7 +92,7 @@ static gboolean
 redraw_all (void)
 {
   board_draw ();
-  game_draw (pegSolitaireWindow, board_pixmap, height, width, tile_size, 1);
+  game_draw (pegSolitaireWindow, board_pixmap, tile_size, 1);
   return 0;
 }
 
@@ -225,12 +225,6 @@ on_gameRestartMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data)
 }
 
 void
-on_pegSolitaireWindow_activate_default (GtkWindow * window,
-                                        gpointer user_data)
-{
-}
-
-void
 on_pegSolitaireWindow_destroy (GObject * object, gpointer user_data)
 {
   gtk_main_quit ();
@@ -309,7 +303,7 @@ on_boardDrawingArea_button_press_event (GtkWidget * widget,
 
     button_down = 1;
     game_toggle_cell (i, j);
-    game_draw (pegSolitaireWindow, board_pixmap, height, width, tile_size, 0);
+    game_draw (pegSolitaireWindow, board_pixmap, tile_size, 0);
     piece_x = i;
     piece_y = j;
     GdkRectangle update;
@@ -338,12 +332,10 @@ on_boardDrawingArea_button_release_event (GtkWidget * widget,
       if (game_move (piece_x, piece_y, i, j) == FALSE) {
         //put the peg back where we started.
         game_toggle_cell (piece_x, piece_y);
-        game_draw (pegSolitaireWindow, board_pixmap, height, width,
-                   tile_size, 0);
+        game_draw (pegSolitaireWindow, board_pixmap, tile_size, 0);
         return FALSE;
       }
-      game_draw (pegSolitaireWindow, board_pixmap, height, width, tile_size,
-                 0);
+      game_draw (pegSolitaireWindow, board_pixmap, tile_size, 0);
       update_statusbar (game_moves);
       if (is_game_end ()) {
         gtk_label_set_text (statusMessageLabel, game_cheese ());
