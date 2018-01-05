@@ -178,7 +178,7 @@ initiate_new_game (int board_type, int board_size)
   clear_game = 1;
   game_new ();
 
-  gtk_label_set_text (GTK_LABEL (messagewidget), "");
+  gtk_label_set_text (statusMessageLabel, "");
   update_statusbar (game_moves);
 
   games_grid_frame_set (GAMES_GRID_FRAME (gameframe), board_size, board_size);
@@ -346,7 +346,7 @@ on_boardDrawingArea_button_release_event (GtkWidget * widget,
                  0);
       update_statusbar (game_moves);
       if (is_game_end ()) {
-        gtk_label_set_text (GTK_LABEL (messagewidget), game_cheese ());
+        gtk_label_set_text (statusMessageLabel, game_cheese ());
       } else
         set_cursor (CURSOR_OPEN);
     }

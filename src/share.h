@@ -27,7 +27,7 @@
 extern GtkWidget *pegSolitaireWindow;
 extern GtkWidget *gameframe;
 extern GtkWidget *boardDrawingArea;
-extern GtkWidget *messagewidget;
+extern GtkLabel *statusMessageLabel;
 extern GdkPixmap *board_pixmap;
 extern gint tile_size, prior_tile_size;
 extern gint width, height;

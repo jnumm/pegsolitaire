@@ -32,7 +32,7 @@
 GtkWidget *pegSolitaireWindow;
 GtkWidget *gameframe;
 GtkWidget *boardDrawingArea;
-GtkWidget *messagewidget;
+GtkLabel *statusMessageLabel;
 GdkPixmap *board_pixmap;
 gint tile_size, prior_tile_size;
 gint width, height;
@@ -49,8 +49,7 @@ GdkPixbuf *peg_pixbuf;
 GdkPixbuf *hole_pixbuf;
 // End of globals exposed through share.h
 
-GtkWidget *statusbar;
-GtkWidget *moveswidget;
+GtkLabel *statusMovesLabel;
 gint session_xpos = 0;
 gint session_ypos = 0;
 
@@ -90,22 +89,10 @@ create_boardDrawingArea ()
 void
 update_statusbar (int moves)
 {
-  gchar *str;
   // TRANSLATORS: This is the number of moves the player has made.
-  str = g_strdup_printf (_("Moves: %d"), moves);
-  gtk_label_set_text (GTK_LABEL (moveswidget), str);
+  gchar *str = g_strdup_printf (_("Moves: %d"), moves);
+  gtk_label_set_text (statusMovesLabel, str);
   g_free (str);
-}
-
-void
-create_statusbar (void)
-{
-  statusbar = gtk_hbox_new (TRUE, 0);
-
-  messagewidget = gtk_label_new ("");
-  gtk_box_pack_start (GTK_BOX (statusbar), messagewidget, FALSE, FALSE, 0);
-  moveswidget = gtk_label_new ("");
-  gtk_box_pack_end (GTK_BOX (statusbar), moveswidget, FALSE, FALSE, 0);
 }
 
 /* Session Options */
@@ -176,18 +163,16 @@ main (int argc, char *argv[])
   gtk_builder_connect_signals (builder, NULL);
 
   pegSolitaireWindow = GTK_WIDGET (gtk_builder_get_object (builder, "pegSolitaireWindow"));
+  statusMessageLabel = GTK_LABEL (gtk_builder_get_object (builder, "statusMessageLabel"));
+  statusMovesLabel = GTK_LABEL (gtk_builder_get_object (builder, "statusMovesLabel"));
+  update_statusbar (0);
 
   peg_preimage = load_image ("peg.svg");
   hole_preimage = load_image ("hole.svg");
 
   create_boardDrawingArea ();
-  create_statusbar ();
-  update_statusbar (0);
-
-  GObject *w = gtk_builder_get_object(builder, "pegSolitaireVBox");
-
-  gtk_box_pack_start (GTK_BOX (w), gameframe, TRUE, TRUE, 0);
-  gtk_box_pack_end (GTK_BOX (w), statusbar, FALSE, FALSE, 8);
+  GtkBox *vbox = GTK_BOX (gtk_builder_get_object(builder, "pegSolitaireVBox"));
+  gtk_box_pack_start (vbox, gameframe, TRUE, TRUE, 0);
 
   game_new ();
 
