@@ -45,11 +45,13 @@
                     <child>
                       <object class="GtkImageMenuItem" id="gameRestartMenuItem">
                         <property name="label" translatable="yes">_Restart</property>
+                        <property name="use_underline">True</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="image">stockRefreshImage</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_gameRestartMenuItem_activate"/>
+                        <accelerator key="r" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -63,6 +65,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_English Board</property>
+                        <property name="use_underline">True</property>
                         <child type="submenu">
                           <object class="GtkMenu" id="gameEnglishMenu">
                             <property name="visible">True</property>
@@ -72,6 +75,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Beginner</property>
+                                <property name="use_underline">True</property>
                                 <signal name="activate" handler="on_gameEnglishBeginnerMenuItem_activate"/>
                               </object>
                             </child>
@@ -80,6 +84,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Intermediate</property>
+                                <property name="use_underline">True</property>
                                 <signal name="activate" handler="on_gameEnglishIntermediateMenuItem_activate" />
                               </object>
                             </child>
@@ -88,6 +93,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Advanced</property>
+                                <property name="use_underline">True</property>
                                 <signal name="activate" handler="on_gameEnglishAdvancedMenuItem_activate"/>
                               </object>
                             </child>
@@ -100,6 +106,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">E_uropean Board</property>
+                        <property name="use_underline">True</property>
                         <child type="submenu">
                           <object class="GtkMenu" id="gameEuropeanMenu">
                             <property name="visible">True</property>
@@ -109,6 +116,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Beginner</property>
+                                <property name="use_underline">True</property>
                                 <signal name="activate" handler="on_gameEuropeanBeginnerMenuItem_activate"/>
                               </object>
                             </child>
@@ -117,6 +125,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Intermediate</property>
+                                <property name="use_underline">True</property>
                                 <signal name="activate" handler="on_gameEuropeanIntermediateMenuItem_activate"/>
                               </object>
                             </child>
@@ -125,6 +134,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Advanced</property>
+                                <property name="use_underline">True</property>
                                 <signal name="activate" handler="on_gameEuropeanAdvancedMenuItem_activate"/>
                               </object>
                             </child>
@@ -146,6 +156,7 @@
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                         <signal name="activate" handler="on_gameQuitMenuItem_activate"/>
+                        <accelerator key="q" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                   </object>
@@ -170,6 +181,7 @@
                         <property name="image">stockHelpImage</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_helpContentsMenuItem_activate"/>
+                        <accelerator key="F1" signal="activate"/>
                       </object>
                     </child>
                     <child>
