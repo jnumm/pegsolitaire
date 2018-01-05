@@ -30,6 +30,7 @@
 
 // Exposed through share.h
 GtkWidget *pegSolitaireWindow;
+GtkAboutDialog *pegSolitaireAboutDialog;
 GtkWidget *gameframe;
 GtkWidget *boardDrawingArea;
 GtkLabel *statusMessageLabel;
@@ -161,6 +162,10 @@ main (int argc, char *argv[])
   gtk_builder_connect_signals (builder, NULL);
 
   pegSolitaireWindow = GTK_WIDGET (gtk_builder_get_object (builder, "pegSolitaireWindow"));
+
+  pegSolitaireAboutDialog = GTK_ABOUT_DIALOG (gtk_builder_get_object (builder, "pegSolitaireAboutDialog"));
+  gtk_about_dialog_set_version (pegSolitaireAboutDialog, VERSION);
+
   statusMessageLabel = GTK_LABEL (gtk_builder_get_object (builder, "statusMessageLabel"));
   statusMovesLabel = GTK_LABEL (gtk_builder_get_object (builder, "statusMovesLabel"));
   update_statusbar (0);
