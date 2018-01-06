@@ -17,11 +17,12 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Peg Solitaire</property>
+    <property name="icon_name">pegsolitaire</property>
     <!-- TODO: either "center" or "GTK_WIN_POS_CENTER" don't seem to work for me
                on KDE Plasma 5, investigate! -->
     <property name="window_position">GTK_WIN_POS_CENTER</property>
-    <property name="default_width">400</property>
-    <property name="default_height">400</property>
+    <property name="default_width">500</property>
+    <property name="default_height">500</property>
     <signal name="destroy" handler="on_pegSolitaireWindow_destroy"/>
     <child>
       <object class="GtkVBox" id="pegSolitaireVBox">
@@ -221,6 +222,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
+                <property name="padding">8</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -233,6 +235,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
+                <property name="padding">8</property>
                 <property name="pack_type">end</property>
                 <property name="position">1</property>
               </packing>
@@ -250,12 +253,14 @@
   </object>
   <object class="GtkAboutDialog" id="pegSolitaireAboutDialog">
     <property name="name" translatable="yes">Peg Solitaire</property>
+    <property name="icon_name">pegsolitaire</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">normal</property>
     <property name="program_name" translatable="yes">Peg Solitaire</property>
-    <property name="copyright" translatable="yes">Copyright 2007 2008 Ben Asselstine</property>
+    <property name="copyright" translatable="yes">© 2007-2008 Ben Asselstine
+© 2017-2018 Juhani Numminen</property>
     <property name="comments" translatable="yes">This software is dedicated
  to Mothers everywhere.</property>
     <property name="authors">Ben Asselstine
