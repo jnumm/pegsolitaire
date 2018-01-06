@@ -1,7 +1,7 @@
 # List of source files containing translatable strings.
 
-pegsolitaire.desktop.in
-src/pegsolitaire.glade
+data/pegsolitaire.desktop.in
+data/pegsolitaire.glade
 src/game.c
 src/main.c
 src/callbacks.c
