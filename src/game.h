@@ -28,15 +28,15 @@ extern gint game_moves;
 extern game_board_enum game_board_type;
 extern gint game_board_size;
 
-int game_new ();
-int is_game_end ();
+int game_new (void);
+int is_game_end (void);
 int game_draw (GtkWidget *widget, GdkPixmap *pixmap, gint tile_size, int force);
 int game_draw_cell (GtkWidget *widget, GdkPixmap *pixmap, gint tile_size,
                     gint x, gint y);
 void game_toggle_cell (int i, int j);
 gboolean game_is_peg_at (int i, int j);
 gboolean game_move (int src_x, int src_y, int dst_x, int dst_y);
-int game_count_pegs_on_board ();
-gchar *game_cheese ();
+int game_count_pegs_on_board (void);
+gchar *game_cheese (void);
 
 #endif // PEGSOLITAIRE_GAME_H

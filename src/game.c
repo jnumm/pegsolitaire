@@ -41,7 +41,7 @@ game_board_enum game_board_type = DEFAULT_GAME_BOARD_TYPE;
 // End of globals that are exposed through game.h
 
 static int
-create_game_board_mask ()
+create_game_board_mask (void)
 {
   int i, j;
   int n = game_board_size;
@@ -93,7 +93,7 @@ create_game_board_mask ()
 }
 
 static int
-game_init ()
+game_init (void)
 {
   int i;
   // setup the shape of the game board
@@ -128,7 +128,7 @@ game_init ()
 }
 
 static int
-game_clear ()
+game_clear (void)
 {
   int i, j;
   int size = game_board_size;
@@ -151,7 +151,7 @@ game_clear ()
 }
 
 int
-game_count_pegs_on_board ()
+game_count_pegs_on_board (void)
 {
   int i, j, pegs_left = 0;
   // find the number of pegs on the board
@@ -165,7 +165,7 @@ game_count_pegs_on_board ()
 }
 
 int
-game_new ()
+game_new (void)
 {
   int err;
   err = game_init ();
@@ -175,7 +175,7 @@ game_new ()
 }
 
 int
-is_game_end ()
+is_game_end (void)
 {
   int i, j, k;
 
@@ -354,7 +354,7 @@ game_draw_cell (GtkWidget * widget, GdkPixmap * pixmap, gint tile_size,
 }
 
 gchar *
-game_cheese ()
+game_cheese (void)
 {
   int i = 6;
   int pegs_left = game_count_pegs_on_board ();

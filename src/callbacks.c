@@ -56,7 +56,7 @@ set_cursor (int cursor)
 }
 
 static void
-board_draw ()
+board_draw (void)
 {
   GtkWidget *w;
   static GdkGC *backgc = NULL;
@@ -146,7 +146,7 @@ resize_all (void)
 }
 
 static void
-update_tile_size ()
+update_tile_size (void)
 {
   if (width < height)
     tile_size = width / game_board_size;

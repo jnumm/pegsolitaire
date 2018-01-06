@@ -54,7 +54,7 @@ static gint session_xpos = 0;
 static gint session_ypos = 0;
 
 static void
-create_boardDrawingArea ()
+create_boardDrawingArea (void)
 {
   gameframe = games_grid_frame_new (7, 7);
   games_grid_frame_set_padding (GAMES_GRID_FRAME (gameframe), 10, 10);
