@@ -25,20 +25,20 @@
 
 #define DEFAULT_GAME_BOARD_SIZE 7
 #define DEFAULT_GAME_BOARD_TYPE BOARD_ENGLISH
-gchar **game_board;
+static gchar **game_board;
 // 7x7, 1 means there's a peg, 0 means no peg.
 
-gchar **game_board_mask;
+static gchar **game_board_mask;
 // 7x7, 1 means it's part of the cross, 0 means not.
 
-gchar **game_board_dirty;
+static gchar **game_board_dirty;
 // 7x7, 1 means the cell needs to be redrawn, 0 means not.
 
-// Globals that are exposed through share.h
+// Globals that are exposed through game.h
 gint game_moves;
 gint game_board_size = DEFAULT_GAME_BOARD_SIZE;
-gint game_board_type = 0;       // 0 = english, 1 = european
-// End of globals that are exposed through share.h
+game_board_enum game_board_type = DEFAULT_GAME_BOARD_TYPE;
+// End of globals that are exposed through game.h
 
 static int
 create_game_board_mask ()
@@ -233,7 +233,7 @@ game_is_peg_at (int i, int j)
   return game_board[i][j];
 }
 
-gboolean
+static gboolean
 game_is_valid_move (int src_x, int src_y, int dst_x, int dst_y)
 {
   int delta_x, delta_y;

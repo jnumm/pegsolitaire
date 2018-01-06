@@ -49,11 +49,9 @@ GdkPixbuf *peg_pixbuf;
 GdkPixbuf *hole_pixbuf;
 // End of globals exposed through share.h
 
-GtkLabel *statusMovesLabel;
-gint session_xpos = 0;
-gint session_ypos = 0;
-
-gboolean resize_all (void);
+static GtkLabel *statusMovesLabel;
+static gint session_xpos = 0;
+static gint session_ypos = 0;
 
 static void
 create_boardDrawingArea ()
@@ -105,7 +103,7 @@ static const GOptionEntry options[] = {
   {NULL}
 };
 
-GamesPreimage *
+static GamesPreimage *
 load_image (char *filename)
 {
   char *fname;

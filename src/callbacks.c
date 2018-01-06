@@ -29,9 +29,9 @@
 
 void update_statusbar (int moves);
 
-GdkCursor *hand_closed_cursor = NULL;
-GdkCursor *hand_open_cursor = NULL;
-GdkCursor *default_cursor = NULL;
+static GdkCursor *hand_closed_cursor = NULL;
+static GdkCursor *hand_open_cursor = NULL;
+static GdkCursor *default_cursor = NULL;
 enum
 {
   CURSOR_NONE = 0,

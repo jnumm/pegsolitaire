@@ -43,9 +43,4 @@ extern GamesPreimage *hole_preimage;
 extern GdkPixbuf *peg_pixbuf;
 extern GdkPixbuf *hole_pixbuf;
 
-// defined in game.c
-extern gint game_moves;
-extern gint game_board_type;
-extern gint game_board_size;
-
 #endif // PEGSOLITAIRE_SHARE_H

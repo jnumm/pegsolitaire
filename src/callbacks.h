@@ -3,6 +3,9 @@
 
 #include <gtk/gtk.h>
 
+gboolean
+resize_all (void);
+
 void
 on_helpAboutMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data);
 
