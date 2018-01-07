@@ -31,12 +31,23 @@ dist_pixmaps_DATA = data/pegsolitaire.png
 helpdir = $(datarootdir)/gnome/help/pegsolitaire/C
 dist_help_DATA = help/legal.xml help/pegsolitaire.xml
 
-EXTRA_DIST = data/pegsolitaire.desktop.in
-CLEANFILES = pegsolitaire.desktop
+# Rules for metadata translation using gettext.
+EXTRA_DIST = \
+  data/pegsolitaire.desktop.in \
+  data/com.github.jnumm.pegsolitaire.appdata.xml.in
+CLEANFILES = \
+  pegsolitaire.desktop \
+  com.github.jnumm.pegsolitaire.appdata.xml
+
 desktopdir = $(datarootdir)/applications
 desktop_DATA = pegsolitaire.desktop
+appdatadir = $(datarootdir)/metainfo
+appdata_DATA = com.github.jnumm.pegsolitaire.appdata.xml
+
 pegsolitaire.desktop: data/pegsolitaire.desktop.in
-	$(MSGFMT) -c --statistics --verbose --desktop \
-	--template $< -d $(top_srcdir)/po -o $@
+	$(MSGFMT) -v -c --statistics --desktop --template $< -d $(top_srcdir)/po -o $@
+
+com.github.jnumm.pegsolitaire.appdata.xml: data/com.github.jnumm.pegsolitaire.appdata.xml.in
+	$(MSGFMT) -v -c --statistics --xml --template $< -d $(top_srcdir)/po -o $@
 
 SUBDIRS = po
