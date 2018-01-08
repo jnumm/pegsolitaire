@@ -23,6 +23,7 @@ pegsolitaire_SOURCES = \
 # Files in dist_something_DATA will be installed to $(somethingdir).
 dist_pkgdata_DATA = data/hole.svg data/peg.svg data/pegsolitaire.glade
 
+dist_man_MANS = data/pegsolitaire.6
 dist_doc_DATA = README COPYING AUTHORS ChangeLog NEWS
 
 pixmapsdir = $(datarootdir)/pixmaps
