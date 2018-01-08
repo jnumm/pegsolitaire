@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pegsolitaire 0.0.4\n"
 "Report-Msgid-Bugs-To: https://github.com/jnumm/pegsolitaire/issues\n"
-"POT-Creation-Date: 2018-01-04 18:34+0200\n"
+"POT-Creation-Date: 2018-01-08 15:59+0200\n"
 "PO-Revision-Date: 2008-05-01 14:44+0200\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@t-online.de>\n"
 "Language-Team: German\n"
@@ -17,42 +17,136 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pegsolitaire.desktop.in:4 src/interface.c:55 src/interface.c:200
-#: src/interface.c:251
+#: data/pegsolitaire.desktop.in:4
+#: data/com.github.jnumm.pegsolitaire.appdata.xml.in:8
+#: data/pegsolitaire.glade:19 data/pegsolitaire.glade:255
+#: data/pegsolitaire.glade:261
 msgid "Peg Solitaire"
 msgstr "Peg Solitaire"
 
-#: pegsolitaire.desktop.in:5
+#: data/pegsolitaire.desktop.in:5
+#: data/com.github.jnumm.pegsolitaire.appdata.xml.in:9
 msgid "Play an educational puzzle game similar to Hi-Q"
 msgstr "Spiele ein lehrreiches Knobelspiel ähnlich wie Hi-Q"
 
-#: pegsolitaire.desktop.in:10
+#: data/pegsolitaire.desktop.in:10
 msgid "solitaire;peg;brainvita;solo;noble;puzzle;logic;board;"
 msgstr ""
 
+#: data/com.github.jnumm.pegsolitaire.appdata.xml.in:12
+msgid ""
+"Peg Solitaire is a board game for one player involving movement of pegs on a "
+"board with holes. The game fills the entire board with pegs except for the "
+"central hole. The objective is, making valid moves, to empty the entire "
+"board except for a solitary peg in the central hole."
+msgstr ""
+
+#: data/pegsolitaire.glade:40
+msgid "_Game"
+msgstr "_Spiel"
+
+#: data/pegsolitaire.glade:48
+msgid "_Restart"
+msgstr "_Neu starten"
+
+#: data/pegsolitaire.glade:68
+msgid "_English Board"
+msgstr "_Englisches Brett"
+
+#: data/pegsolitaire.glade:78 data/pegsolitaire.glade:119
+msgid "Beginner"
+msgstr "Anfänger"
+
+#: data/pegsolitaire.glade:87 data/pegsolitaire.glade:128
+msgid "Intermediate"
+msgstr "Fortgeschritten"
+
+#: data/pegsolitaire.glade:96 data/pegsolitaire.glade:137
+msgid "Advanced"
+msgstr "Profi"
+
+#: data/pegsolitaire.glade:109
+msgid "E_uropean Board"
+msgstr "E_uropäisches Brett"
+
+#: data/pegsolitaire.glade:171
+msgid "_Help"
+msgstr "_Hilfe"
+
+#: data/pegsolitaire.glade:179
+msgid "Contents"
+msgstr "Inhalt"
+
+#: data/pegsolitaire.glade:262
+msgid ""
+"© 2007-2008 Ben Asselstine\n"
+"© 2017-2018 Juhani Numminen"
+msgstr ""
+
+#: data/pegsolitaire.glade:264
+msgid ""
+"This software is dedicated\n"
+" to Mothers everywhere."
+msgstr ""
+"Diese Software ist den\n"
+" Müttern der Welt gewidmet."
+
+#. TRANSLATORS: Replace this string with your names, one name per line.
+#: data/pegsolitaire.glade:268
+msgid "translator-credits"
+msgstr "Deutsch: Mario Blättermann <mario.blaettermann@t-online.de>"
+
+#: src/game.c:365
+msgid "GENIUS!"
+msgstr "GENIAL!"
+
+#: src/game.c:366
+msgid "OUTSTANDING!"
+msgstr "Außergewöhnlich!"
+
+#: src/game.c:367
+msgid "Sensational!"
+msgstr "Sensationell!"
+
+#: src/game.c:368
+msgid "Excellent!"
+msgstr "Exzellent!"
+
+#: src/game.c:369
+msgid "Very Good!"
+msgstr "Sehr gut!"
+
+#: src/game.c:370
+msgid "Not Bad!"
+msgstr "Nicht schlecht!"
+
+#: src/game.c:371
+msgid "Better Luck Next Time!"
+msgstr "Viel Glück beim nächsten Mal!"
+
 #. TRANSLATORS: This is the number of moves the player has made.
-#: src/main.c:93
+#: src/main.c:95
 #, c-format
 msgid "Moves: %d"
 msgstr "Züge: %d"
 
-#: src/main.c:112
+#: src/main.c:103
 msgid "X location of window"
 msgstr "X Fensterposition"
 
-#: src/main.c:113
+#: src/main.c:104
 msgid "X"
 msgstr "X"
 
-#: src/main.c:114
+#: src/main.c:105
 msgid "Y location of window"
 msgstr "Y Fensterposition"
 
-#: src/main.c:115
+#: src/main.c:106
 msgid "Y"
 msgstr "Y"
 
-#: src/main.c:132
+#: src/main.c:123
 #, c-format
 msgid ""
 "Could not find the image:\n"
@@ -65,84 +159,7 @@ msgstr ""
 "\n"
 "Bitte überprüfen Sie die korrekte Installation von Peg Solitaire."
 
-#: src/interface.c:68
-msgid "_Game"
-msgstr "_Spiel"
-
-#: src/interface.c:75
-msgid "_Restart"
-msgstr "_Neu starten"
-
-#: src/interface.c:91
-msgid "_English Board"
-msgstr "_Englisches Brett"
-
-#: src/interface.c:98 src/interface.c:117
-msgid "Beginner"
-msgstr "Anfänger"
-
-#: src/interface.c:102 src/interface.c:121
-msgid "Intermediate"
-msgstr "Fortgeschritten"
-
-#: src/interface.c:106 src/interface.c:125
-msgid "Advanced"
-msgstr "Profi"
-
-#: src/interface.c:110
-msgid "E_uropean Board"
-msgstr "E_uropäisches Brett"
-
-#: src/interface.c:138
-msgid "_Help"
-msgstr "_Hilfe"
-
-#: src/interface.c:145
-msgid "Contents"
-msgstr "Inhalt"
-
-#. TRANSLATORS: Replace this string with your names, one name per line.
-#: src/interface.c:245
-msgid "translator-credits"
-msgstr "Deutsch: Mario Blättermann <mario.blaettermann@t-online.de>"
-
-#: src/interface.c:252
-msgid ""
-"This software is dedicated\n"
-" to Mothers everywhere."
-msgstr ""
-"Diese Software ist den\n"
-" Müttern der Welt gewidmet."
-
-#: src/game.c:362
-msgid "GENIUS!"
-msgstr "GENIAL!"
-
-#: src/game.c:363
-msgid "OUTSTANDING!"
-msgstr "Außergewöhnlich!"
-
-#: src/game.c:364
-msgid "Sensational!"
-msgstr "Sensationell!"
-
-#: src/game.c:365
-msgid "Excellent!"
-msgstr "Exzellent!"
-
-#: src/game.c:366
-msgid "Very Good!"
-msgstr "Sehr gut!"
-
-#: src/game.c:367
-msgid "Not Bad!"
-msgstr "Nicht schlecht!"
-
-#: src/game.c:368
-msgid "Better Luck Next Time!"
-msgstr "Viel Glück beim nächsten Mal!"
-
-#: src/callbacks.c:149
+#: src/callbacks.c:131
 #, fuzzy
 msgid ""
 "The theme for this game failed to render.\n"
@@ -154,17 +171,17 @@ msgstr ""
 "\n"
 "Bitte überprüfen Sie die korrekte Installation von Peg Solitaire."
 
-#: src/callbacks.c:212
+#: src/callbacks.c:210
 #, c-format
 msgid "Cannot show help: %s"
 msgstr ""
 
-#: src/callbacks.c:394
+#: src/callbacks.c:368
 #, c-format
 msgid "The \"%s\" cursor is not available"
 msgstr ""
 
-#: src/callbacks.c:401 src/callbacks.c:409
+#: src/callbacks.c:375 src/callbacks.c:383
 #, c-format
 msgid "The \"%s\" or \"%s\" cursor is not available"
 msgstr ""
