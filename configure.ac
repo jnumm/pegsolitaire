@@ -1,4 +1,4 @@
-AC_INIT([pegsolitaire], [0.0.4])
+AC_INIT([pegsolitaire], [0.1.0])
 
 AM_INIT_AUTOMAKE([foreign subdir-objects -Wall])
 AM_MAINTAINER_MODE([enable])
