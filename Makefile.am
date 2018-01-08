@@ -26,8 +26,8 @@ dist_pkgdata_DATA = data/hole.svg data/peg.svg data/pegsolitaire.glade
 dist_man_MANS = data/pegsolitaire.6
 dist_doc_DATA = README COPYING AUTHORS ChangeLog NEWS
 
-pixmapsdir = $(datarootdir)/pixmaps
-dist_pixmaps_DATA = data/pegsolitaire.png
+svgicondir = $(datarootdir)/icons/hicolor/scalable/apps
+dist_svgicon_DATA = data/pegsolitaire.svg
 
 helpdir = $(datarootdir)/gnome/help/pegsolitaire/C
 dist_help_DATA = help/legal.xml help/pegsolitaire.xml
