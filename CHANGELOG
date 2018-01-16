@@ -1,0 +1,26 @@
+Version 0.1.0 (2018-01-08)
+==========================
+
+ * Removed usage of deprecated libgnome, libgnomeui and libglade.
+ * Updated gridframe and preimage libraries. New dependency librsvg2.
+ * Enabled new compiler warnings. New dependency autoconf-archive.
+ * Added .desktop, .appdata.xml and manpage.
+
+Version 0.0.4 (2008-05-01)
+==========================
+
+ * Updated translation files.
+ * Added German translation.
+
+(2007-01-05)
+============
+
+ * Regenerate files to work with Anjuta version 2.2.0.
+ * src/callbacks.c (on_helpAboutMenuItemActivate): don't just show
+	 the pegSolitaireAboutDialog, but run it also so that the `close'
+	 button works on the dialog.
+
+(2007-01-01)
+============
+
+ * Initial version.

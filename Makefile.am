@@ -24,7 +24,7 @@ pegsolitaire_SOURCES = \
 dist_pkgdata_DATA = data/hole.svg data/peg.svg data/pegsolitaire.glade
 
 dist_man_MANS = data/pegsolitaire.6
-dist_doc_DATA = ChangeLog COPYING NEWS
+dist_doc_DATA = CHANGELOG COPYING
 
 svgicondir = $(datarootdir)/icons/hicolor/scalable/apps
 dist_svgicon_DATA = data/pegsolitaire.svg
