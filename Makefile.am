@@ -24,7 +24,6 @@ pegsolitaire_SOURCES = \
 dist_pkgdata_DATA = data/hole.svg data/peg.svg data/pegsolitaire.glade
 
 dist_man_MANS = data/pegsolitaire.6
-dist_doc_DATA = CHANGELOG COPYING
 
 svgicondir = $(datarootdir)/icons/hicolor/scalable/apps
 dist_svgicon_DATA = data/pegsolitaire.svg
@@ -32,7 +31,7 @@ dist_svgicon_DATA = data/pegsolitaire.svg
 helpdir = $(datarootdir)/gnome/help/pegsolitaire/C
 dist_help_DATA = help/legal.xml help/pegsolitaire.xml
 
-EXTRA_DIST = AUTHORS README
+EXTRA_DIST = AUTHORS CHANGELOG COPYING README
 
 # Rules for metadata translation using gettext.
 EXTRA_DIST += \
