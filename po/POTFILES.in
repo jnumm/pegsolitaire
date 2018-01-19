@@ -1,6 +1,6 @@
 # List of source files containing translatable strings.
 
-data/pegsolitaire.desktop.in
+data/com.github.jnumm.pegsolitaire.desktop.in
 data/com.github.jnumm.pegsolitaire.appdata.xml.in
 data/pegsolitaire.glade
 src/game.c

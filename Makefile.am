@@ -35,18 +35,18 @@ EXTRA_DIST = AUTHORS CHANGELOG COPYING README
 
 # Rules for metadata translation using gettext.
 EXTRA_DIST += \
-  data/pegsolitaire.desktop.in \
+  data/com.github.jnumm.pegsolitaire.desktop.in \
   data/com.github.jnumm.pegsolitaire.appdata.xml.in
 CLEANFILES = \
-  pegsolitaire.desktop \
+  com.github.jnumm.pegsolitaire.desktop \
   com.github.jnumm.pegsolitaire.appdata.xml
 
 desktopdir = $(datarootdir)/applications
-desktop_DATA = pegsolitaire.desktop
+desktop_DATA = com.github.jnumm.pegsolitaire.desktop
 appdatadir = $(datarootdir)/metainfo
 appdata_DATA = com.github.jnumm.pegsolitaire.appdata.xml
 
-pegsolitaire.desktop: data/pegsolitaire.desktop.in
+com.github.jnumm.pegsolitaire.desktop: data/com.github.jnumm.pegsolitaire.desktop.in
 	$(MSGFMT) -v -c --statistics --desktop --template $< -d $(top_srcdir)/po -o $@
 
 com.github.jnumm.pegsolitaire.appdata.xml: data/com.github.jnumm.pegsolitaire.appdata.xml.in

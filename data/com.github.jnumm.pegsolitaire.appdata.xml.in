@@ -17,7 +17,7 @@
     </p>
   </description>
 
-  <launchable type="desktop-id">pegsolitaire.desktop</launchable>
+  <launchable type="desktop-id">com.github.jnumm.pegsolitaire.desktop</launchable>
 
   <screenshots>
     <screenshot type="default">

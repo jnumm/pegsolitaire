@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pegsolitaire 0.0.4\n"
 "Report-Msgid-Bugs-To: https://github.com/jnumm/pegsolitaire/issues\n"
-"POT-Creation-Date: 2018-01-08 15:59+0200\n"
+"POT-Creation-Date: 2018-01-19 14:34+0200\n"
 "PO-Revision-Date: 2008-05-01 14:44+0200\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@t-online.de>\n"
 "Language-Team: German\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/pegsolitaire.desktop.in:4
+#: data/com.github.jnumm.pegsolitaire.desktop.in:4
 #: data/com.github.jnumm.pegsolitaire.appdata.xml.in:8
 #: data/pegsolitaire.glade:19 data/pegsolitaire.glade:255
 #: data/pegsolitaire.glade:261
 msgid "Peg Solitaire"
 msgstr "Peg Solitaire"
 
-#: data/pegsolitaire.desktop.in:5
+#: data/com.github.jnumm.pegsolitaire.desktop.in:5
 #: data/com.github.jnumm.pegsolitaire.appdata.xml.in:9
 msgid "Play an educational puzzle game similar to Hi-Q"
 msgstr "Spiele ein lehrreiches Knobelspiel ähnlich wie Hi-Q"
 
-#: data/pegsolitaire.desktop.in:10
+#: data/com.github.jnumm.pegsolitaire.desktop.in:10
 msgid "solitaire;peg;brainvita;solo;noble;puzzle;logic;board;"
 msgstr ""
 
