@@ -25,7 +25,6 @@
 
 #include "config.h"
 #include "game.h"
-#include "gridframe.h"
 #include "i18n.h"
 #include "preimage.h"
 #include "share.h"
@@ -184,7 +183,7 @@ initiate_new_game (int board_type, int board_size)
   gtk_label_set_text (statusMessageLabel, "");
   update_statusbar (game_moves);
 
-  games_grid_frame_set (GAMES_GRID_FRAME (gameframe), board_size, board_size);
+  //games_grid_frame_set (GAMES_GRID_FRAME (gameframe), board_size, board_size);
   recalculate_size ();
 }
 

@@ -12,8 +12,6 @@ pegsolitaire_SOURCES = \
   src/callbacks.h \
   src/game.c \
   src/game.h \
-  src/gridframe.c \
-  src/gridframe.h \
   src/i18n.h \
   src/main.c \
   src/preimage.c \

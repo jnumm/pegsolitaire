@@ -26,7 +26,6 @@
 #include "callbacks.h"
 #include "config.h"
 #include "game.h"
-#include "gridframe.h"
 #include "i18n.h"
 #include "preimage.h"
 #include "share.h"
@@ -34,7 +33,6 @@
 // Exposed through share.h
 GtkWidget *pegSolitaireWindow;
 GtkAboutDialog *pegSolitaireAboutDialog;
-GtkWidget *gameframe;
 GtkWidget *boardDrawingArea;
 GtkLabel *statusMessageLabel;
 GdkPixmap *board_pixmap;
@@ -60,15 +58,6 @@ static gint session_ypos = 0;
 static void
 create_boardDrawingArea (void)
 {
-  gameframe = games_grid_frame_new (7, 7);
-  games_grid_frame_set_padding (GAMES_GRID_FRAME (gameframe), 10, 10);
-  gtk_widget_set_size_request (GTK_WIDGET (gameframe), 250, 250);
-
-  boardDrawingArea = gtk_drawing_area_new ();
-  gtk_widget_set_name (GTK_WIDGET (boardDrawingArea), "boardDrawingArea");
-
-  gtk_widget_set_double_buffered (boardDrawingArea, 0);
-  gtk_container_add (GTK_CONTAINER (gameframe), boardDrawingArea);
   gtk_widget_set_events (boardDrawingArea, GDK_EXPOSURE_MASK |
                          GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK |
                          GDK_BUTTON_RELEASE_MASK);
@@ -176,9 +165,8 @@ main (int argc, char *argv[])
   peg_preimage = load_image ("peg.svg");
   hole_preimage = load_image ("hole.svg");
 
+  boardDrawingArea = GTK_WIDGET (gtk_builder_get_object (builder, "boardDrawingArea"));
   create_boardDrawingArea ();
-  GtkBox *vbox = GTK_BOX (gtk_builder_get_object(builder, "pegSolitaireVBox"));
-  gtk_box_pack_start (vbox, gameframe, TRUE, TRUE, 0);
 
   game_new ();
 

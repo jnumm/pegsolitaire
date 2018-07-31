@@ -26,7 +26,6 @@
 // defined in main.c
 extern GtkWidget *pegSolitaireWindow;
 extern GtkAboutDialog *pegSolitaireAboutDialog;
-extern GtkWidget *gameframe;
 extern GtkWidget *boardDrawingArea;
 extern GtkLabel *statusMessageLabel;
 extern GdkPixmap *board_pixmap;
