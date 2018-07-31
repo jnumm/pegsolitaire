@@ -257,6 +257,7 @@
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="destroy_with_parent">True</property>
+    <property name="transient_for">pegSolitaireWindow</property>
     <property name="type_hint">normal</property>
     <property name="program_name" translatable="yes">Peg Solitaire</property>
     <property name="copyright" translatable="yes">© 2007-2008 Ben Asselstine
