@@ -295,13 +295,13 @@ game_move (int src_x, int src_y, int dst_x, int dst_y)
 }
 
 int
-game_draw (GtkWidget * widget, GdkPixmap * pixmap, gint tile_size, int force)
+game_draw (GtkWidget * widget, /*GdkPixmap * pixmap,*/ gint tile_size, int force)
 {
   int i, j;
   for (i = 0; i < game_board_size; i++) {
     for (j = 0; j < game_board_size; j++) {
       if ((game_board_dirty[i][j] == 1) || (force)) {
-        game_draw_cell (widget, pixmap, tile_size, i, j);
+        //game_draw_cell (widget, pixmap, tile_size, i, j);
         game_board_dirty[i][j] = 0;
       }
     }
@@ -312,11 +312,11 @@ game_draw (GtkWidget * widget, GdkPixmap * pixmap, gint tile_size, int force)
 }
 
 int
-game_draw_cell (GtkWidget * widget, GdkPixmap * pixmap, gint tile_size,
+game_draw_cell (GtkWidget * widget, /*GdkPixmap * pixmap,*/ gint tile_size,
                 gint x, gint y)
 {
-  GdkPixbuf *p;
-  static GdkGC *backgc = NULL;
+  //GdkPixbuf *p;
+  //static GdkGC *backgc = NULL;
   GdkColor *bg_color;
   GtkStyle *style;
   if (x < 0 || y < 0)
@@ -325,26 +325,26 @@ game_draw_cell (GtkWidget * widget, GdkPixmap * pixmap, gint tile_size,
     return -1;
   if (game_board_mask[x][y] == 0)
     return 1;
-  if (game_board[x][y])
+  /*if (game_board[x][y])
     p = peg_pixbuf;
   else
-    p = hole_pixbuf;
+    p = hole_pixbuf;*/
 
-  if (!backgc)
+  /*if (!backgc)
     backgc = gdk_gc_new (gtk_widget_get_window (widget));
   style = gtk_widget_get_style (widget);
   bg_color = gdk_color_copy (&style->bg[GTK_STATE_NORMAL]);
   gdk_gc_set_foreground (backgc, bg_color);
-  gdk_gc_set_fill (backgc, GDK_SOLID);
-  gdk_color_free (bg_color);
+  //gdk_gc_set_fill (backgc, GDK_SOLID);
+  gdk_color_free (bg_color);*/
 
-  gdk_draw_rectangle (pixmap, backgc, TRUE,
-                      (x * tile_size), (y * tile_size), tile_size, tile_size);
+  /*gdk_draw_rectangle (pixmap, backgc, TRUE,
+                      (x * tile_size), (y * tile_size), tile_size, tile_size);*/
   int icon_size = tile_size / 1.666;
-  gdk_draw_pixbuf (pixmap, backgc, p, 0, 0,
+  /*gdk_draw_pixbuf (pixmap, backgc, p, 0, 0,
                    (x * tile_size) + (tile_size / 2) - (icon_size / 2),
                    (y * tile_size) + (tile_size / 2) - (icon_size / 2),
-                   icon_size, icon_size, GDK_RGB_DITHER_NORMAL, 0, 0);
+                   icon_size, icon_size, GDK_RGB_DITHER_NORMAL, 0, 0);*/
 
   GdkRectangle update;
   update.x = x * tile_size;

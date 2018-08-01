@@ -14,8 +14,6 @@ pegsolitaire_SOURCES = \
   src/game.h \
   src/i18n.h \
   src/main.c \
-  src/preimage.c \
-  src/preimage.h \
   src/share.h
 
 # Files in dist_something_DATA will be installed to $(somethingdir).

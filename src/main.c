@@ -27,7 +27,6 @@
 #include "config.h"
 #include "game.h"
 #include "i18n.h"
-#include "preimage.h"
 #include "share.h"
 
 // Exposed through share.h
@@ -35,7 +34,7 @@ GtkWidget *pegSolitaireWindow;
 GtkAboutDialog *pegSolitaireAboutDialog;
 GtkWidget *boardDrawingArea;
 GtkLabel *statusMessageLabel;
-GdkPixmap *board_pixmap;
+//GdkPixmap *board_pixmap;
 gint tile_size, prior_tile_size;
 gint width, height;
 guint redraw_all_idle_id = 0;
@@ -45,10 +44,10 @@ gboolean clear_buffer = 1;
 gint piece_x;
 gint piece_y;
 gint button_down;
-GamesPreimage *peg_preimage;
-GamesPreimage *hole_preimage;
-GdkPixbuf *peg_pixbuf;
-GdkPixbuf *hole_pixbuf;
+//GamesPreimage *peg_preimage;
+//GamesPreimage *hole_preimage;
+//GdkPixbuf *peg_pixbuf;
+//GdkPixbuf *hole_pixbuf;
 // End of globals exposed through share.h
 
 static GtkLabel *statusMovesLabel;
@@ -96,7 +95,7 @@ static const GOptionEntry options[] = {
   {NULL}
 };
 
-static GamesPreimage *
+/*static GamesPreimage *
 load_image (char *filename)
 {
   char *fname;
@@ -118,7 +117,7 @@ load_image (char *filename)
   }
   g_free (fname);
   return preimage;
-}
+}*/
 
 int
 main (int argc, char *argv[])
@@ -162,8 +161,8 @@ main (int argc, char *argv[])
   statusMovesLabel = GTK_LABEL (gtk_builder_get_object (builder, "statusMovesLabel"));
   update_statusbar (0);
 
-  peg_preimage = load_image ("peg.svg");
-  hole_preimage = load_image ("hole.svg");
+  //peg_preimage = load_image ("peg.svg");
+  //hole_preimage = load_image ("hole.svg");
 
   boardDrawingArea = GTK_WIDGET (gtk_builder_get_object (builder, "boardDrawingArea"));
   create_boardDrawingArea ();

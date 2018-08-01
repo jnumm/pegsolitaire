@@ -21,14 +21,14 @@
 
 #include <gtk/gtk.h>
 
-#include "preimage.h"
+//#include "preimage.h"
 
 // defined in main.c
 extern GtkWidget *pegSolitaireWindow;
 extern GtkAboutDialog *pegSolitaireAboutDialog;
 extern GtkWidget *boardDrawingArea;
 extern GtkLabel *statusMessageLabel;
-extern GdkPixmap *board_pixmap;
+//extern GdkPixmap *board_pixmap;
 extern gint tile_size, prior_tile_size;
 extern gint width, height;
 extern guint redraw_all_idle_id;
@@ -38,9 +38,9 @@ extern gboolean clear_buffer;
 extern gint piece_x;
 extern gint piece_y;
 extern gint button_down;
-extern GamesPreimage *peg_preimage;
-extern GamesPreimage *hole_preimage;
-extern GdkPixbuf *peg_pixbuf;
-extern GdkPixbuf *hole_pixbuf;
+//extern GamesPreimage *peg_preimage;
+//extern GamesPreimage *hole_preimage;
+//extern GdkPixbuf *peg_pixbuf;
+//extern GdkPixbuf *hole_pixbuf;
 
 #endif // PEGSOLITAIRE_SHARE_H
