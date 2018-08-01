@@ -40,10 +40,9 @@ gint game_board_size = DEFAULT_GAME_BOARD_SIZE;
 game_board_enum game_board_type = DEFAULT_GAME_BOARD_TYPE;
 // End of globals that are exposed through game.h
 
-static int
+static void
 create_game_board_mask (void)
 {
-  int i, j;
   int n = game_board_size;
   int m = n / 2;                // length of one side of the cross
   assert (n % 2 == 1);
@@ -55,15 +54,15 @@ create_game_board_mask (void)
 
   if (game_board_type == BOARD_ENGLISH) {
     // fill the centre row of the cross
-    for (i = n / 2 - m / 2; i < n - (n / 2 - m / 2); i++) {
-      for (j = 0; j < game_board_size; j++) {
+    for (int i = n / 2 - m / 2; i < n - (n / 2 - m / 2); i++) {
+      for (int j = 0; j < game_board_size; j++) {
         game_board_mask[i][j] = 1;
       }
     }
 
     // fill the centre column of the cross
-    for (i = 0; i < game_board_size; i++) {
-      for (j = n / 2 - m / 2; j < n - (n / 2 - m / 2); j++) {
+    for (int i = 0; i < game_board_size; i++) {
+      for (int j = n / 2 - m / 2; j < n - (n / 2 - m / 2); j++) {
         game_board_mask[i][j] = 1;
       }
     }
@@ -71,56 +70,46 @@ create_game_board_mask (void)
     game_board_type = BOARD_ENGLISH;
     create_game_board_mask ();
     game_board_type = BOARD_EUROPEAN;
-    for (i = n / 2 - m / 1.666; i < n - (n / 2 - m / 1.666); i++) {
-      for (j = n / 2 - m / 1.666; j < n - (n / 2 - m / 1.666); j++) {
+    for (int i = n / 2 - m / 1.666; i < n - (n / 2 - m / 1.666); i++) {
+      for (int j = n / 2 - m / 1.666; j < n - (n / 2 - m / 1.666); j++) {
         game_board_mask[i][j] = 1;
       }
     }
   }
-
-  return 0;
 }
 
-static int
+static void
 game_init (void)
 {
   // setup the shape of the game board
   create_game_board_mask ();
-
   // clear the board of all pegs
   memset (game_board, 0, sizeof game_board);
-
-  return 0;
 }
 
-static int
+/* Clears the number of moves, and places a peg in all holes of the board
+ * except for the middle one. */
+static void
 game_clear (void)
 {
-  int i, j;
-  int size = game_board_size;
-  for (i = 0; i < size; i++) {
-    for (j = 0; j < size; j++) {
-      if (game_board_mask[i][j] == 0)
-        continue;
-      if (game_board[i][j] == 0) {
+  for (int i = 0; i < game_board_size; i++) {
+    for (int j = 0; j < game_board_size; j++) {
+      if (game_board_mask[i][j]) {
         game_board[i][j] = 1;
       }
     }
   }
-  if (game_board[size / 2][size / 2] == 1) {
-    game_board[size / 2][size / 2] = 0;
-  }
+  game_board[game_board_size / 2][game_board_size / 2] = 0;
   game_moves = 0;
-  return 0;
 }
 
 static int
 game_count_pegs_on_board (void)
 {
-  int i, j, pegs_left = 0;
+  int pegs_left = 0;
   // find the number of pegs on the board
-  for (i = 0; i < game_board_size; i++) {
-    for (j = 0; j < game_board_size; j++) {
+  for (int i = 0; i < game_board_size; i++) {
+    for (int j = 0; j < game_board_size; j++) {
       if (game_board[i][j])
         pegs_left++;
     }
@@ -128,14 +117,11 @@ game_count_pegs_on_board (void)
   return pegs_left;
 }
 
-int
+void
 game_new (void)
 {
-  int err;
-  err = game_init ();
-  if (!err)
-    err = game_clear ();
-  return err;
+  game_init ();
+  game_clear ();
 }
 
 int
