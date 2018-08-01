@@ -35,7 +35,7 @@ static char game_board_mask[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = { 0 };
 // 1 means it's part of the cross, 0 means not.
 
 // Globals that are exposed through game.h
-gint game_moves;
+gint game_moves = 0;
 gint game_board_size = DEFAULT_GAME_BOARD_SIZE;
 game_board_enum game_board_type = DEFAULT_GAME_BOARD_TYPE;
 // End of globals that are exposed through game.h
