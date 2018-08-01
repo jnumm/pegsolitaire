@@ -143,12 +143,7 @@ main (int argc, char *argv[])
 
   gtk_init (&argc, &argv);
 
-  // TODO: gtk3: change to gtk_builder_new_from_file (filename)
-  GtkBuilder *builder = gtk_builder_new ();
-  if (!gtk_builder_add_from_file (builder, PKGDATADIR "/pegsolitaire.glade", &error)) {
-    fputs (error->message, stderr);
-    exit (1);
-  }
+  GtkBuilder *builder = gtk_builder_new_from_file (PKGDATADIR "/pegsolitaire.glade");
 
   gtk_builder_connect_signals (builder, NULL);
 

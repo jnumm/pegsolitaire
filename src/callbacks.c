@@ -201,8 +201,7 @@ void
 on_helpContentsMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data)
 {
   GError *err = NULL;
-  /* TODO: gtk3: change to gtk_show_uri_on_window */
-  gtk_show_uri (gtk_widget_get_screen (pegSolitaireWindow),
+  gtk_show_uri_on_window (GTK_WINDOW (pegSolitaireWindow),
                 "ghelp:pegsolitaire", gtk_get_current_event_time (), &err);
   if (err != NULL) {
     g_warning (_("Cannot show help: %s"), err->message);
