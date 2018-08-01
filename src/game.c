@@ -20,7 +20,6 @@
 #include "game.h"
 
 #include <assert.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include "i18n.h"
@@ -28,11 +27,12 @@
 
 #define DEFAULT_GAME_BOARD_SIZE BOARD_SIZE_BEGINNER
 #define DEFAULT_GAME_BOARD_TYPE BOARD_ENGLISH
-static gchar **game_board;
-// 7x7, 1 means there's a peg, 0 means no peg.
 
-static gchar **game_board_mask;
-// 7x7, 1 means it's part of the cross, 0 means not.
+static char game_board[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = { 0 };
+// 1 means there's a peg, 0 means no peg.
+
+static char game_board_mask[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = { 0 };
+// 1 means it's part of the cross, 0 means not.
 
 // Globals that are exposed through game.h
 gint game_moves;
@@ -50,19 +50,8 @@ create_game_board_mask (void)
   assert (m % 2 == 1);
   // for those keeping score, this means n=3,7,11,15,19... is valid.
 
-  // allocate the game board mask
-  game_board_mask = realloc (game_board_mask,
-                             game_board_size * sizeof (gchar *));
-  if (game_board_mask == NULL)
-    return -1;
-  memset (game_board_mask, 0, game_board_size * sizeof (gchar *));
-  for (i = 0; i < game_board_size; i++) {
-    game_board_mask[i] = realloc (game_board_mask[i],
-                                  game_board_size * sizeof (gchar));
-    if (game_board_mask[i] == NULL)
-      return -1;
-    memset (game_board_mask[i], 0, game_board_size * sizeof (gchar));
-  }
+  // initialize game_board_mask
+  memset (game_board_mask, 0, sizeof game_board_mask);
 
   if (game_board_type == BOARD_ENGLISH) {
     // fill the centre row of the cross
@@ -95,21 +84,12 @@ create_game_board_mask (void)
 static int
 game_init (void)
 {
-  int i;
   // setup the shape of the game board
   create_game_board_mask ();
 
-  // allocate the game board
-  game_board = realloc (game_board, game_board_size * sizeof (gchar *));
-  if (game_board == NULL)
-    return -1;
-  memset (game_board, 0, game_board_size * sizeof (gchar *));
-  for (i = 0; i < game_board_size; i++) {
-    game_board[i] = realloc (game_board[i], game_board_size * sizeof (gchar));
-    if (game_board[i] == NULL)
-      return -1;
-    memset (game_board[i], 0, game_board_size * sizeof (gchar));
-  }
+  // clear the board of all pegs
+  memset (game_board, 0, sizeof game_board);
+
   return 0;
 }
 
