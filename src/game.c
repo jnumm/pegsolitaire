@@ -26,7 +26,7 @@
 #include "i18n.h"
 #include "share.h"
 
-#define DEFAULT_GAME_BOARD_SIZE 7
+#define DEFAULT_GAME_BOARD_SIZE BOARD_SIZE_BEGINNER
 #define DEFAULT_GAME_BOARD_TYPE BOARD_ENGLISH
 static gchar **game_board;
 // 7x7, 1 means there's a peg, 0 means no peg.

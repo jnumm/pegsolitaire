@@ -27,6 +27,10 @@ typedef enum {
   BOARD_EUROPEAN
 } game_board_enum;
 
+#define BOARD_SIZE_BEGINNER 7
+#define BOARD_SIZE_INTERMEDIATE 11
+#define BOARD_SIZE_ADVANCED 15
+
 extern gint game_moves;
 extern game_board_enum game_board_type;
 extern gint game_board_size;

@@ -390,42 +390,42 @@ void
 on_gameEnglishBeginnerMenuItem_activate (GtkMenuItem * menuitem,
                                          gpointer user_data)
 {
-  initiate_new_game (BOARD_ENGLISH, 7);
+  initiate_new_game (BOARD_ENGLISH, BOARD_SIZE_BEGINNER);
 }
 
 void
 on_gameEnglishIntermediateMenuItem_activate (GtkMenuItem * menuitem,
                                              gpointer user_data)
 {
-  initiate_new_game (BOARD_ENGLISH, 11);
+  initiate_new_game (BOARD_ENGLISH, BOARD_SIZE_INTERMEDIATE);
 }
 
 void
 on_gameEnglishAdvancedMenuItem_activate (GtkMenuItem * menuitem,
                                          gpointer user_data)
 {
-  initiate_new_game (BOARD_ENGLISH, 15);
+  initiate_new_game (BOARD_ENGLISH, BOARD_SIZE_ADVANCED);
 }
 
 void
 on_gameEuropeanBeginnerMenuItem_activate (GtkMenuItem * menuitem,
                                           gpointer user_data)
 {
-  initiate_new_game (BOARD_EUROPEAN, 7);
+  initiate_new_game (BOARD_EUROPEAN, BOARD_SIZE_BEGINNER);
 }
 
 void
 on_gameEuropeanIntermediateMenuItem_activate (GtkMenuItem * menuitem,
                                               gpointer user_data)
 {
-  initiate_new_game (BOARD_EUROPEAN, 11);
+  initiate_new_game (BOARD_EUROPEAN, BOARD_SIZE_INTERMEDIATE);
 }
 
 void
 on_gameEuropeanAdvancedMenuItem_activate (GtkMenuItem * menuitem,
                                           gpointer user_data)
 {
-  initiate_new_game (BOARD_EUROPEAN, 15);
+  initiate_new_game (BOARD_EUROPEAN, BOARD_SIZE_ADVANCED);
 }
 
 #pragma GCC diagnostic pop
