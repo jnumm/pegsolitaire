@@ -114,7 +114,7 @@ game_clear (void)
   return 0;
 }
 
-int
+static int
 game_count_pegs_on_board (void)
 {
   int i, j, pegs_left = 0;
@@ -254,21 +254,7 @@ game_move (int src_x, int src_y, int dst_x, int dst_y)
   return FALSE;
 }
 
-int
-game_draw (GtkWidget * widget, /*GdkPixmap * pixmap,*/ gint tile_size, int force)
-{
-  int i, j;
-  for (i = 0; i < game_board_size; i++) {
-    for (j = 0; j < game_board_size; j++) {
-      //game_draw_cell (widget, pixmap, tile_size, i, j);
-    }
-  }
-
-  gtk_widget_queue_draw (widget);
-  return 0;
-}
-
-int
+static int
 game_draw_cell (GtkWidget * widget, /*GdkPixmap * pixmap,*/ gint tile_size,
                 gint x, gint y)
 {
@@ -310,6 +296,20 @@ game_draw_cell (GtkWidget * widget, /*GdkPixmap * pixmap,*/ gint tile_size,
   update.height = tile_size;
   gtk_widget_draw (widget, &update);
 
+  return 0;
+}
+
+int
+game_draw (GtkWidget * widget, /*GdkPixmap * pixmap,*/ gint tile_size, int force)
+{
+  int i, j;
+  for (i = 0; i < game_board_size; i++) {
+    for (j = 0; j < game_board_size; j++) {
+      //game_draw_cell (widget, pixmap, tile_size, i, j);
+    }
+  }
+
+  gtk_widget_queue_draw (widget);
   return 0;
 }
 
