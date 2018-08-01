@@ -54,28 +54,6 @@ static GtkLabel *statusMovesLabel;
 static gint session_xpos = 0;
 static gint session_ypos = 0;
 
-static void
-create_boardDrawingArea (void)
-{
-  gtk_widget_set_events (boardDrawingArea, GDK_EXPOSURE_MASK |
-                         GDK_BUTTON_PRESS_MASK | GDK_POINTER_MOTION_MASK |
-                         GDK_BUTTON_RELEASE_MASK);
-
-  g_signal_connect (G_OBJECT (boardDrawingArea), "expose_event",
-                    G_CALLBACK (on_boardDrawingArea_expose_event), NULL);
-  g_signal_connect (G_OBJECT (boardDrawingArea), "configure_event",
-                    G_CALLBACK (on_boardDrawingArea_configure_event), NULL);
-  g_signal_connect (G_OBJECT (boardDrawingArea), "button_press_event",
-                    G_CALLBACK (on_boardDrawingArea_button_press_event),
-                    NULL);
-  g_signal_connect (G_OBJECT (boardDrawingArea), "button_release_event",
-                    G_CALLBACK (on_boardDrawingArea_button_release_event),
-                    NULL);
-  g_signal_connect (G_OBJECT (boardDrawingArea), "motion_notify_event",
-                    G_CALLBACK (on_boardDrawingArea_motion_notify_event),
-                    NULL);
-}
-
 void
 update_statusbar (int moves)
 {
@@ -160,7 +138,6 @@ main (int argc, char *argv[])
   //hole_preimage = load_image ("hole.svg");
 
   boardDrawingArea = GTK_WIDGET (gtk_builder_get_object (builder, "boardDrawingArea"));
-  create_boardDrawingArea ();
 
   game_new ();
 
