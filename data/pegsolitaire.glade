@@ -17,15 +17,13 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Peg Solitaire</property>
-    <property name="icon_name">pegsolitaire</property>
-    <!-- TODO: either "center" or "GTK_WIN_POS_CENTER" don't seem to work for me
-               on KDE Plasma 5, investigate! -->
-    <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <property name="window_position">center</property>
     <property name="default_width">500</property>
     <property name="default_height">500</property>
-    <signal name="destroy" handler="on_pegSolitaireWindow_destroy"/>
+    <property name="icon_name">pegsolitaire</property>
+    <signal name="destroy" handler="on_pegSolitaireWindow_destroy" swapped="no"/>
     <child>
-      <object class="GtkVBox" id="pegSolitaireVBox">
+      <object class="GtkBox" id="pegSolitaireBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
@@ -46,12 +44,12 @@
                     <child>
                       <object class="GtkImageMenuItem" id="gameRestartMenuItem">
                         <property name="label" translatable="yes">_Restart</property>
-                        <property name="use_underline">True</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="use_underline">True</property>
                         <property name="image">stockRefreshImage</property>
                         <property name="use_stock">False</property>
-                        <signal name="activate" handler="on_gameRestartMenuItem_activate"/>
+                        <signal name="activate" handler="on_gameRestartMenuItem_activate" swapped="no"/>
                         <accelerator key="r" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -77,7 +75,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Beginner</property>
                                 <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_gameEnglishBeginnerMenuItem_activate"/>
+                                <signal name="activate" handler="on_gameEnglishBeginnerMenuItem_activate" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -86,7 +84,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Intermediate</property>
                                 <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_gameEnglishIntermediateMenuItem_activate" />
+                                <signal name="activate" handler="on_gameEnglishIntermediateMenuItem_activate" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -95,7 +93,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Advanced</property>
                                 <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_gameEnglishAdvancedMenuItem_activate"/>
+                                <signal name="activate" handler="on_gameEnglishAdvancedMenuItem_activate" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -118,7 +116,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Beginner</property>
                                 <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_gameEuropeanBeginnerMenuItem_activate"/>
+                                <signal name="activate" handler="on_gameEuropeanBeginnerMenuItem_activate" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -127,7 +125,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Intermediate</property>
                                 <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_gameEuropeanIntermediateMenuItem_activate"/>
+                                <signal name="activate" handler="on_gameEuropeanIntermediateMenuItem_activate" swapped="no"/>
                               </object>
                             </child>
                             <child>
@@ -136,7 +134,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Advanced</property>
                                 <property name="use_underline">True</property>
-                                <signal name="activate" handler="on_gameEuropeanAdvancedMenuItem_activate"/>
+                                <signal name="activate" handler="on_gameEuropeanAdvancedMenuItem_activate" swapped="no"/>
                               </object>
                             </child>
                           </object>
@@ -156,7 +154,7 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_gameQuitMenuItem_activate"/>
+                        <signal name="activate" handler="on_gameQuitMenuItem_activate" swapped="no"/>
                         <accelerator key="q" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
@@ -181,7 +179,7 @@
                         <property name="can_focus">False</property>
                         <property name="image">stockHelpImage</property>
                         <property name="use_stock">False</property>
-                        <signal name="activate" handler="on_helpContentsMenuItem_activate"/>
+                        <signal name="activate" handler="on_helpContentsMenuItem_activate" swapped="no"/>
                         <accelerator key="F1" signal="activate"/>
                       </object>
                     </child>
@@ -192,7 +190,7 @@
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_helpAboutMenuItem_activate"/>
+                        <signal name="activate" handler="on_helpAboutMenuItem_activate" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -218,14 +216,13 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="statusHBox">
+          <object class="GtkBox" id="statusBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
               <object class="GtkLabel" id="statusMessageLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="no"></property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -238,7 +235,6 @@
               <object class="GtkLabel" id="statusMovesLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="no"></property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -260,22 +256,37 @@
     </child>
   </object>
   <object class="GtkAboutDialog" id="pegSolitaireAboutDialog">
-    <property name="name" translatable="yes">Peg Solitaire</property>
-    <property name="icon_name">pegsolitaire</property>
+    <property name="name">Peg Solitaire</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="destroy_with_parent">True</property>
-    <property name="transient_for">pegSolitaireWindow</property>
+    <property name="icon_name">pegsolitaire</property>
     <property name="type_hint">normal</property>
-    <property name="program_name" translatable="yes">Peg Solitaire</property>
+    <property name="transient_for">pegSolitaireWindow</property>
+    <property name="program_name">Peg Solitaire</property>
     <property name="copyright" translatable="yes">© 2007-2008 Ben Asselstine
 © 2017-2018 Juhani Numminen</property>
     <property name="comments" translatable="yes">This software is dedicated
  to Mothers everywhere.</property>
+    <property name="website">https://github.com/jnumm/pegsolitaire</property>
     <property name="authors">Ben Asselstine
 Juhani Numminen</property>
     <property name="translator_credits" translatable="yes" comments="TRANSLATORS: Replace this string with your names, one name per line.">translator-credits</property>
     <property name="logo_icon_name">pegsolitaire</property>
-    <property name="website">https://github.com/jnumm/pegsolitaire</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
   </object>
 </interface>
