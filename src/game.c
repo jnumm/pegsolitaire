@@ -313,12 +313,10 @@ game_draw_cell (GtkWidget * widget, /*GdkPixmap * pixmap,*/ gint tile_size,
   return 0;
 }
 
-gchar *
+const char *
 game_cheese (void)
 {
-  int i = 6;
-  int pegs_left = game_count_pegs_on_board ();
-  static gchar *cheese[] = {
+  static const char *cheese[] = {
     N_("GENIUS!"),
     N_("OUTSTANDING!"),
     N_("Sensational!"),
@@ -327,15 +325,12 @@ game_cheese (void)
     N_("Not Bad!"),
     N_("Better Luck Next Time!"),
   };
-  if (pegs_left > 6)
-    i = 6;
-  else if (pegs_left > 1)
-    i = pegs_left;
-  else if (pegs_left == 1) {
-    if (game_board[game_board_size / 2][game_board_size / 2] == 1)
-      i = 1;
-    else
-      i = 0;
-  }
-  return gettext (cheese[i]);
+
+  int pegs_left = game_count_pegs_on_board ();
+  int cheese_index = MIN(pegs_left, 6);
+
+  if (pegs_left == 1 && game_board[game_board_size / 2][game_board_size / 2] == 1)
+    cheese_index = 0;
+
+  return gettext (cheese[cheese_index]);
 }

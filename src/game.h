@@ -44,6 +44,6 @@ void game_toggle_cell (int i, int j);
 gboolean game_is_peg_at (int i, int j);
 gboolean game_move (int src_x, int src_y, int dst_x, int dst_y);
 int game_count_pegs_on_board (void);
-gchar *game_cheese (void);
+const char *game_cheese (void);
 
 #endif // PEGSOLITAIRE_GAME_H
