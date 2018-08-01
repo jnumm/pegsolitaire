@@ -273,6 +273,7 @@
 Juhani Numminen</property>
     <property name="translator_credits" translatable="yes" comments="TRANSLATORS: Replace this string with your names, one name per line.">translator-credits</property>
     <property name="logo_icon_name">pegsolitaire</property>
+    <property name="license_type">gpl-2-0</property>
     <child internal-child="vbox">
       <object class="GtkBox">
         <property name="can_focus">False</property>
