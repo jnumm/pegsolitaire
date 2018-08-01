@@ -34,9 +34,6 @@ static gchar **game_board;
 static gchar **game_board_mask;
 // 7x7, 1 means it's part of the cross, 0 means not.
 
-static gchar **game_board_dirty;
-// 7x7, 1 means the cell needs to be redrawn, 0 means not.
-
 // Globals that are exposed through game.h
 gint game_moves;
 gint game_board_size = DEFAULT_GAME_BOARD_SIZE;
@@ -102,20 +99,6 @@ game_init (void)
   // setup the shape of the game board
   create_game_board_mask ();
 
-  // allocate the game board dirty map
-  game_board_dirty = realloc (game_board_dirty,
-                              game_board_size * sizeof (gchar *));
-  if (game_board_dirty == NULL)
-    return -1;
-  memset (game_board_dirty, 0, game_board_size * sizeof (gchar *));
-  for (i = 0; i < game_board_size; i++) {
-    game_board_dirty[i] = realloc (game_board_dirty[i],
-                                   game_board_size * sizeof (gchar));
-    if (game_board_dirty[i] == NULL)
-      return -1;
-    memset (game_board_dirty[i], 0, game_board_size * sizeof (gchar));
-  }
-
   // allocate the game board
   game_board = realloc (game_board, game_board_size * sizeof (gchar *));
   if (game_board == NULL)
@@ -141,13 +124,11 @@ game_clear (void)
         continue;
       if (game_board[i][j] == 0) {
         game_board[i][j] = 1;
-        game_board_dirty[i][j] = 1;
       }
     }
   }
   if (game_board[size / 2][size / 2] == 1) {
     game_board[size / 2][size / 2] = 0;
-    game_board_dirty[size / 2][size / 2] = 1;
   }
   game_moves = 0;
   return 0;
@@ -222,7 +203,6 @@ game_toggle_cell (int i, int j)
 
   if (game_board_mask[i][j]) {
     game_board[i][j] = !game_board[i][j];
-    game_board_dirty[i][j] = 1;
   }
 }
 
@@ -300,10 +280,7 @@ game_draw (GtkWidget * widget, /*GdkPixmap * pixmap,*/ gint tile_size, int force
   int i, j;
   for (i = 0; i < game_board_size; i++) {
     for (j = 0; j < game_board_size; j++) {
-      if ((game_board_dirty[i][j] == 1) || (force)) {
-        //game_draw_cell (widget, pixmap, tile_size, i, j);
-        game_board_dirty[i][j] = 0;
-      }
+      //game_draw_cell (widget, pixmap, tile_size, i, j);
     }
   }
 
