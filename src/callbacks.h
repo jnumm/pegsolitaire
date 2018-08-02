@@ -40,11 +40,6 @@ void
 on_gameQuitMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data);
 
 gboolean
-on_pegSolitaireWindow_configure_event (GtkWidget * widget,
-                                       GdkEventConfigure * event,
-                                       gpointer user_data);
-
-gboolean
   on_boardDrawingArea_motion_notify_event
   (GtkWidget * widget, GdkEventMotion * event, gpointer user_data);
 
