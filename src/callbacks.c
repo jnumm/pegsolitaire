@@ -30,6 +30,15 @@
 
 void update_statusbar (int moves);
 
+static gint tile_size = 0, prior_tile_size = 0;
+static gint width = 0, height = 0;
+static guint redraw_all_idle_id = 0;
+static gboolean clear_game = 1;
+static gboolean clear_buffer = 1;
+static gint piece_x = 0;
+static gint piece_y = 0;
+static gint button_down = 0;
+
 static GdkCursor *hand_closed_cursor = NULL;
 static GdkCursor *hand_open_cursor = NULL;
 static GdkCursor *default_cursor = NULL;
