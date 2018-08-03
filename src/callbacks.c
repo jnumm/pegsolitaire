@@ -32,7 +32,6 @@ void update_statusbar (int moves);
 
 static gint tile_size = 0, prior_tile_size = 0;
 static gint width = 0, height = 0;
-static guint redraw_all_idle_id = 0;
 static gboolean clear_game = 1;
 static gboolean clear_buffer = 1;
 static gint piece_x = 0;
@@ -145,13 +144,6 @@ resize_all (void)
     prior_tile_size = tile_size;
   }*/
 
-  if (redraw_all_idle_id)
-    g_source_remove (redraw_all_idle_id);
-
-  redraw_all_idle_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE + 1,
-                                        (GSourceFunc) redraw_all, NULL, NULL);
-
-  resize_all_idle_id = 0;
   return 0;
 }
 
@@ -171,10 +163,6 @@ recalculate_size (void)
   update_tile_size ();
 
   if (clear_buffer || clear_game || tile_size != prior_tile_size) {
-    if (resize_all_idle_id)
-      g_source_remove (resize_all_idle_id);
-
-    resize_all_idle_id = g_idle_add ((GSourceFunc) resize_all, NULL);
     clear_buffer = 1;
   }
 }

@@ -23,7 +23,6 @@
 
 #include <gtk/gtk.h>
 
-#include "callbacks.h"
 #include "config.h"
 #include "game.h"
 #include "i18n.h"
@@ -35,7 +34,6 @@ GtkAboutDialog *pegSolitaireAboutDialog = NULL;
 GtkWidget *boardDrawingArea = NULL;
 GtkLabel *statusMessageLabel = NULL;
 //GdkPixmap *board_pixmap;
-guint resize_all_idle_id = 0;
 //GamesPreimage *peg_preimage;
 //GamesPreimage *hole_preimage;
 //GdkPixbuf *peg_pixbuf;
@@ -139,10 +137,7 @@ main (int argc, char *argv[])
 
   gtk_widget_show_all (pegSolitaireWindow);
 
-  if (resize_all_idle_id)
-    g_source_remove (resize_all_idle_id);
 
-  resize_all_idle_id = g_idle_add ((GSourceFunc) resize_all, NULL);
 
   gtk_main ();
   return 0;
