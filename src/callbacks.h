@@ -22,6 +22,9 @@
 
 #include <gtk/gtk.h>
 
+void
+init_cursors (void);
+
 gboolean
 resize_all (void);
 

@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 
+#include "callbacks.h"
 #include "config.h"
 #include "game.h"
 #include "i18n.h"
@@ -103,6 +104,8 @@ main (int argc, char *argv[])
   update_statusbar (0);
 
   boardDrawingArea = GTK_WIDGET (gtk_builder_get_object (builder, "boardDrawingArea"));
+
+  init_cursors ();
 
   game_new ();
 

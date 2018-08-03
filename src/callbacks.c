@@ -48,6 +48,33 @@ enum
   CURSOR_CLOSED
 };
 
+void
+init_cursors (void)
+{
+  GdkDisplay *display = gtk_widget_get_display (pegSolitaireWindow);
+
+  if (!default_cursor)
+    default_cursor = gdk_cursor_new_from_name (display, "default");
+  if (!default_cursor)
+    g_warning (_("The \"%s\" cursor is not available"), "default");
+
+  if (!hand_closed_cursor)
+    hand_closed_cursor = gdk_cursor_new_from_name (display, "grabbing");
+  if (!hand_closed_cursor)
+    hand_closed_cursor = gdk_cursor_new_from_name (display, "closedhand");
+  if (!hand_closed_cursor)
+    g_warning (_("The \"%s\" or \"%s\" cursor is not available"),
+               "grabbing", "closedhand");
+
+  if (!hand_open_cursor)
+    hand_open_cursor = gdk_cursor_new_from_name (display, "grab");
+  if (!hand_open_cursor)
+    hand_open_cursor = gdk_cursor_new_from_name (display, "openhand");
+  if (!hand_open_cursor)
+    g_warning (_("The \"%s\" or \"%s\" cursor is not available"),
+               "grab", "openhand");
+}
+
 static void
 set_cursor (int cursor)
 {
@@ -345,28 +372,6 @@ on_boardDrawingArea_configure_event (GtkWidget * widget,
                                      GdkEventConfigure * event,
                                      gpointer user_data)
 {
-  GdkDisplay *display = gtk_widget_get_display (widget);
-
-  if (!default_cursor)
-    default_cursor = gdk_cursor_new_from_name (display, "default");
-  if (!default_cursor)
-    g_warning (_("The \"%s\" cursor is not available"), "default");
-
-  if (!hand_closed_cursor)
-    hand_closed_cursor = gdk_cursor_new_from_name (display, "grabbing");
-  if (!hand_closed_cursor)
-    hand_closed_cursor = gdk_cursor_new_from_name (display, "closedhand");
-  if (!hand_closed_cursor)
-    g_warning (_("The \"%s\" or \"%s\" cursor is not available"),
-               "grabbing", "closedhand");
-
-  if (!hand_open_cursor)
-    hand_open_cursor = gdk_cursor_new_from_name (display, "grab");
-  if (!hand_open_cursor)
-    hand_open_cursor = gdk_cursor_new_from_name (display, "openhand");
-  if (!hand_open_cursor)
-    g_warning (_("The \"%s\" or \"%s\" cursor is not available"),
-               "grab", "openhand");
 
   width = event->width;
   height = event->height;
