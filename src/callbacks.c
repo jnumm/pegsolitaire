@@ -37,6 +37,7 @@ static gboolean clear_buffer = 1;
 static gint piece_x = 0;
 static gint piece_y = 0;
 static gint button_down = 0;
+static cairo_surface_t *board_surface = NULL;
 
 static GdkCursor *hand_closed_cursor = NULL;
 static GdkCursor *hand_open_cursor = NULL;
@@ -367,15 +368,45 @@ on_boardDrawingArea_expose_event (GtkWidget * widget,
   return FALSE;
 }
 
+/* Create a new surface of the appropriate size. */
 gboolean
 on_boardDrawingArea_configure_event (GtkWidget * widget,
                                      GdkEventConfigure * event,
                                      gpointer user_data)
 {
+  if (board_surface)
+    cairo_surface_destroy (board_surface);
 
-  width = event->width;
-  height = event->height;
-  recalculate_size ();
+  board_surface = gdk_window_create_similar_surface (gtk_widget_get_window (widget),
+                                               CAIRO_CONTENT_COLOR,
+                                               gtk_widget_get_allocated_width (widget),
+                                               gtk_widget_get_allocated_height (widget));
+
+  cairo_t *cr = cairo_create (board_surface);
+
+  cairo_paint (cr);
+
+  cairo_destroy (cr);
+
+  return TRUE;
+}
+
+/* Redraw the screen from the surface. Note that the ::draw
+ * signal receives a ready-to-be-used cairo_t that is already
+ * clipped to only draw the exposed areas of the widget
+ */
+gboolean
+on_boardDrawingArea_draw (GtkWidget *widget,
+                          cairo_t   *cr,
+                          gpointer   data)
+{
+  if (!board_surface)
+    return FALSE;
+
+  cairo_set_source_surface (cr, board_surface, 0, 0);
+  cairo_set_source_rgb (cr, 1, 1, 1);
+  cairo_paint (cr);
+
   return FALSE;
 }
 
