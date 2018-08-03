@@ -20,7 +20,10 @@
 #include "game.h"
 
 #include <assert.h>
+#include <stdlib.h>
 #include <string.h>
+
+#include <librsvg/rsvg.h>
 
 #include "i18n.h"
 #include "share.h"
@@ -33,6 +36,9 @@ static char game_board[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = { 0 };
 
 static char game_board_mask[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = { 0 };
 // 1 means it's part of the cross, 0 means not.
+
+static RsvgHandle *peg_svg = NULL;
+static RsvgHandle *hole_svg = NULL;
 
 // Globals that are exposed through game.h
 gint game_moves = 0;
@@ -238,6 +244,44 @@ game_move (int src_x, int src_y, int dst_x, int dst_y)
     return TRUE;
   }
   return FALSE;
+}
+
+static RsvgHandle *
+load_svg (char *filename)
+{
+  char *full_filename = g_build_filename (PKGDATADIR, filename, NULL);
+
+  GError *err = NULL;
+  RsvgHandle *svg = rsvg_handle_new_from_file (full_filename, &err);
+
+  if (err) {
+    GtkDialog *dialog = GTK_DIALOG (gtk_message_dialog_new (GTK_WINDOW (pegSolitaireWindow), GTK_DIALOG_MODAL,
+                                     GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                                     _("Could not load image file %s:\n"
+                                       "%s\n\n"
+                                       "Please check that Peg Solitaire is installed correctly."),
+                                     full_filename, err->message));
+    gtk_dialog_run (dialog);
+    g_error_free (err);
+    exit (1);
+  }
+
+  g_free (full_filename);
+  return svg;
+}
+
+void
+game_load_resources (void)
+{
+  peg_svg = load_svg ("peg.svg");
+  hole_svg = load_svg ("hole.svg");
+}
+
+void
+game_unload_resources (void)
+{
+  g_object_unref (peg_svg);
+  g_object_unref (hole_svg);
 }
 
 static int

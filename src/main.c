@@ -63,30 +63,6 @@ static const GOptionEntry options[] = {
   {NULL}
 };
 
-/*static GamesPreimage *
-load_image (char *filename)
-{
-  char *fname;
-  GamesPreimage *preimage;
-  fname = g_build_filename (PKGDATADIR, filename, NULL);
-  if (g_file_test (fname, G_FILE_TEST_EXISTS)) {
-    preimage = games_preimage_new_from_file (fname, NULL);
-  } else {
-    GtkWidget *dialog;
-
-    dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
-                                     GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-                                     _("Could not find the image:\n"
-                                       "%s\n\n"
-                                       "Please check that Peg Solitaire is installed correctly."),
-                                     fname);
-    gtk_dialog_run (GTK_DIALOG (dialog));
-    exit (1);
-  }
-  g_free (fname);
-  return preimage;
-}*/
-
 int
 main (int argc, char *argv[])
 {
@@ -111,6 +87,8 @@ main (int argc, char *argv[])
 
   gtk_init (&argc, &argv);
 
+  game_load_resources ();
+
   GtkBuilder *builder = gtk_builder_new_from_file (PKGDATADIR "/pegsolitaire.glade");
 
   gtk_builder_connect_signals (builder, NULL);
@@ -124,9 +102,6 @@ main (int argc, char *argv[])
   statusMovesLabel = GTK_LABEL (gtk_builder_get_object (builder, "statusMovesLabel"));
   update_statusbar (0);
 
-  //peg_preimage = load_image ("peg.svg");
-  //hole_preimage = load_image ("hole.svg");
-
   boardDrawingArea = GTK_WIDGET (gtk_builder_get_object (builder, "boardDrawingArea"));
 
   game_new ();
@@ -137,8 +112,11 @@ main (int argc, char *argv[])
 
   gtk_widget_show_all (pegSolitaireWindow);
 
-
-
+  /* main loop */
   gtk_main ();
+
+  /* cleanup */
+  game_unload_resources ();
+
   return 0;
 }

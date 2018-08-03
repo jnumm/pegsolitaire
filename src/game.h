@@ -35,6 +35,8 @@ extern gint game_moves;
 extern game_board_enum game_board_type;
 extern gint game_board_size;
 
+void game_load_resources (void);
+void game_unload_resources (void);
 void game_new (void);
 int is_game_end (void);
 int game_draw (GtkWidget *widget, /*GdkPixmap *pixmap,*/ gint tile_size, int force);
