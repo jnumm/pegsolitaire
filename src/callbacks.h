@@ -25,9 +25,6 @@
 void
 init_cursors (void);
 
-gboolean
-resize_all (void);
-
 void
 on_helpAboutMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data);
 
@@ -43,6 +40,9 @@ void
 on_gameQuitMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data);
 
 gboolean
+on_boardDrawingArea_draw (GtkWidget *widget, cairo_t *cr, gpointer user_data);
+
+gboolean
   on_boardDrawingArea_motion_notify_event
   (GtkWidget * widget, GdkEventMotion * event, gpointer user_data);
 
@@ -54,10 +54,6 @@ on_boardDrawingArea_button_press_event (GtkWidget * widget,
 gboolean
   on_boardDrawingArea_button_release_event
   (GtkWidget * widget, GdkEventButton * event, gpointer user_data);
-
-gboolean
-on_boardDrawingArea_expose_event (GtkWidget * widget,
-                                  GdkEventExpose * event, gpointer user_data);
 
 void
   on_gameEnglishBeginnerMenuItem_activate
@@ -81,11 +77,6 @@ void
 void
   on_gameEuropeanAdvancedMenuItem_activate
   (GtkMenuItem * menuitem, gpointer user_data);
-
-gboolean
-on_boardDrawingArea_configure_event (GtkWidget * widget,
-                                     GdkEventConfigure * event,
-                                     gpointer user_data);
 
 void
 on_helpAboutMenuItem_activate (GtkMenuItem * menuitem, gpointer user_data);

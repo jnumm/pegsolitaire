@@ -34,11 +34,6 @@ GtkWidget *pegSolitaireWindow = NULL;
 GtkAboutDialog *pegSolitaireAboutDialog = NULL;
 GtkWidget *boardDrawingArea = NULL;
 GtkLabel *statusMessageLabel = NULL;
-//GdkPixmap *board_pixmap;
-//GamesPreimage *peg_preimage;
-//GamesPreimage *hole_preimage;
-//GdkPixbuf *peg_pixbuf;
-//GdkPixbuf *hole_pixbuf;
 // End of globals exposed through share.h
 
 static GtkLabel *statusMovesLabel = NULL;

@@ -92,123 +92,17 @@ set_cursor (int cursor)
   prev_cursor = cursor;
 }
 
-static void
-board_draw (void)
-{
-  /*GtkWidget *w;
-  //static GdkGC *backgc = NULL;
-  GdkColor *bg_color;
-  GtkStyle *style;
-  GtkAllocation allocation;
-
-  w = boardDrawingArea;
-
-  //if (board_pixmap)
-  //  g_object_unref (board_pixmap);
-
-  gtk_widget_get_allocation (w, &allocation);
-  board_pixmap = gdk_pixmap_new (gtk_widget_get_window (w), allocation.width,
-                                 allocation.height, -1);
-  //if (!backgc)
-  //  backgc = gdk_gc_new (gtk_widget_get_window (w));
-  style = gtk_widget_get_style (w);
-  //bg_color = gdk_color_copy (&style->bg[GTK_STATE_NORMAL]);
-  //gdk_gc_set_foreground (backgc, bg_color);
-  //gdk_gc_set_fill (backgc, GDK_SOLID);
-  gdk_color_free (bg_color);
-
-  //gdk_draw_rectangle (board_pixmap, backgc, TRUE, 0, 0,
-  //                    allocation.width, allocation.height);
-
-  clear_buffer = clear_game = 0;
-  gtk_widget_queue_draw (w);*/
-}
-
-// redraw the board and pegs
-static gboolean
-redraw_all (void)
-{
-  board_draw ();
-  //game_draw (pegSolitaireWindow, board_pixmap, tile_size, 1);
-  return 0;
-}
-
-// redraw everything in a thread
-gboolean
-resize_all (void)
-{
-  /*if (tile_size != prior_tile_size) {
-    if (peg_pixbuf != NULL)
-      g_object_unref (peg_pixbuf);
-    peg_pixbuf = NULL;
-    if (hole_pixbuf != NULL)
-      g_object_unref (hole_pixbuf);
-    hole_pixbuf = NULL;
-
-    if (peg_preimage) {
-      peg_pixbuf = games_preimage_render (peg_preimage,
-                                          tile_size / 1.666,
-                                          tile_size / 1.666);
-    }
-
-    if (hole_preimage) {
-      hole_pixbuf = games_preimage_render (hole_preimage,
-                                           tile_size / 1.666,
-                                           tile_size / 1.666);
-    }
-
-    if (peg_pixbuf == NULL || hole_pixbuf == NULL) {
-      GtkWidget *dialog;
-      dialog = gtk_message_dialog_new (GTK_WINDOW (pegSolitaireWindow),
-                                       GTK_DIALOG_MODAL,
-                                       GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-                                       _("The theme for this game failed "
-                                         "to render.\n\nPlease check that "
-                                         "Peg Solitaire is installed "
-                                         "correctly."));
-      gtk_dialog_run (GTK_DIALOG (dialog));
-      exit (1);
-    }
-    prior_tile_size = tile_size;
-  }*/
-
-  return 0;
-}
-
-static void
-update_tile_size (void)
-{
-  if (width < height)
-    tile_size = width / game_board_size;
-  else
-    tile_size = height / game_board_size;
-}
-
-// the size has changed, show the resize in a thread.
-static void
-recalculate_size (void)
-{
-  update_tile_size ();
-
-  if (clear_buffer || clear_game || tile_size != prior_tile_size) {
-    clear_buffer = 1;
-  }
-}
 
 static void
 initiate_new_game (int board_type, int board_size)
 {
   game_board_type = board_type;
   game_board_size = board_size;
-  update_tile_size ();
   clear_game = 1;
   game_new ();
 
   gtk_label_set_text (statusMessageLabel, "");
   update_statusbar (game_moves);
-
-  //games_grid_frame_set (GAMES_GRID_FRAME (gameframe), board_size, board_size);
-  recalculate_size ();
 }
 
 // Following functions are gtk callbacks and all their parameters are required.
@@ -351,44 +245,6 @@ on_boardDrawingArea_button_release_event (GtkWidget * widget,
     }
   }
   return FALSE;
-}
-
-gboolean
-on_boardDrawingArea_expose_event (GtkWidget * widget,
-                                  GdkEventExpose * event, gpointer user_data)
-{
-  if (clear_game)
-    return FALSE;
-
-  /*gdk_draw_pixmap (gtk_widget_get_window (widget),
-                   gtk_widget_get_style (widget)->fg_gc[gtk_widget_get_state
-                                                        (widget)],
-                   board_pixmap, event->area.x, event->area.y, event->area.x,
-                   event->area.y, event->area.width, event->area.height);*/
-  return FALSE;
-}
-
-/* Create a new surface of the appropriate size. */
-gboolean
-on_boardDrawingArea_configure_event (GtkWidget * widget,
-                                     GdkEventConfigure * event,
-                                     gpointer user_data)
-{
-  if (board_surface)
-    cairo_surface_destroy (board_surface);
-
-  board_surface = gdk_window_create_similar_surface (gtk_widget_get_window (widget),
-                                               CAIRO_CONTENT_COLOR,
-                                               gtk_widget_get_allocated_width (widget),
-                                               gtk_widget_get_allocated_height (widget));
-
-  cairo_t *cr = cairo_create (board_surface);
-
-  cairo_paint (cr);
-
-  cairo_destroy (cr);
-
-  return TRUE;
 }
 
 /* Redraw the screen from the surface. Note that the ::draw
