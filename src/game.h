@@ -32,6 +32,7 @@ typedef enum { BOARD_ENGLISH, BOARD_EUROPEAN } game_board_enum;
 extern int game_moves;
 extern game_board_enum game_board_type;
 extern int game_board_size;
+extern int tile_size;
 
 void game_load_resources(void);
 void game_unload_resources(void);

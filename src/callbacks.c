@@ -29,13 +29,8 @@
 
 void update_statusbar(int moves);
 
-static gint tile_size = 0, prior_tile_size = 0;
-static gint width = 0, height = 0;
-static gboolean clear_game = 1;
-static gboolean clear_buffer = 1;
-static gint piece_x = 0;
-static gint piece_y = 0;
 static bool button_down = false;
+static int dragging_peg_x = 0, dragging_peg_y = 0;
 
 static GdkCursor *hand_closed_cursor = NULL;
 static GdkCursor *hand_open_cursor = NULL;
@@ -84,11 +79,11 @@ static void set_cursor(int cursor) {
 static void initiate_new_game(int board_type, int board_size) {
     game_board_type = board_type;
     game_board_size = board_size;
-    clear_game = 1;
     game_new();
 
     gtk_label_set_text(statusMessageLabel, "");
     update_statusbar(game_moves);
+    gtk_widget_queue_draw(boardDrawingArea);
 }
 
 // Following functions are gtk callbacks and all their parameters are required.
@@ -127,33 +122,14 @@ void on_gameQuitMenuItem_activate(GtkMenuItem *menuitem, gpointer user_data) {
 gboolean on_boardDrawingArea_motion_notify_event(GtkWidget *widget,
                                                  GdkEventMotion *event,
                                                  gpointer user_data) {
-    int i = event->x / tile_size;
-    int j = event->y / tile_size;
-    int icon_size = tile_size / 1.666;
+    int tile_x = event->x / tile_size;
+    int tile_y = event->y / tile_size;
     if (button_down) {
-        // before we draw the peg, let's expose the board again.
-        /*gdk_draw_pixmap (gtk_widget_get_window (widget),
-                         gtk_widget_get_style
-           (widget)->fg_gc[gtk_widget_get_state (widget)], board_pixmap, 0, 0,
-           0, 0, tile_size * game_board_size, tile_size * game_board_size);*/
 
-        /*gdk_draw_pixbuf (gtk_widget_get_window (widget),
-                         gtk_widget_get_style
-           (widget)->fg_gc[gtk_widget_get_state (widget)], peg_pixbuf, 0, 0,
-           event->x - (icon_size / 2), event->y - (icon_size / 2), icon_size,
-           icon_size, GDK_RGB_DITHER_NORMAL, 0, 0);*/
+    } else if (game_is_peg_at(tile_x, tile_y)) {
+        set_cursor(CURSOR_OPEN);
     } else {
-        // switch up the pointer when we're over a peg and what-not.
-        if (game_is_peg_at(i, j)) {
-            if ((int)event->x % tile_size < (tile_size / 2) + (icon_size / 2) &&
-                (int)event->x % tile_size > (tile_size / 2) - (icon_size / 2) &&
-                (int)event->y % tile_size < (tile_size / 2) + (icon_size / 2) &&
-                (int)event->y % tile_size > (tile_size / 2) - (icon_size / 2))
-                set_cursor(CURSOR_OPEN);
-            else
-                set_cursor(CURSOR_NONE);
-        } else
-            set_cursor(CURSOR_NONE);
+        set_cursor(CURSOR_NONE);
     }
     return FALSE;
 }
@@ -161,29 +137,20 @@ gboolean on_boardDrawingArea_motion_notify_event(GtkWidget *widget,
 gboolean on_boardDrawingArea_button_press_event(GtkWidget *widget,
                                                 GdkEventButton *event,
                                                 gpointer user_data) {
-    if ((event->button == 1) && !button_down) {
-        int i, j;
-        if (is_game_end())
+    if (event->button == 1 && !button_down /* && !is_game_end()*/) {
+        int tile_x = event->x / tile_size;
+        int tile_y = event->y / tile_size;
+
+        if (!game_is_peg_at(tile_x, tile_y))
             return FALSE;
 
-        i = event->x / tile_size;
-        j = event->y / tile_size;
-
-        if (!game_is_peg_at(i, j))
-            return FALSE;
         set_cursor(CURSOR_CLOSED);
+        dragging_peg_x = tile_x;
+        dragging_peg_y = tile_y;
 
         button_down = true;
-        game_toggle_cell(i, j);
-        // game_draw(pegSolitaireWindow, /*board_pixmap,*/ tile_size, 0);
-        piece_x = i;
-        piece_y = j;
-        GdkRectangle update;
-        update.x = i * tile_size;
-        update.y = j * tile_size;
-        update.width = tile_size;
-        update.height = tile_size;
-        // gtk_widget_draw(widget, &update);
+        game_toggle_cell(tile_x, tile_y);
+        gtk_widget_queue_draw(widget);
     }
     return FALSE;
 }
@@ -191,26 +158,23 @@ gboolean on_boardDrawingArea_button_press_event(GtkWidget *widget,
 gboolean on_boardDrawingArea_button_release_event(GtkWidget *widget,
                                                   GdkEventButton *event,
                                                   gpointer user_data) {
-    if (event->button == 1) {
-        if (button_down) {
-            int i, j;
-            button_down = false;
-            set_cursor(CURSOR_NONE);
-            i = event->x / tile_size;
-            j = event->y / tile_size;
-            if (!game_move(piece_x, piece_y, i, j)) {
-                // put the peg back where we started.
-                game_toggle_cell(piece_x, piece_y);
-                // game_draw(pegSolitaireWindow, board_pixmap, tile_size, 0);
-                return FALSE;
-            }
-            // game_draw(pegSolitaireWindow, board_pixmap, tile_size, 0);
+    if (event->button == 1 && button_down) {
+        button_down = false;
+        set_cursor(CURSOR_NONE);
+        int dest_x = event->x / tile_size;
+        int dest_y = event->y / tile_size;
+
+        // Either execute the move or put the peg back where we started.
+        if (game_move(dragging_peg_x, dragging_peg_y, dest_x, dest_y)) {
             update_statusbar(game_moves);
             if (is_game_end()) {
                 gtk_label_set_text(statusMessageLabel, game_cheese());
-            } else
-                set_cursor(CURSOR_OPEN);
+            }
+        } else {
+            game_toggle_cell(dragging_peg_x, dragging_peg_y);
         }
+
+        gtk_widget_queue_draw(widget);
     }
     return FALSE;
 }

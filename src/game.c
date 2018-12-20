@@ -39,7 +39,6 @@ static bool game_board[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = {false};
 static bool game_board_mask[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = {false};
 // true means it's part of the cross, false means not.
 
-static int tile_size = 0;
 static cairo_pattern_t *peg_pattern = NULL;
 static cairo_pattern_t *hole_pattern = NULL;
 
@@ -47,6 +46,7 @@ static cairo_pattern_t *hole_pattern = NULL;
 int game_moves = 0;
 int game_board_size = DEFAULT_GAME_BOARD_SIZE;
 game_board_enum game_board_type = DEFAULT_GAME_BOARD_TYPE;
+int tile_size = 0;
 // End of globals that are exposed through game.h
 
 static bool valid_index(int i) { return i >= 0 && i < game_board_size; }
@@ -119,14 +119,12 @@ void game_new(void) {
 }
 
 bool is_game_end(void) {
-    int i, j, k;
-
     // are there any two pegs adjacent in a row?
-    for (i = 0; i < game_board_size; i++) {
-        for (j = 0; j < game_board_size - 1; j++) {
+    for (int i = 0; i < game_board_size; i++) {
+        for (int j = 0; j < game_board_size - 1; j++) {
             if (game_board[i][j] && game_board[i][j + 1]) {
                 // great, but is the entire row filled with pegs?
-                for (k = 0; k < game_board_size; k++) {
+                for (int k = 0; k < game_board_size; k++) {
                     if (game_board_mask[i][k] && !game_board[i][k]) {
                         return false; // nope, the game is still on.
                     }
@@ -136,11 +134,11 @@ bool is_game_end(void) {
     }
 
     // are there any two pegs adjacent in a column?
-    for (i = 0; i < game_board_size - 1; i++) {
-        for (j = 0; j < game_board_size; j++) {
+    for (int i = 0; i < game_board_size - 1; i++) {
+        for (int j = 0; j < game_board_size; j++) {
             if (game_board[i][j] && game_board[i + 1][j]) {
                 // great, but is the entire row filled with pegs?
-                for (k = 0; k < game_board_size; k++) {
+                for (int k = 0; k < game_board_size; k++) {
                     if (game_board_mask[k][j] && !game_board[k][j]) {
                         return false; // nope, the game is still on.
                     }
@@ -153,12 +151,12 @@ bool is_game_end(void) {
     return true;
 }
 
-void game_toggle_cell(int i, int j) {
-    if (!valid_index(i) || !valid_index(j))
+void game_toggle_cell(int x, int y) {
+    if (!valid_index(x) || !valid_index(y))
         return;
 
-    if (game_board_mask[i][j]) {
-        game_board[i][j] = !game_board[i][j];
+    if (game_board_mask[y][x]) {
+        game_board[y][x] = !game_board[y][x];
     }
 }
 
