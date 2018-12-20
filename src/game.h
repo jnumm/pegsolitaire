@@ -22,10 +22,7 @@
 
 #include <gtk/gtk.h>
 
-typedef enum {
-  BOARD_ENGLISH,
-  BOARD_EUROPEAN
-} game_board_enum;
+typedef enum { BOARD_ENGLISH, BOARD_EUROPEAN } game_board_enum;
 
 #define BOARD_SIZE_BEGINNER 7
 #define BOARD_SIZE_INTERMEDIATE 11
@@ -35,14 +32,15 @@ extern gint game_moves;
 extern game_board_enum game_board_type;
 extern gint game_board_size;
 
-void game_load_resources (void);
-void game_unload_resources (void);
-void game_new (void);
-int is_game_end (void);
-int game_draw (GtkWidget *widget, /*GdkPixmap *pixmap,*/ gint tile_size, int force);
-void game_toggle_cell (int i, int j);
-gboolean game_is_peg_at (int i, int j);
-gboolean game_move (int src_x, int src_y, int dst_x, int dst_y);
-const char *game_cheese (void);
+void game_load_resources(void);
+void game_unload_resources(void);
+void game_new(void);
+int is_game_end(void);
+int game_draw(GtkWidget *widget, /*GdkPixmap *pixmap,*/ gint tile_size,
+              int force);
+void game_toggle_cell(int i, int j);
+gboolean game_is_peg_at(int i, int j);
+gboolean game_move(int src_x, int src_y, int dst_x, int dst_y);
+const char *game_cheese(void);
 
 #endif // PEGSOLITAIRE_GAME_H

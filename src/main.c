@@ -40,81 +40,82 @@ static GtkLabel *statusMovesLabel = NULL;
 static gint session_xpos = 0;
 static gint session_ypos = 0;
 
-void
-update_statusbar (int moves)
-{
-  // TRANSLATORS: This is the number of moves the player has made.
-  gchar *str = g_strdup_printf (_("Moves: %d"), moves);
-  gtk_label_set_text (statusMovesLabel, str);
-  g_free (str);
+void update_statusbar(int moves) {
+    // TRANSLATORS: This is the number of moves the player has made.
+    gchar *str = g_strdup_printf(_("Moves: %d"), moves);
+    gtk_label_set_text(statusMovesLabel, str);
+    g_free(str);
 }
 
 /* Session Options */
 
 static const GOptionEntry options[] = {
-  {"x", 'x', 0, G_OPTION_ARG_INT, &session_xpos, N_("X location of window"),
-   N_("X")},
-  {"y", 'y', 0, G_OPTION_ARG_INT, &session_ypos, N_("Y location of window"),
-   N_("Y")},
-  {NULL}
-};
+    {"x", 'x', 0, G_OPTION_ARG_INT, &session_xpos, N_("X location of window"),
+     N_("X")},
+    {"y", 'y', 0, G_OPTION_ARG_INT, &session_ypos, N_("Y location of window"),
+     N_("Y")},
+    {NULL}};
 
-int
-main (int argc, char *argv[])
-{
-  GOptionContext *context;
-  GError *error = NULL;
+int main(int argc, char *argv[]) {
+    GOptionContext *context;
+    GError *error = NULL;
 
-  setlocale (LC_ALL, "");
+    setlocale(LC_ALL, "");
 #ifdef ENABLE_NLS
-  bindtextdomain (PACKAGE, LOCALEDIR);
-  bind_textdomain_codeset (PACKAGE, "UTF-8");
-  textdomain (PACKAGE);
+    bindtextdomain(PACKAGE, LOCALEDIR);
+    bind_textdomain_codeset(PACKAGE, "UTF-8");
+    textdomain(PACKAGE);
 #endif
 
-  context = g_option_context_new ("");
-  g_option_context_add_main_entries (context, options, PACKAGE);
-  g_option_context_add_group (context, gtk_get_option_group (TRUE));
+    context = g_option_context_new("");
+    g_option_context_add_main_entries(context, options, PACKAGE);
+    g_option_context_add_group(context, gtk_get_option_group(TRUE));
 
-  if (!g_option_context_parse (context, &argc, &argv, &error)) {
-    fputs (error->message, stderr);
-    exit (1);
-  }
+    if (!g_option_context_parse(context, &argc, &argv, &error)) {
+        fputs(error->message, stderr);
+        exit(1);
+    }
 
-  gtk_init (&argc, &argv);
+    gtk_init(&argc, &argv);
 
-  game_load_resources ();
+    game_load_resources();
 
-  GtkBuilder *builder = gtk_builder_new_from_file (PKGDATADIR "/pegsolitaire.glade");
+    GtkBuilder *builder =
+        gtk_builder_new_from_file(PKGDATADIR "/pegsolitaire.glade");
 
-  gtk_builder_connect_signals (builder, NULL);
+    gtk_builder_connect_signals(builder, NULL);
 
-  pegSolitaireWindow = GTK_WIDGET (gtk_builder_get_object (builder, "pegSolitaireWindow"));
+    pegSolitaireWindow =
+        GTK_WIDGET(gtk_builder_get_object(builder, "pegSolitaireWindow"));
 
-  pegSolitaireAboutDialog = GTK_ABOUT_DIALOG (gtk_builder_get_object (builder, "pegSolitaireAboutDialog"));
-  gtk_about_dialog_set_version (pegSolitaireAboutDialog, VERSION);
+    pegSolitaireAboutDialog = GTK_ABOUT_DIALOG(
+        gtk_builder_get_object(builder, "pegSolitaireAboutDialog"));
+    gtk_about_dialog_set_version(pegSolitaireAboutDialog, VERSION);
 
-  statusMessageLabel = GTK_LABEL (gtk_builder_get_object (builder, "statusMessageLabel"));
-  statusMovesLabel = GTK_LABEL (gtk_builder_get_object (builder, "statusMovesLabel"));
-  update_statusbar (0);
+    statusMessageLabel =
+        GTK_LABEL(gtk_builder_get_object(builder, "statusMessageLabel"));
+    statusMovesLabel =
+        GTK_LABEL(gtk_builder_get_object(builder, "statusMovesLabel"));
+    update_statusbar(0);
 
-  boardDrawingArea = GTK_WIDGET (gtk_builder_get_object (builder, "boardDrawingArea"));
+    boardDrawingArea =
+        GTK_WIDGET(gtk_builder_get_object(builder, "boardDrawingArea"));
 
-  init_cursors ();
+    init_cursors();
 
-  game_new ();
+    game_new();
 
-  if (session_xpos > 0 && session_ypos > 0)
-    gtk_window_move (GTK_WINDOW (pegSolitaireWindow),
-                     session_xpos, session_ypos);
+    if (session_xpos > 0 && session_ypos > 0)
+        gtk_window_move(GTK_WINDOW(pegSolitaireWindow), session_xpos,
+                        session_ypos);
 
-  gtk_widget_show_all (pegSolitaireWindow);
+    gtk_widget_show_all(pegSolitaireWindow);
 
-  /* main loop */
-  gtk_main ();
+    /* main loop */
+    gtk_main();
 
-  /* cleanup */
-  game_unload_resources ();
+    /* cleanup */
+    game_unload_resources();
 
-  return 0;
+    return 0;
 }
