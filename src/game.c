@@ -58,24 +58,21 @@ create_game_board_mask (void)
   // initialize game_board_mask
   memset (game_board_mask, 0, sizeof game_board_mask);
 
-  if (game_board_type == BOARD_ENGLISH) {
-    // fill the centre row of the cross
-    for (int i = n / 2 - m / 2; i < n - (n / 2 - m / 2); i++) {
-      for (int j = 0; j < game_board_size; j++) {
-        game_board_mask[i][j] = 1;
-      }
+  // fill the centre row of the cross
+  for (int i = n / 2 - m / 2; i < n - (n / 2 - m / 2); i++) {
+    for (int j = 0; j < game_board_size; j++) {
+      game_board_mask[i][j] = 1;
     }
+  }
 
-    // fill the centre column of the cross
-    for (int i = 0; i < game_board_size; i++) {
-      for (int j = n / 2 - m / 2; j < n - (n / 2 - m / 2); j++) {
-        game_board_mask[i][j] = 1;
-      }
+  // fill the centre column of the cross
+  for (int i = 0; i < game_board_size; i++) {
+    for (int j = n / 2 - m / 2; j < n - (n / 2 - m / 2); j++) {
+      game_board_mask[i][j] = 1;
     }
-  } else if (game_board_type == BOARD_EUROPEAN) {
-    game_board_type = BOARD_ENGLISH;
-    create_game_board_mask ();
-    game_board_type = BOARD_EUROPEAN;
+  }
+
+  if (game_board_type == BOARD_EUROPEAN) {
     for (int i = n / 2 - m / 1.666; i < n - (n / 2 - m / 1.666); i++) {
       for (int j = n / 2 - m / 1.666; j < n - (n / 2 - m / 1.666); j++) {
         game_board_mask[i][j] = 1;
