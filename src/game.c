@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <gtk/gtk.h>
 #include <librsvg/rsvg.h>
 
 #include "i18n.h"
@@ -37,8 +38,9 @@ static char game_board[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = {0};
 static char game_board_mask[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = {0};
 // 1 means it's part of the cross, 0 means not.
 
-static RsvgHandle *peg_svg = NULL;
-static RsvgHandle *hole_svg = NULL;
+static int tile_size = 0;
+static cairo_pattern_t *peg_pattern = NULL;
+static cairo_pattern_t *hole_pattern = NULL;
 
 // Globals that are exposed through game.h
 gint game_moves = 0;
@@ -246,72 +248,58 @@ static RsvgHandle *load_svg(char *filename) {
     return svg;
 }
 
+static void verify_size(int width, int height) {
+    if (!tile_size)
+        tile_size = width;
+    if (!(width == height && width == tile_size))
+        g_warning("All tiles are expected to be square and of the same size.");
+}
+
+static cairo_pattern_t *rsvg_to_pattern(RsvgHandle *svg) {
+    RsvgDimensionData svg_dimensions;
+    rsvg_handle_get_dimensions(svg, &svg_dimensions);
+    verify_size(svg_dimensions.width, svg_dimensions.height);
+
+    cairo_surface_t *surface = cairo_image_surface_create(
+        CAIRO_FORMAT_ARGB32, svg_dimensions.width, svg_dimensions.height);
+    cairo_t *cr = cairo_create(surface);
+    rsvg_handle_render_cairo(svg, cr);
+    cairo_pattern_t *pattern = cairo_pattern_create_for_surface(surface);
+    cairo_pattern_set_extend(pattern, CAIRO_EXTEND_REPEAT);
+
+    cairo_destroy(cr);
+    cairo_surface_destroy(surface);
+    g_object_unref(svg);
+
+    return pattern;
+}
+
 void game_load_resources(void) {
-    peg_svg = load_svg("peg.svg");
-    hole_svg = load_svg("hole.svg");
+    peg_pattern = rsvg_to_pattern(load_svg("peg.svg"));
+    hole_pattern = rsvg_to_pattern(load_svg("hole.svg"));
 }
 
 void game_unload_resources(void) {
-    g_object_unref(peg_svg);
-    g_object_unref(hole_svg);
+    cairo_pattern_destroy(peg_pattern);
+    cairo_pattern_destroy(hole_pattern);
 }
 
-static int game_draw_cell(GtkWidget *widget,
-                          /*GdkPixmap * pixmap,*/ gint tile_size, gint x,
-                          gint y) {
-    // GdkPixbuf *p;
-    // static GdkGC *backgc = NULL;
-    GdkColor *bg_color;
-    GtkStyle *style;
-    if (x < 0 || y < 0)
-        return -1;
-    if (x >= game_board_size || y >= game_board_size)
-        return -1;
-    if (game_board_mask[x][y] == 0)
-        return 1;
-    /*if (game_board[x][y])
-      p = peg_pixbuf;
-    else
-      p = hole_pixbuf;*/
+void game_draw(cairo_t *cr) {
+    cairo_set_source(cr, hole_pattern);
+    for (int y = 0; y < game_board_size; y++)
+        for (int x = 0; x < game_board_size; x++)
+            if (game_board_mask[y][x])
+                cairo_rectangle(cr, tile_size * x, tile_size * y,
+                                tile_size, tile_size);
+    cairo_fill(cr);
 
-    /*if (!backgc)
-      backgc = gdk_gc_new (gtk_widget_get_window (widget));
-    style = gtk_widget_get_style (widget);
-    bg_color = gdk_color_copy (&style->bg[GTK_STATE_NORMAL]);
-    gdk_gc_set_foreground (backgc, bg_color);
-    //gdk_gc_set_fill (backgc, GDK_SOLID);
-    gdk_color_free (bg_color);*/
-
-    /*gdk_draw_rectangle (pixmap, backgc, TRUE,
-                        (x * tile_size), (y * tile_size), tile_size,
-       tile_size);*/
-    int icon_size = tile_size / 1.666;
-    /*gdk_draw_pixbuf (pixmap, backgc, p, 0, 0,
-                     (x * tile_size) + (tile_size / 2) - (icon_size / 2),
-                     (y * tile_size) + (tile_size / 2) - (icon_size / 2),
-                     icon_size, icon_size, GDK_RGB_DITHER_NORMAL, 0, 0);*/
-
-    GdkRectangle update;
-    update.x = x * tile_size;
-    update.y = y * tile_size;
-    update.width = tile_size;
-    update.height = tile_size;
-    gtk_widget_draw(widget, &update);
-
-    return 0;
-}
-
-int game_draw(GtkWidget *widget, /*GdkPixmap * pixmap,*/ gint tile_size,
-              int force) {
-    int i, j;
-    for (i = 0; i < game_board_size; i++) {
-        for (j = 0; j < game_board_size; j++) {
-            // game_draw_cell (widget, pixmap, tile_size, i, j);
-        }
-    }
-
-    gtk_widget_queue_draw(widget);
-    return 0;
+    cairo_set_source(cr, peg_pattern);
+    for (int y = 0; y < game_board_size; y++)
+        for (int x = 0; x < game_board_size; x++)
+            if (game_board[y][x])
+                cairo_rectangle(cr, tile_size * x, tile_size * y,
+                                tile_size, tile_size);
+    cairo_fill(cr);
 }
 
 const char *game_cheese(void) {

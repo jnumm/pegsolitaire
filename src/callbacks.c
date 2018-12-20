@@ -19,8 +19,6 @@
 
 #include "callbacks.h"
 
-#include <stdlib.h> // for exit()
-
 #include <gtk/gtk.h>
 
 #include "config.h"
@@ -37,7 +35,6 @@ static gboolean clear_buffer = 1;
 static gint piece_x = 0;
 static gint piece_y = 0;
 static gint button_down = 0;
-static cairo_surface_t *board_surface = NULL;
 
 static GdkCursor *hand_closed_cursor = NULL;
 static GdkCursor *hand_open_cursor = NULL;
@@ -177,7 +174,7 @@ gboolean on_boardDrawingArea_button_press_event(GtkWidget *widget,
 
         button_down = 1;
         game_toggle_cell(i, j);
-        game_draw(pegSolitaireWindow, /*board_pixmap,*/ tile_size, 0);
+        // game_draw(pegSolitaireWindow, /*board_pixmap,*/ tile_size, 0);
         piece_x = i;
         piece_y = j;
         GdkRectangle update;
@@ -185,7 +182,7 @@ gboolean on_boardDrawingArea_button_press_event(GtkWidget *widget,
         update.y = j * tile_size;
         update.width = tile_size;
         update.height = tile_size;
-        gtk_widget_draw(widget, &update);
+        // gtk_widget_draw(widget, &update);
     }
     return FALSE;
 }
@@ -203,10 +200,10 @@ gboolean on_boardDrawingArea_button_release_event(GtkWidget *widget,
             if (game_move(piece_x, piece_y, i, j) == FALSE) {
                 // put the peg back where we started.
                 game_toggle_cell(piece_x, piece_y);
-                game_draw(pegSolitaireWindow, /*board_pixmap,*/ tile_size, 0);
+                // game_draw(pegSolitaireWindow, board_pixmap, tile_size, 0);
                 return FALSE;
             }
-            game_draw(pegSolitaireWindow, /*board_pixmap,*/ tile_size, 0);
+            // game_draw(pegSolitaireWindow, board_pixmap, tile_size, 0);
             update_statusbar(game_moves);
             if (is_game_end()) {
                 gtk_label_set_text(statusMessageLabel, game_cheese());
@@ -217,19 +214,9 @@ gboolean on_boardDrawingArea_button_release_event(GtkWidget *widget,
     return FALSE;
 }
 
-/* Redraw the screen from the surface. Note that the ::draw
- * signal receives a ready-to-be-used cairo_t that is already
- * clipped to only draw the exposed areas of the widget
- */
 gboolean on_boardDrawingArea_draw(GtkWidget *widget, cairo_t *cr,
                                   gpointer data) {
-    if (!board_surface)
-        return FALSE;
-
-    cairo_set_source_surface(cr, board_surface, 0, 0);
-    cairo_set_source_rgb(cr, 1, 1, 1);
-    cairo_paint(cr);
-
+    game_draw(cr);
     return FALSE;
 }
 
