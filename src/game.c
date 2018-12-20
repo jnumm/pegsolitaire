@@ -20,6 +20,7 @@
 #include "game.h"
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -32,21 +33,26 @@
 #define DEFAULT_GAME_BOARD_SIZE BOARD_SIZE_BEGINNER
 #define DEFAULT_GAME_BOARD_TYPE BOARD_ENGLISH
 
-static char game_board[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = {0};
-// 1 means there's a peg, 0 means no peg.
+static bool game_board[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = {false};
+// true means there's a peg, false means no peg.
 
-static char game_board_mask[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = {0};
-// 1 means it's part of the cross, 0 means not.
+static bool game_board_mask[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = {false};
+// true means it's part of the cross, false means not.
 
 static int tile_size = 0;
 static cairo_pattern_t *peg_pattern = NULL;
 static cairo_pattern_t *hole_pattern = NULL;
 
 // Globals that are exposed through game.h
-gint game_moves = 0;
-gint game_board_size = DEFAULT_GAME_BOARD_SIZE;
+int game_moves = 0;
+int game_board_size = DEFAULT_GAME_BOARD_SIZE;
 game_board_enum game_board_type = DEFAULT_GAME_BOARD_TYPE;
 // End of globals that are exposed through game.h
+
+static bool valid_index(int i) { return i >= 0 && i < game_board_size; }
+
+// The geometric center between two points.
+static int middle(int src, int dst) { return src + ((dst - src) / 2); }
 
 static void create_game_board_mask(void) {
     int n = game_board_size;
@@ -91,14 +97,8 @@ static void game_init(void) {
 /* Clears the number of moves, and places a peg in all holes of the board
  * except for the middle one. */
 static void game_clear(void) {
-    for (int i = 0; i < game_board_size; i++) {
-        for (int j = 0; j < game_board_size; j++) {
-            if (game_board_mask[i][j]) {
-                game_board[i][j] = 1;
-            }
-        }
-    }
-    game_board[game_board_size / 2][game_board_size / 2] = 0;
+    memcpy(game_board, game_board_mask, sizeof game_board);
+    game_board[game_board_size / 2][game_board_size / 2] = false;
     game_moves = 0;
 }
 
@@ -107,8 +107,7 @@ static int game_count_pegs_on_board(void) {
     // find the number of pegs on the board
     for (int i = 0; i < game_board_size; i++) {
         for (int j = 0; j < game_board_size; j++) {
-            if (game_board[i][j])
-                pegs_left++;
+            pegs_left += game_board[i][j];
         }
     }
     return pegs_left;
@@ -119,7 +118,7 @@ void game_new(void) {
     game_clear();
 }
 
-int is_game_end(void) {
+bool is_game_end(void) {
     int i, j, k;
 
     // are there any two pegs adjacent in a row?
@@ -128,9 +127,9 @@ int is_game_end(void) {
             if (game_board[i][j] && game_board[i][j + 1]) {
                 // great, but is the entire row filled with pegs?
                 for (k = 0; k < game_board_size; k++) {
-                    if (game_board_mask[i][k] == 1)
-                        if (game_board[i][k] == 0)
-                            return 0; // nope, the game is still on.
+                    if (game_board_mask[i][k] && !game_board[i][k]) {
+                        return false; // nope, the game is still on.
+                    }
                 }
             }
         }
@@ -142,20 +141,20 @@ int is_game_end(void) {
             if (game_board[i][j] && game_board[i + 1][j]) {
                 // great, but is the entire row filled with pegs?
                 for (k = 0; k < game_board_size; k++) {
-                    if (game_board_mask[k][j] == 1)
-                        if (game_board[k][j] == 0)
-                            return 0; // nope, the game is still on.
+                    if (game_board_mask[k][j] && !game_board[k][j]) {
+                        return false; // nope, the game is still on.
+                    }
                 }
             }
         }
     }
 
     // no pegs adjacent.  no more moves means it's game over.
-    return 1;
+    return true;
 }
 
 void game_toggle_cell(int i, int j) {
-    if (i < 0 || j < 0 || i >= game_board_size || j >= game_board_size)
+    if (!valid_index(i) || !valid_index(j))
         return;
 
     if (game_board_mask[i][j]) {
@@ -163,66 +162,39 @@ void game_toggle_cell(int i, int j) {
     }
 }
 
-gboolean game_is_peg_at(int i, int j) {
-    if (i < 0 || j < 0 || i >= game_board_size || j >= game_board_size)
-        return FALSE;
-    if (game_board_mask[i][j] == 0)
-        return FALSE;
-    return game_board[i][j];
+bool game_is_peg_at(int x, int y) {
+    return valid_index(x) && valid_index(y) && game_board_mask[y][x] &&
+           game_board[y][x];
 }
 
-static gboolean game_is_valid_move(int src_x, int src_y, int dst_x, int dst_y) {
-    int delta_x, delta_y;
-    if (src_x < 0 || src_y < 0 || dst_x < 0 || dst_y < 0)
-        return FALSE;
-    if (src_x >= game_board_size || src_y >= game_board_size)
-        return FALSE;
-    if (dst_x >= game_board_size || dst_y >= game_board_size)
-        return FALSE;
-    if (game_board_mask[src_x][src_y] == 0 ||
-        game_board_mask[dst_x][dst_y] == 0)
-        return FALSE;
-
-    // well the peg has to be out of the source pos'n already
-    if (game_is_peg_at(src_x, src_y) == TRUE)
-        return FALSE;
-    // and there can't be a peg at the destination either.
-    if (game_is_peg_at(dst_x, dst_y) == TRUE)
-        return FALSE;
-
+static bool game_is_valid_move(int src_x, int src_y, int dst_x, int dst_y) {
     // is it 2 away with a peg in the middle with a peg in it?
-    delta_x = src_x - dst_x;
-    delta_y = src_y - dst_y;
-    if (delta_x == 0 && (delta_y == -2 || delta_y == 2))
-        return game_is_peg_at(dst_x, dst_y + (delta_y / 2));
-    else if (delta_y == 0 && (delta_x == -2 || delta_x == 2))
-        return game_is_peg_at(dst_x + (delta_x / 2), dst_y);
-    return FALSE;
+    bool correct_distance = (dst_x == src_x && abs(dst_y - src_y) == 2) ||
+                            (dst_y == src_y && abs(dst_x - src_x) == 2);
+
+    return !game_is_peg_at(src_x, src_y) && !game_is_peg_at(dst_x, dst_y) &&
+           game_is_peg_at(middle(src_x, dst_x), middle(src_y, dst_y)) &&
+           correct_distance;
 }
 
 // move peg from src to dst, taking intermediate peg out.
 // presumes that peg from src is already removed
-gboolean game_move(int src_x, int src_y, int dst_x, int dst_y) {
-    if (game_is_valid_move(src_x, src_y, dst_x, dst_y) == TRUE) {
-        int delta_x = src_x - dst_x;
-        int delta_y = src_y - dst_y;
+bool game_move(int src_x, int src_y, int dst_x, int dst_y) {
+    if (game_is_valid_move(src_x, src_y, dst_x, dst_y)) {
         // okay, the peg has been taken out of src_x,src_y and is in the air.
         // it is placed on dst_x,dst_y, and it's a valid move.
         // this means that the dst_x,dst_y doesn't have a peg in it.
         // it also means the one tile we jumped over does have a peg in it.
 
         // take the jumped peg out.
-        if (delta_x == 0)
-            game_toggle_cell(dst_x, dst_y + (delta_y / 2));
-        else
-            game_toggle_cell(dst_x + (delta_x / 2), dst_y);
+        game_toggle_cell(middle(src_x, dst_x), middle(src_y, dst_y));
 
         // put the source peg into the destination spot.
         game_toggle_cell(dst_x, dst_y);
         game_moves++;
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 static RsvgHandle *load_svg(char *filename) {
@@ -289,16 +261,16 @@ void game_draw(cairo_t *cr) {
     for (int y = 0; y < game_board_size; y++)
         for (int x = 0; x < game_board_size; x++)
             if (game_board_mask[y][x])
-                cairo_rectangle(cr, tile_size * x, tile_size * y,
-                                tile_size, tile_size);
+                cairo_rectangle(cr, tile_size * x, tile_size * y, tile_size,
+                                tile_size);
     cairo_fill(cr);
 
     cairo_set_source(cr, peg_pattern);
     for (int y = 0; y < game_board_size; y++)
         for (int x = 0; x < game_board_size; x++)
             if (game_board[y][x])
-                cairo_rectangle(cr, tile_size * x, tile_size * y,
-                                tile_size, tile_size);
+                cairo_rectangle(cr, tile_size * x, tile_size * y, tile_size,
+                                tile_size);
     cairo_fill(cr);
 }
 
@@ -316,8 +288,7 @@ const char *game_cheese(void) {
     int pegs_left = game_count_pegs_on_board();
     int cheese_index = MIN(pegs_left, 6);
 
-    if (pegs_left == 1 &&
-        game_board[game_board_size / 2][game_board_size / 2] == 1)
+    if (pegs_left == 1 && game_board[game_board_size / 2][game_board_size / 2])
         cheese_index = 0;
 
     return gettext(cheese[cheese_index]);

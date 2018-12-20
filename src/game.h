@@ -20,7 +20,8 @@
 #ifndef PEGSOLITAIRE_GAME_H
 #define PEGSOLITAIRE_GAME_H
 
-#include <gtk/gtk.h>
+#include <cairo.h>
+#include <stdbool.h>
 
 typedef enum { BOARD_ENGLISH, BOARD_EUROPEAN } game_board_enum;
 
@@ -28,18 +29,18 @@ typedef enum { BOARD_ENGLISH, BOARD_EUROPEAN } game_board_enum;
 #define BOARD_SIZE_INTERMEDIATE 11
 #define BOARD_SIZE_ADVANCED 15
 
-extern gint game_moves;
+extern int game_moves;
 extern game_board_enum game_board_type;
-extern gint game_board_size;
+extern int game_board_size;
 
 void game_load_resources(void);
 void game_unload_resources(void);
 void game_new(void);
-int is_game_end(void);
+bool is_game_end(void);
 void game_draw(cairo_t *cr);
 void game_toggle_cell(int i, int j);
-gboolean game_is_peg_at(int i, int j);
-gboolean game_move(int src_x, int src_y, int dst_x, int dst_y);
+bool game_is_peg_at(int i, int j);
+bool game_move(int src_x, int src_y, int dst_x, int dst_y);
 const char *game_cheese(void);
 
 #endif // PEGSOLITAIRE_GAME_H

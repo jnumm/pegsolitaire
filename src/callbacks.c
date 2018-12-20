@@ -20,6 +20,7 @@
 #include "callbacks.h"
 
 #include <gtk/gtk.h>
+#include <stdbool.h>
 
 #include "config.h"
 #include "game.h"
@@ -34,7 +35,7 @@ static gboolean clear_game = 1;
 static gboolean clear_buffer = 1;
 static gint piece_x = 0;
 static gint piece_y = 0;
-static gint button_down = 0;
+static bool button_down = false;
 
 static GdkCursor *hand_closed_cursor = NULL;
 static GdkCursor *hand_open_cursor = NULL;
@@ -104,7 +105,7 @@ void on_helpContentsMenuItem_activate(GtkMenuItem *menuitem,
     GError *err = NULL;
     gtk_show_uri_on_window(GTK_WINDOW(pegSolitaireWindow), "ghelp:pegsolitaire",
                            gtk_get_current_event_time(), &err);
-    if (err != NULL) {
+    if (err) {
         g_warning(_("Cannot show help: %s"), err->message);
         g_error_free(err);
     }
@@ -129,7 +130,7 @@ gboolean on_boardDrawingArea_motion_notify_event(GtkWidget *widget,
     int i = event->x / tile_size;
     int j = event->y / tile_size;
     int icon_size = tile_size / 1.666;
-    if (button_down == 1) {
+    if (button_down) {
         // before we draw the peg, let's expose the board again.
         /*gdk_draw_pixmap (gtk_widget_get_window (widget),
                          gtk_widget_get_style
@@ -143,7 +144,7 @@ gboolean on_boardDrawingArea_motion_notify_event(GtkWidget *widget,
            icon_size, GDK_RGB_DITHER_NORMAL, 0, 0);*/
     } else {
         // switch up the pointer when we're over a peg and what-not.
-        if (game_is_peg_at(i, j) == TRUE) {
+        if (game_is_peg_at(i, j)) {
             if ((int)event->x % tile_size < (tile_size / 2) + (icon_size / 2) &&
                 (int)event->x % tile_size > (tile_size / 2) - (icon_size / 2) &&
                 (int)event->y % tile_size < (tile_size / 2) + (icon_size / 2) &&
@@ -160,19 +161,19 @@ gboolean on_boardDrawingArea_motion_notify_event(GtkWidget *widget,
 gboolean on_boardDrawingArea_button_press_event(GtkWidget *widget,
                                                 GdkEventButton *event,
                                                 gpointer user_data) {
-    if ((event->button == 1) && (button_down == 0)) {
+    if ((event->button == 1) && !button_down) {
         int i, j;
-        if (is_game_end() == 1)
+        if (is_game_end())
             return FALSE;
 
         i = event->x / tile_size;
         j = event->y / tile_size;
 
-        if (game_is_peg_at(i, j) == FALSE)
+        if (!game_is_peg_at(i, j))
             return FALSE;
         set_cursor(CURSOR_CLOSED);
 
-        button_down = 1;
+        button_down = true;
         game_toggle_cell(i, j);
         // game_draw(pegSolitaireWindow, /*board_pixmap,*/ tile_size, 0);
         piece_x = i;
@@ -191,13 +192,13 @@ gboolean on_boardDrawingArea_button_release_event(GtkWidget *widget,
                                                   GdkEventButton *event,
                                                   gpointer user_data) {
     if (event->button == 1) {
-        if (button_down == 1) {
+        if (button_down) {
             int i, j;
-            button_down = 0;
+            button_down = false;
             set_cursor(CURSOR_NONE);
             i = event->x / tile_size;
             j = event->y / tile_size;
-            if (game_move(piece_x, piece_y, i, j) == FALSE) {
+            if (!game_move(piece_x, piece_y, i, j)) {
                 // put the peg back where we started.
                 game_toggle_cell(piece_x, piece_y);
                 // game_draw(pegSolitaireWindow, board_pixmap, tile_size, 0);
