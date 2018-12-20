@@ -90,38 +90,13 @@ static void initiate_new_game(int board_type, int board_size) {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
-void on_helpAboutMenuItem_activate(GtkMenuItem *menuitem, gpointer user_data) {
-    gtk_dialog_run(GTK_DIALOG(pegSolitaireAboutDialog));
-    gtk_widget_hide(GTK_WIDGET(pegSolitaireAboutDialog));
+gboolean drawarea_draw(GtkWidget *widget, cairo_t *cr, gpointer data) {
+    game_draw(cr);
+    return FALSE;
 }
 
-void on_helpContentsMenuItem_activate(GtkMenuItem *menuitem,
-                                      gpointer user_data) {
-    GError *err = NULL;
-    gtk_show_uri_on_window(GTK_WINDOW(pegSolitaireWindow), "ghelp:pegsolitaire",
-                           gtk_get_current_event_time(), &err);
-    if (err) {
-        g_warning(_("Cannot show help: %s"), err->message);
-        g_error_free(err);
-    }
-}
-
-void on_gameRestartMenuItem_activate(GtkMenuItem *menuitem,
-                                     gpointer user_data) {
-    initiate_new_game(game_board_type, game_board_size);
-}
-
-void on_pegSolitaireWindow_destroy(GObject *object, gpointer user_data) {
-    gtk_main_quit();
-}
-
-void on_gameQuitMenuItem_activate(GtkMenuItem *menuitem, gpointer user_data) {
-    gtk_main_quit();
-}
-
-gboolean on_boardDrawingArea_motion_notify_event(GtkWidget *widget,
-                                                 GdkEventMotion *event,
-                                                 gpointer user_data) {
+gboolean drawarea_motion(GtkWidget *widget, GdkEventMotion *event,
+                         gpointer user_data) {
     int tile_x = event->x / tile_size;
     int tile_y = event->y / tile_size;
     if (button_down) {
@@ -134,9 +109,8 @@ gboolean on_boardDrawingArea_motion_notify_event(GtkWidget *widget,
     return FALSE;
 }
 
-gboolean on_boardDrawingArea_button_press_event(GtkWidget *widget,
-                                                GdkEventButton *event,
-                                                gpointer user_data) {
+gboolean drawarea_button_press(GtkWidget *widget, GdkEventButton *event,
+                               gpointer user_data) {
     if (event->button == 1 && !button_down /* && !is_game_end()*/) {
         int tile_x = event->x / tile_size;
         int tile_y = event->y / tile_size;
@@ -155,9 +129,8 @@ gboolean on_boardDrawingArea_button_press_event(GtkWidget *widget,
     return FALSE;
 }
 
-gboolean on_boardDrawingArea_button_release_event(GtkWidget *widget,
-                                                  GdkEventButton *event,
-                                                  gpointer user_data) {
+gboolean drawarea_button_release(GtkWidget *widget, GdkEventButton *event,
+                                 gpointer user_data) {
     if (event->button == 1 && button_down) {
         button_down = false;
         set_cursor(CURSOR_NONE);
@@ -179,40 +152,51 @@ gboolean on_boardDrawingArea_button_release_event(GtkWidget *widget,
     return FALSE;
 }
 
-gboolean on_boardDrawingArea_draw(GtkWidget *widget, cairo_t *cr,
-                                  gpointer data) {
-    game_draw(cr);
-    return FALSE;
+void menu_restart(GtkMenuItem *menuitem, gpointer user_data) {
+    initiate_new_game(game_board_type, game_board_size);
 }
 
-void on_gameEnglishBeginnerMenuItem_activate(GtkMenuItem *menuitem,
-                                             gpointer user_data) {
+void menu_eng_beginner(GtkMenuItem *menuitem, gpointer user_data) {
     initiate_new_game(BOARD_ENGLISH, BOARD_SIZE_BEGINNER);
 }
 
-void on_gameEnglishIntermediateMenuItem_activate(GtkMenuItem *menuitem,
-                                                 gpointer user_data) {
+void menu_eng_intermediate(GtkMenuItem *menuitem, gpointer user_data) {
     initiate_new_game(BOARD_ENGLISH, BOARD_SIZE_INTERMEDIATE);
 }
 
-void on_gameEnglishAdvancedMenuItem_activate(GtkMenuItem *menuitem,
-                                             gpointer user_data) {
+void menu_eng_advanced(GtkMenuItem *menuitem, gpointer user_data) {
     initiate_new_game(BOARD_ENGLISH, BOARD_SIZE_ADVANCED);
 }
 
-void on_gameEuropeanBeginnerMenuItem_activate(GtkMenuItem *menuitem,
-                                              gpointer user_data) {
+void menu_eur_beginner(GtkMenuItem *menuitem, gpointer user_data) {
     initiate_new_game(BOARD_EUROPEAN, BOARD_SIZE_BEGINNER);
 }
 
-void on_gameEuropeanIntermediateMenuItem_activate(GtkMenuItem *menuitem,
-                                                  gpointer user_data) {
+void menu_eur_intermediate(GtkMenuItem *menuitem, gpointer user_data) {
     initiate_new_game(BOARD_EUROPEAN, BOARD_SIZE_INTERMEDIATE);
 }
 
-void on_gameEuropeanAdvancedMenuItem_activate(GtkMenuItem *menuitem,
-                                              gpointer user_data) {
+void menu_eur_advanced(GtkMenuItem *menuitem, gpointer user_data) {
     initiate_new_game(BOARD_EUROPEAN, BOARD_SIZE_ADVANCED);
 }
+
+void menu_help(GtkMenuItem *menuitem, gpointer user_data) {
+    GError *err = NULL;
+    gtk_show_uri_on_window(GTK_WINDOW(pegSolitaireWindow), "ghelp:pegsolitaire",
+                           gtk_get_current_event_time(), &err);
+    if (err) {
+        g_warning(_("Cannot show help: %s"), err->message);
+        g_error_free(err);
+    }
+}
+
+void menu_about(GtkMenuItem *menuitem, gpointer user_data) {
+    gtk_dialog_run(GTK_DIALOG(pegSolitaireAboutDialog));
+    gtk_widget_hide(GTK_WIDGET(pegSolitaireAboutDialog));
+}
+
+void window_destroy(GObject *object, gpointer user_data) { gtk_main_quit(); }
+
+void menu_quit(GtkMenuItem *menuitem, gpointer user_data) { gtk_main_quit(); }
 
 #pragma GCC diagnostic pop

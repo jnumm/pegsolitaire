@@ -27,52 +27,25 @@ void init_cursors(void);
 // The callback functions are explicitly marked for export due to combining
 // -fvisibility=hidden with -Wl,--export-dynamic.
 #pragma GCC visibility push(default)
+gboolean drawarea_draw(GtkWidget *, cairo_t *, gpointer);
+gboolean drawarea_motion(GtkWidget *, GdkEventMotion *, gpointer);
+gboolean drawarea_button_press(GtkWidget *, GdkEventButton *, gpointer);
+gboolean drawarea_button_release(GtkWidget *, GdkEventButton *, gpointer);
 
-void on_helpAboutMenuItem_activate(GtkMenuItem *menuitem, gpointer user_data);
+void menu_restart(GtkMenuItem *, gpointer);
 
-void on_helpContentsMenuItem_activate(GtkMenuItem *menuitem,
-                                      gpointer user_data);
+void menu_eng_beginner(GtkMenuItem *, gpointer);
+void menu_eng_intermediate(GtkMenuItem *, gpointer);
+void menu_eng_advanced(GtkMenuItem *, gpointer);
+void menu_eur_beginner(GtkMenuItem *, gpointer);
+void menu_eur_intermediate(GtkMenuItem *, gpointer);
+void menu_eur_advanced(GtkMenuItem *, gpointer);
 
-void on_gameRestartMenuItem_activate(GtkMenuItem *menuitem, gpointer user_data);
+void menu_help(GtkMenuItem *, gpointer);
+void menu_about(GtkMenuItem *, gpointer);
 
-void on_pegSolitaireWindow_destroy(GObject *object, gpointer user_data);
-
-void on_gameQuitMenuItem_activate(GtkMenuItem *menuitem, gpointer user_data);
-
-gboolean on_boardDrawingArea_draw(GtkWidget *widget, cairo_t *cr,
-                                  gpointer user_data);
-
-gboolean on_boardDrawingArea_motion_notify_event(GtkWidget *widget,
-                                                 GdkEventMotion *event,
-                                                 gpointer user_data);
-
-gboolean on_boardDrawingArea_button_press_event(GtkWidget *widget,
-                                                GdkEventButton *event,
-                                                gpointer user_data);
-
-gboolean on_boardDrawingArea_button_release_event(GtkWidget *widget,
-                                                  GdkEventButton *event,
-                                                  gpointer user_data);
-
-void on_gameEnglishBeginnerMenuItem_activate(GtkMenuItem *menuitem,
-                                             gpointer user_data);
-
-void on_gameEnglishIntermediateMenuItem_activate(GtkMenuItem *menuitem,
-                                                 gpointer user_data);
-
-void on_gameEnglishAdvancedMenuItem_activate(GtkMenuItem *menuitem,
-                                             gpointer user_data);
-void on_gameEuropeanBeginnerMenuItem_activate(GtkMenuItem *menuitem,
-                                              gpointer user_data);
-
-void on_gameEuropeanIntermediateMenuItem_activate(GtkMenuItem *menuitem,
-                                                  gpointer user_data);
-
-void on_gameEuropeanAdvancedMenuItem_activate(GtkMenuItem *menuitem,
-                                              gpointer user_data);
-
-void on_helpAboutMenuItem_activate(GtkMenuItem *menuitem, gpointer user_data);
-
+void window_destroy(GObject *, gpointer);
+void menu_quit(GtkMenuItem *, gpointer);
 #pragma GCC visibility pop
 
 #endif // PEGSOLITAIRE_CALLBACKS_H
