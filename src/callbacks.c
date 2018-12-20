@@ -35,45 +35,28 @@ static int dragging_peg_x = 0, dragging_peg_y = 0;
 static GdkCursor *hand_closed_cursor = NULL;
 static GdkCursor *hand_open_cursor = NULL;
 static GdkCursor *default_cursor = NULL;
-enum { CURSOR_NONE = 0, CURSOR_OPEN, CURSOR_CLOSED };
 
-void init_cursors(void) {
+static GdkCursor *try_cursor_names(const char *names[]) {
     GdkDisplay *display = gtk_widget_get_display(pegSolitaireWindow);
-
-    if (!default_cursor)
-        default_cursor = gdk_cursor_new_from_name(display, "default");
-    if (!default_cursor)
-        g_warning(_("The \"%s\" cursor is not available"), "default");
-
-    if (!hand_closed_cursor)
-        hand_closed_cursor = gdk_cursor_new_from_name(display, "grabbing");
-    if (!hand_closed_cursor)
-        hand_closed_cursor = gdk_cursor_new_from_name(display, "closedhand");
-    if (!hand_closed_cursor)
-        g_warning(_("The \"%s\" or \"%s\" cursor is not available"), "grabbing",
-                  "closedhand");
-
-    if (!hand_open_cursor)
-        hand_open_cursor = gdk_cursor_new_from_name(display, "grab");
-    if (!hand_open_cursor)
-        hand_open_cursor = gdk_cursor_new_from_name(display, "openhand");
-    if (!hand_open_cursor)
-        g_warning(_("The \"%s\" or \"%s\" cursor is not available"), "grab",
-                  "openhand");
+    GdkCursor *cursor = NULL;
+    for (int i = 0; names[i] && !cursor; i++)
+        cursor = gdk_cursor_new_from_name(display, names[i]);
+    if (!cursor)
+        g_warning("The \"%s\" cursor is not available", names[0]);
+    return cursor;
 }
 
-static void set_cursor(int cursor) {
-    static int prev_cursor = -1;
-    if ((cursor == CURSOR_NONE) && (prev_cursor != CURSOR_NONE))
-        gdk_window_set_cursor(gtk_widget_get_window(pegSolitaireWindow),
-                              default_cursor);
-    if ((cursor == CURSOR_OPEN) && (prev_cursor != CURSOR_OPEN))
-        gdk_window_set_cursor(gtk_widget_get_window(pegSolitaireWindow),
-                              hand_open_cursor);
-    if ((cursor == CURSOR_CLOSED) && (prev_cursor != CURSOR_CLOSED))
-        gdk_window_set_cursor(gtk_widget_get_window(pegSolitaireWindow),
-                              hand_closed_cursor);
-    prev_cursor = cursor;
+void init_cursors(void) {
+    default_cursor = try_cursor_names((const char *[]){"default", NULL});
+    hand_closed_cursor =
+        try_cursor_names((const char *[]){"closedhand", "grabbing", NULL});
+    hand_open_cursor =
+        try_cursor_names((const char *[]){"openhand", "grab", NULL});
+}
+
+static void set_cursor(GdkCursor *cursor) {
+    gdk_window_set_cursor(gtk_widget_get_window(GTK_WIDGET(boardDrawingArea)),
+                          cursor);
 }
 
 static void initiate_new_game(int board_type, int board_size) {
@@ -100,11 +83,10 @@ gboolean drawarea_motion(GtkWidget *widget, GdkEventMotion *event,
     int tile_x = event->x / tile_size;
     int tile_y = event->y / tile_size;
     if (button_down) {
-
     } else if (game_is_peg_at(tile_x, tile_y)) {
-        set_cursor(CURSOR_OPEN);
+        set_cursor(hand_open_cursor);
     } else {
-        set_cursor(CURSOR_NONE);
+        set_cursor(default_cursor);
     }
     return FALSE;
 }
@@ -118,7 +100,7 @@ gboolean drawarea_button_press(GtkWidget *widget, GdkEventButton *event,
         if (!game_is_peg_at(tile_x, tile_y))
             return FALSE;
 
-        set_cursor(CURSOR_CLOSED);
+        set_cursor(hand_closed_cursor);
         dragging_peg_x = tile_x;
         dragging_peg_y = tile_y;
 
@@ -133,12 +115,12 @@ gboolean drawarea_button_release(GtkWidget *widget, GdkEventButton *event,
                                  gpointer user_data) {
     if (event->button == 1 && button_down) {
         button_down = false;
-        set_cursor(CURSOR_NONE);
         int dest_x = event->x / tile_size;
         int dest_y = event->y / tile_size;
 
         // Either execute the move or put the peg back where we started.
         if (game_move(dragging_peg_x, dragging_peg_y, dest_x, dest_y)) {
+            set_cursor(hand_open_cursor);
             update_statusbar(game_moves);
             if (is_game_end()) {
                 gtk_label_set_text(statusMessageLabel, game_cheese());
