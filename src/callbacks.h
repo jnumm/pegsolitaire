@@ -24,6 +24,10 @@
 
 void init_cursors(void);
 
+// The callback functions are explicitly marked for export due to combining
+// -fvisibility=hidden with -Wl,--export-dynamic.
+#pragma GCC visibility push(default)
+
 void on_helpAboutMenuItem_activate(GtkMenuItem *menuitem, gpointer user_data);
 
 void on_helpContentsMenuItem_activate(GtkMenuItem *menuitem,
@@ -68,5 +72,7 @@ void on_gameEuropeanAdvancedMenuItem_activate(GtkMenuItem *menuitem,
                                               gpointer user_data);
 
 void on_helpAboutMenuItem_activate(GtkMenuItem *menuitem, gpointer user_data);
+
+#pragma GCC visibility pop
 
 #endif // PEGSOLITAIRE_CALLBACKS_H
