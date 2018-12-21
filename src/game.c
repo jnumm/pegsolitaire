@@ -43,18 +43,27 @@ static bool game_board_mask[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED] = {false};
 static cairo_pattern_t *peg_pattern = NULL;
 static cairo_pattern_t *hole_pattern = NULL;
 
+static double offset_x = 0, offset_y = 0;
+static double tile_size = 0;
+
 // Globals that are exposed through game.h
 int game_moves = 0;
 int game_board_size = DEFAULT_GAME_BOARD_SIZE;
 game_board_enum game_board_type = DEFAULT_GAME_BOARD_TYPE;
-double offset_x = 0, offset_y = 0;
-double tile_size = 0;
 // End of globals that are exposed through game.h
 
 static bool valid_index(int i) { return i >= 0 && i < game_board_size; }
 
+static bool valid_cell(GdkPoint cell) {
+    return valid_index(cell.x) && valid_index(cell.y);
+}
+
 // The geometric center between two points.
-static int middle(int src, int dst) { return src + ((dst - src) / 2); }
+static int halfway(int src, int dst) { return src + ((dst - src) / 2); }
+
+static GdkPoint middle(GdkPoint src, GdkPoint dst) {
+    return (GdkPoint){halfway(src.x, dst.x), halfway(src.y, dst.y)};
+}
 
 static void create_game_board_mask(void) {
     int n = game_board_size;
@@ -153,44 +162,43 @@ bool is_game_end(void) {
     return true;
 }
 
-void game_toggle_cell(int x, int y) {
-    if (!valid_index(x) || !valid_index(y))
+void game_toggle_cell(GdkPoint cell) {
+    if (!valid_cell(cell))
         return;
 
-    if (game_board_mask[y][x]) {
-        game_board[y][x] = !game_board[y][x];
+    if (game_board_mask[cell.y][cell.x]) {
+        game_board[cell.y][cell.x] = !game_board[cell.y][cell.x];
     }
 }
 
-bool game_is_peg_at(int x, int y) {
-    return valid_index(x) && valid_index(y) && game_board_mask[y][x] &&
-           game_board[y][x];
+bool game_is_peg_at(GdkPoint cell) {
+    return valid_cell(cell) && game_board_mask[cell.y][cell.x] &&
+           game_board[cell.y][cell.x];
 }
 
-static bool game_is_valid_move(int src_x, int src_y, int dst_x, int dst_y) {
+static bool game_is_valid_move(GdkPoint src, GdkPoint dst) {
     // is it 2 away with a peg in the middle with a peg in it?
-    bool correct_distance = (dst_x == src_x && abs(dst_y - src_y) == 2) ||
-                            (dst_y == src_y && abs(dst_x - src_x) == 2);
+    bool correct_distance = (dst.x == src.x && abs(dst.y - src.y) == 2) ||
+                            (dst.y == src.y && abs(dst.x - src.x) == 2);
 
-    return !game_is_peg_at(src_x, src_y) && !game_is_peg_at(dst_x, dst_y) &&
-           game_is_peg_at(middle(src_x, dst_x), middle(src_y, dst_y)) &&
-           correct_distance;
+    return !game_is_peg_at(src) && !game_is_peg_at(dst) &&
+           game_is_peg_at(middle(src, dst)) && correct_distance;
 }
 
 // move peg from src to dst, taking intermediate peg out.
 // presumes that peg from src is already removed
-bool game_move(int src_x, int src_y, int dst_x, int dst_y) {
-    if (game_is_valid_move(src_x, src_y, dst_x, dst_y)) {
+bool game_move(GdkPoint src, GdkPoint dst) {
+    if (game_is_valid_move(src, dst)) {
         // okay, the peg has been taken out of src_x,src_y and is in the air.
         // it is placed on dst_x,dst_y, and it's a valid move.
         // this means that the dst_x,dst_y doesn't have a peg in it.
         // it also means the one tile we jumped over does have a peg in it.
 
         // take the jumped peg out.
-        game_toggle_cell(middle(src_x, dst_x), middle(src_y, dst_y));
+        game_toggle_cell(middle(src, dst));
 
         // put the source peg into the destination spot.
-        game_toggle_cell(dst_x, dst_y);
+        game_toggle_cell(dst);
         game_moves++;
         return true;
     }
@@ -274,6 +282,10 @@ void game_draw(cairo_t *cr, int width, int height) {
             if (game_board[y][x])
                 cairo_rectangle(cr, x, y, 1, 1);
     cairo_fill(cr);
+}
+
+GdkPoint widget_coords_to_cell(int x, int y) {
+    return (GdkPoint){(x - offset_x) / tile_size, (y - offset_y) / tile_size};
 }
 
 const char *game_cheese(void) {

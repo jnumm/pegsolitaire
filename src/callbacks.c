@@ -30,7 +30,7 @@
 void update_statusbar(int moves);
 
 static bool button_down = false;
-static int dragging_peg_x = 0, dragging_peg_y = 0;
+static GdkPoint dragging_peg = {0, 0};
 
 static GdkCursor *hand_closed_cursor = NULL;
 static GdkCursor *hand_open_cursor = NULL;
@@ -81,10 +81,9 @@ gboolean drawarea_draw(GtkWidget *widget, cairo_t *cr, gpointer data) {
 
 gboolean drawarea_motion(GtkWidget *widget, GdkEventMotion *event,
                          gpointer user_data) {
-    int tile_x = (event->x - offset_x) / tile_size;
-    int tile_y = (event->y - offset_y) / tile_size;
+    GdkPoint cell = widget_coords_to_cell(event->x, event->y);
     if (button_down) {
-    } else if (game_is_peg_at(tile_x, tile_y)) {
+    } else if (game_is_peg_at(cell)) {
         set_cursor(hand_open_cursor);
     } else {
         set_cursor(default_cursor);
@@ -95,18 +94,16 @@ gboolean drawarea_motion(GtkWidget *widget, GdkEventMotion *event,
 gboolean drawarea_button_press(GtkWidget *widget, GdkEventButton *event,
                                gpointer user_data) {
     if (event->button == 1 && !button_down /* && !is_game_end()*/) {
-        int tile_x = (event->x - offset_x) / tile_size;
-        int tile_y = (event->y - offset_y) / tile_size;
+        GdkPoint cell = widget_coords_to_cell(event->x, event->y);
 
-        if (!game_is_peg_at(tile_x, tile_y))
+        if (!game_is_peg_at(cell))
             return FALSE;
 
         set_cursor(hand_closed_cursor);
-        dragging_peg_x = tile_x;
-        dragging_peg_y = tile_y;
+        dragging_peg = cell;
 
         button_down = true;
-        game_toggle_cell(tile_x, tile_y);
+        game_toggle_cell(cell);
         gtk_widget_queue_draw(widget);
     }
     return FALSE;
@@ -116,18 +113,17 @@ gboolean drawarea_button_release(GtkWidget *widget, GdkEventButton *event,
                                  gpointer user_data) {
     if (event->button == 1 && button_down) {
         button_down = false;
-        int dest_x = (event->x - offset_x) / tile_size;
-        int dest_y = (event->y - offset_y) / tile_size;
+        GdkPoint dest = widget_coords_to_cell(event->x, event->y);
 
         // Either execute the move or put the peg back where we started.
-        if (game_move(dragging_peg_x, dragging_peg_y, dest_x, dest_y)) {
+        if (game_move(dragging_peg, dest)) {
             set_cursor(hand_open_cursor);
             update_statusbar(game_moves);
             if (is_game_end()) {
                 gtk_label_set_text(statusMessageLabel, game_cheese());
             }
         } else {
-            game_toggle_cell(dragging_peg_x, dragging_peg_y);
+            game_toggle_cell(dragging_peg);
         }
 
         gtk_widget_queue_draw(widget);

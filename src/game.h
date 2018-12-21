@@ -21,6 +21,7 @@
 #define PEGSOLITAIRE_GAME_H
 
 #include <cairo.h>
+#include <gdk/gdk.h>
 #include <stdbool.h>
 
 typedef enum { BOARD_ENGLISH, BOARD_EUROPEAN } game_board_enum;
@@ -32,17 +33,16 @@ typedef enum { BOARD_ENGLISH, BOARD_EUROPEAN } game_board_enum;
 extern int game_moves;
 extern game_board_enum game_board_type;
 extern int game_board_size;
-extern double offset_x, offset_y;
-extern double tile_size;
 
 void game_load_resources(void);
 void game_unload_resources(void);
 void game_new(void);
 bool is_game_end(void);
 void game_draw(cairo_t *cr, int width, int height);
-void game_toggle_cell(int i, int j);
-bool game_is_peg_at(int i, int j);
-bool game_move(int src_x, int src_y, int dst_x, int dst_y);
+GdkPoint widget_coords_to_cell(int x, int y);
+void game_toggle_cell(GdkPoint cell);
+bool game_is_peg_at(GdkPoint cell);
+bool game_move(GdkPoint src, GdkPoint dst);
 const char *game_cheese(void);
 
 #endif // PEGSOLITAIRE_GAME_H
