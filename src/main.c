@@ -19,7 +19,6 @@
 
 #include <locale.h>
 #include <stdio.h>
-#include <stdlib.h> // for exit()
 
 #include <gtk/gtk.h>
 
@@ -37,8 +36,6 @@ GtkLabel *statusMessageLabel = NULL;
 // End of globals exposed through share.h
 
 static GtkLabel *statusMovesLabel = NULL;
-static gint session_xpos = 0;
-static gint session_ypos = 0;
 
 void update_statusbar(int moves) {
     // TRANSLATORS: This is the number of moves the player has made.
@@ -47,19 +44,7 @@ void update_statusbar(int moves) {
     g_free(str);
 }
 
-/* Session Options */
-
-static const GOptionEntry options[] = {
-    {"x", 'x', 0, G_OPTION_ARG_INT, &session_xpos, N_("X location of window"),
-     N_("X")},
-    {"y", 'y', 0, G_OPTION_ARG_INT, &session_ypos, N_("Y location of window"),
-     N_("Y")},
-    {NULL}};
-
 int main(int argc, char *argv[]) {
-    GOptionContext *context;
-    GError *error = NULL;
-
     setlocale(LC_ALL, "");
 #ifdef ENABLE_NLS
     bindtextdomain(PACKAGE, LOCALEDIR);
@@ -67,22 +52,19 @@ int main(int argc, char *argv[]) {
     textdomain(PACKAGE);
 #endif
 
-    context = g_option_context_new("");
-    g_option_context_add_main_entries(context, options, PACKAGE);
-    g_option_context_add_group(context, gtk_get_option_group(TRUE));
-
-    if (!g_option_context_parse(context, &argc, &argv, &error)) {
-        fputs(error->message, stderr);
-        exit(1);
+    const GOptionEntry app_opts[] = {{NULL}};
+    GError *err = NULL;
+    if (!gtk_init_with_args(&argc, &argv, "", app_opts, PACKAGE, &err)) {
+        fprintf(stderr, _("pegsolitaire: Could not initialize GTK+.\n"));
+        if (err)
+            fprintf(stderr, "%s\n", err->message);
+        return 1;
     }
-
-    gtk_init(&argc, &argv);
 
     game_load_resources();
 
     GtkBuilder *builder =
         gtk_builder_new_from_file(PKGDATADIR "/pegsolitaire.glade");
-
     gtk_builder_connect_signals(builder, NULL);
 
     pegSolitaireWindow =
@@ -104,10 +86,6 @@ int main(int argc, char *argv[]) {
     init_cursors();
 
     game_new();
-
-    if (session_xpos > 0 && session_ypos > 0)
-        gtk_window_move(GTK_WINDOW(pegSolitaireWindow), session_xpos,
-                        session_ypos);
 
     gtk_widget_show_all(pegSolitaireWindow);
 
