@@ -20,6 +20,7 @@
 #include "game.h"
 
 #include <assert.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,7 +47,8 @@ static cairo_pattern_t *hole_pattern = NULL;
 int game_moves = 0;
 int game_board_size = DEFAULT_GAME_BOARD_SIZE;
 game_board_enum game_board_type = DEFAULT_GAME_BOARD_TYPE;
-int tile_size = 0;
+double offset_x = 0, offset_y = 0;
+double tile_size = 0;
 // End of globals that are exposed through game.h
 
 static bool valid_index(int i) { return i >= 0 && i < game_board_size; }
@@ -252,9 +254,12 @@ void game_unload_resources(void) {
 }
 
 void game_draw(cairo_t *cr, int width, int height) {
-    // One unit = width of one tile = area_width / game_board_size
-    cairo_scale(cr, (double)width / game_board_size,
-                (double)height / game_board_size);
+    double shorter_side = fmin(width, height);
+    offset_x = 0.5 * (width - shorter_side);
+    offset_y = 0.5 * (height - shorter_side);
+    tile_size = shorter_side / game_board_size;
+    cairo_translate(cr, offset_x, offset_y);
+    cairo_scale(cr, tile_size, tile_size);
 
     cairo_set_source(cr, hole_pattern);
     for (int y = 0; y < game_board_size; y++)

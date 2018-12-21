@@ -81,8 +81,8 @@ gboolean drawarea_draw(GtkWidget *widget, cairo_t *cr, gpointer data) {
 
 gboolean drawarea_motion(GtkWidget *widget, GdkEventMotion *event,
                          gpointer user_data) {
-    int tile_x = event->x / tile_size;
-    int tile_y = event->y / tile_size;
+    int tile_x = (event->x - offset_x) / tile_size;
+    int tile_y = (event->y - offset_y) / tile_size;
     if (button_down) {
     } else if (game_is_peg_at(tile_x, tile_y)) {
         set_cursor(hand_open_cursor);
@@ -95,8 +95,8 @@ gboolean drawarea_motion(GtkWidget *widget, GdkEventMotion *event,
 gboolean drawarea_button_press(GtkWidget *widget, GdkEventButton *event,
                                gpointer user_data) {
     if (event->button == 1 && !button_down /* && !is_game_end()*/) {
-        int tile_x = event->x / tile_size;
-        int tile_y = event->y / tile_size;
+        int tile_x = (event->x - offset_x) / tile_size;
+        int tile_y = (event->y - offset_y) / tile_size;
 
         if (!game_is_peg_at(tile_x, tile_y))
             return FALSE;
@@ -116,8 +116,8 @@ gboolean drawarea_button_release(GtkWidget *widget, GdkEventButton *event,
                                  gpointer user_data) {
     if (event->button == 1 && button_down) {
         button_down = false;
-        int dest_x = event->x / tile_size;
-        int dest_y = event->y / tile_size;
+        int dest_x = (event->x - offset_x) / tile_size;
+        int dest_y = (event->y - offset_y) / tile_size;
 
         // Either execute the move or put the peg back where we started.
         if (game_move(dragging_peg_x, dragging_peg_y, dest_x, dest_y)) {
