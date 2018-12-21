@@ -218,17 +218,9 @@ static RsvgHandle *load_svg(char *filename) {
     return svg;
 }
 
-static void verify_size(int width, int height) {
-    if (!tile_size)
-        tile_size = width;
-    if (!(width == height && width == tile_size))
-        g_warning("All tiles are expected to be square and of the same size.");
-}
-
 static cairo_pattern_t *rsvg_to_pattern(RsvgHandle *svg) {
     RsvgDimensionData svg_dimensions;
     rsvg_handle_get_dimensions(svg, &svg_dimensions);
-    verify_size(svg_dimensions.width, svg_dimensions.height);
 
     cairo_surface_t *surface = cairo_image_surface_create(
         CAIRO_FORMAT_ARGB32, svg_dimensions.width, svg_dimensions.height);
@@ -236,6 +228,11 @@ static cairo_pattern_t *rsvg_to_pattern(RsvgHandle *svg) {
     rsvg_handle_render_cairo(svg, cr);
     cairo_pattern_t *pattern = cairo_pattern_create_for_surface(surface);
     cairo_pattern_set_extend(pattern, CAIRO_EXTEND_REPEAT);
+
+    cairo_matrix_t scale;
+    cairo_matrix_init_scale(&scale, svg_dimensions.width,
+                            svg_dimensions.height);
+    cairo_pattern_set_matrix(pattern, &scale);
 
     cairo_destroy(cr);
     cairo_surface_destroy(surface);
@@ -254,21 +251,23 @@ void game_unload_resources(void) {
     cairo_pattern_destroy(hole_pattern);
 }
 
-void game_draw(cairo_t *cr) {
+void game_draw(cairo_t *cr, int width, int height) {
+    // One unit = width of one tile = area_width / game_board_size
+    cairo_scale(cr, (double)width / game_board_size,
+                (double)height / game_board_size);
+
     cairo_set_source(cr, hole_pattern);
     for (int y = 0; y < game_board_size; y++)
         for (int x = 0; x < game_board_size; x++)
             if (game_board_mask[y][x])
-                cairo_rectangle(cr, tile_size * x, tile_size * y, tile_size,
-                                tile_size);
+                cairo_rectangle(cr, x, y, 1, 1);
     cairo_fill(cr);
 
     cairo_set_source(cr, peg_pattern);
     for (int y = 0; y < game_board_size; y++)
         for (int x = 0; x < game_board_size; x++)
             if (game_board[y][x])
-                cairo_rectangle(cr, tile_size * x, tile_size * y, tile_size,
-                                tile_size);
+                cairo_rectangle(cr, x, y, 1, 1);
     cairo_fill(cr);
 }
 

@@ -74,7 +74,8 @@ static void initiate_new_game(int board_type, int board_size) {
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 gboolean drawarea_draw(GtkWidget *widget, cairo_t *cr, gpointer data) {
-    game_draw(cr);
+    game_draw(cr, gtk_widget_get_allocated_width(widget),
+              gtk_widget_get_allocated_height(widget));
     return FALSE;
 }
 

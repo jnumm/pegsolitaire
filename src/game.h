@@ -38,7 +38,7 @@ void game_load_resources(void);
 void game_unload_resources(void);
 void game_new(void);
 bool is_game_end(void);
-void game_draw(cairo_t *cr);
+void game_draw(cairo_t *cr, int width, int height);
 void game_toggle_cell(int i, int j);
 bool game_is_peg_at(int i, int j);
 bool game_move(int src_x, int src_y, int dst_x, int dst_y);
