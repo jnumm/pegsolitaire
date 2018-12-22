@@ -176,13 +176,18 @@ bool game_is_peg_at(GdkPoint cell) {
            game_board[cell.y][cell.x];
 }
 
+static bool is_in_mask(GdkPoint cell) {
+    return valid_cell(cell) && game_board_mask[cell.y][cell.x];
+}
+
 static bool game_is_valid_move(GdkPoint src, GdkPoint dst) {
     // is it 2 away with a peg in the middle with a peg in it?
     bool correct_distance = (dst.x == src.x && abs(dst.y - src.y) == 2) ||
                             (dst.y == src.y && abs(dst.x - src.x) == 2);
 
-    return !game_is_peg_at(src) && !game_is_peg_at(dst) &&
-           game_is_peg_at(middle(src, dst)) && correct_distance;
+    return is_in_mask(src) && is_in_mask(dst) && !game_is_peg_at(src) &&
+           !game_is_peg_at(dst) && game_is_peg_at(middle(src, dst)) &&
+           correct_distance;
 }
 
 // move peg from src to dst, taking intermediate peg out.
