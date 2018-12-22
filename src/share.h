@@ -26,5 +26,6 @@ extern GtkWidget *pegSolitaireWindow;
 extern GtkAboutDialog *pegSolitaireAboutDialog;
 extern GtkWidget *boardDrawingArea;
 extern GtkLabel *statusMessageLabel;
+extern GtkLabel *statusMovesLabel;
 
 #endif // PEGSOLITAIRE_SHARE_H

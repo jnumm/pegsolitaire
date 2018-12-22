@@ -27,14 +27,19 @@
 #include "i18n.h"
 #include "share.h"
 
-void update_statusbar(int moves);
-
 static bool button_down = false;
 static GdkPoint dragging_peg = {0, 0};
 
 static GdkCursor *hand_closed_cursor = NULL;
 static GdkCursor *hand_open_cursor = NULL;
 static GdkCursor *default_cursor = NULL;
+
+void update_statusbar(void) {
+    // TRANSLATORS: This is the number of moves the player has made.
+    gchar *str = g_strdup_printf(_("Moves: %d"), game_moves);
+    gtk_label_set_text(statusMovesLabel, str);
+    g_free(str);
+}
 
 static GdkCursor *try_cursor_names(const char *names[]) {
     GdkDisplay *display = gtk_widget_get_display(pegSolitaireWindow);
@@ -65,7 +70,7 @@ static void initiate_new_game(int board_type, int board_size) {
     game_new();
 
     gtk_label_set_text(statusMessageLabel, "");
-    update_statusbar(game_moves);
+    update_statusbar();
     gtk_widget_queue_draw(boardDrawingArea);
 }
 
@@ -118,7 +123,7 @@ gboolean drawarea_button_release(GtkWidget *widget, GdkEventButton *event,
         // Either execute the move or put the peg back where we started.
         if (game_move(dragging_peg, dest)) {
             set_cursor(hand_open_cursor);
-            update_statusbar(game_moves);
+            update_statusbar();
             if (is_game_end()) {
                 gtk_label_set_text(statusMessageLabel, game_cheese());
             }

@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 void init_cursors(void);
+void update_statusbar(void);
 
 // The callback functions are explicitly marked for export due to combining
 // -fvisibility=hidden with -Wl,--export-dynamic.

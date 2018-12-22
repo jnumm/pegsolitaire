@@ -33,16 +33,8 @@ GtkWidget *pegSolitaireWindow = NULL;
 GtkAboutDialog *pegSolitaireAboutDialog = NULL;
 GtkWidget *boardDrawingArea = NULL;
 GtkLabel *statusMessageLabel = NULL;
+GtkLabel *statusMovesLabel = NULL;
 // End of globals exposed through share.h
-
-static GtkLabel *statusMovesLabel = NULL;
-
-void update_statusbar(int moves) {
-    // TRANSLATORS: This is the number of moves the player has made.
-    gchar *str = g_strdup_printf(_("Moves: %d"), moves);
-    gtk_label_set_text(statusMovesLabel, str);
-    g_free(str);
-}
 
 int main(int argc, char *argv[]) {
     setlocale(LC_ALL, "");
@@ -78,7 +70,7 @@ int main(int argc, char *argv[]) {
         GTK_LABEL(gtk_builder_get_object(builder, "statusMessageLabel"));
     statusMovesLabel =
         GTK_LABEL(gtk_builder_get_object(builder, "statusMovesLabel"));
-    update_statusbar(0);
+    update_statusbar();
 
     boardDrawingArea =
         GTK_WIDGET(gtk_builder_get_object(builder, "boardDrawingArea"));
