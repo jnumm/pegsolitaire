@@ -289,21 +289,19 @@ GdkPoint widget_coords_to_cell(int x, int y) {
 }
 
 const char *game_cheese(void) {
-    static const char *cheese[] = {
-        N_("GENIUS!"),
-        N_("OUTSTANDING!"),
-        N_("Sensational!"),
-        N_("Excellent!"),
-        N_("Very Good!"),
-        N_("Not Bad!"),
-        N_("Better Luck Next Time!"),
-    };
-
-    int pegs_left = game_count_pegs_on_board();
-    int cheese_index = MIN(pegs_left, 6);
-
-    if (pegs_left == 1 && game_board[game_board_size / 2][game_board_size / 2])
-        cheese_index = 0;
-
-    return gettext(cheese[cheese_index]);
+    bool center_peg = game_board[game_board_size / 2][game_board_size / 2];
+    switch (game_count_pegs_on_board()) {
+    case 1:
+        return center_peg ? _("GENIUS!") : _("OUTSTANDING!");
+    case 2:
+        return _("Sensational!");
+    case 3:
+        return _("Excellent!");
+    case 4:
+        return _("Very Good!");
+    case 5:
+        return _("Not Bad!");
+    default:
+        return _("Better Luck Next Time!");
+    }
 }
