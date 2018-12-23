@@ -1,4 +1,5 @@
-AM_CPPFLAGS = -DLOCALEDIR='"$(localedir)"'
+AM_CPPFLAGS = -DPACKAGE='"$(PACKAGE)"' -DVERSION='"$(PACKAGE_VERSION)"' \
+              -DLOCALEDIR='"$(localedir)"' -DENABLE_NLS
 AM_CFLAGS = -Wall -Wextra -Wpedantic -Wmissing-prototypes -Wstrict-prototypes \
             -Wunused-macros -Wshadow -Wdouble-promotion \
             -Wno-overlength-strings \

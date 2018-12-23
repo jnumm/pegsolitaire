@@ -19,8 +19,6 @@
 #ifndef PEGSOLITAIRE_I18N_H
 #define PEGSOLITAIRE_I18N_H
 
-#include "config.h"
-
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #else

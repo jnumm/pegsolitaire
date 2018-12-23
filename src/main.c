@@ -23,7 +23,6 @@
 #include <gtk/gtk.h>
 
 #include "callbacks.h"
-#include "config.h"
 #include "data.h"
 #include "game.h"
 #include "i18n.h"

@@ -22,7 +22,6 @@
 #include <gtk/gtk.h>
 #include <stdbool.h>
 
-#include "config.h"
 #include "game.h"
 #include "i18n.h"
 #include "share.h"
