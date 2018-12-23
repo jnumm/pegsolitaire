@@ -74,6 +74,12 @@ static void initiate_new_game(int board_type, int board_size) {
     gtk_widget_queue_draw(boardDrawingArea);
 }
 
+static void queue_dragging_draw(int x, int y) {
+    game_dragging_at_x = x;
+    game_dragging_at_y = y;
+    gtk_widget_queue_draw_area(boardDrawingArea, x - 50, y - 50, 100, 100);
+}
+
 // Following functions are gtk callbacks and all their parameters are required.
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -88,6 +94,7 @@ gboolean drawarea_motion(GtkWidget *widget, GdkEventMotion *event,
                          gpointer user_data) {
     GdkPoint cell = widget_coords_to_cell(event->x, event->y);
     if (button_down) {
+        queue_dragging_draw(event->x, event->y);
     } else if (game_is_peg_at(cell)) {
         set_cursor(hand_open_cursor);
     } else {
@@ -104,6 +111,8 @@ gboolean drawarea_button_press(GtkWidget *widget, GdkEventButton *event,
         if (!game_is_peg_at(cell))
             return FALSE;
 
+        queue_dragging_draw(event->x, event->y);
+
         set_cursor(hand_closed_cursor);
         dragging_peg = cell;
 
@@ -118,6 +127,7 @@ gboolean drawarea_button_release(GtkWidget *widget, GdkEventButton *event,
                                  gpointer user_data) {
     if (event->button == 1 && button_down) {
         button_down = false;
+        game_dragging_at_x = GAME_NOT_DRAGGING;
         GdkPoint dest = widget_coords_to_cell(event->x, event->y);
 
         // Either execute the move or put the peg back where we started.

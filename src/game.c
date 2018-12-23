@@ -50,6 +50,9 @@ static double tile_size = 0;
 int game_moves = 0;
 int game_board_size = DEFAULT_GAME_BOARD_SIZE;
 game_board_enum game_board_type = DEFAULT_GAME_BOARD_TYPE;
+
+int game_dragging_at_x = GAME_NOT_DRAGGING;
+int game_dragging_at_y = GAME_NOT_DRAGGING;
 // End of globals that are exposed through game.h
 
 static bool valid_index(int i) { return i >= 0 && i < game_board_size; }
@@ -287,6 +290,14 @@ void game_draw(cairo_t *cr, int width, int height) {
             if (game_board[y][x])
                 cairo_rectangle(cr, x, y, 1, 1);
     cairo_fill(cr);
+
+    if (game_dragging_at_x != GAME_NOT_DRAGGING) {
+        cairo_translate(cr, (game_dragging_at_x - offset_x) / tile_size - 0.5,
+                        (game_dragging_at_y - offset_y) / tile_size - 0.5);
+        cairo_set_source(cr, peg_pattern);
+        cairo_rectangle(cr, 0, 0, 1, 1);
+        cairo_fill(cr);
+    }
 }
 
 GdkPoint widget_coords_to_cell(int x, int y) {

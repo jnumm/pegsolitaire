@@ -34,6 +34,9 @@ extern int game_moves;
 extern game_board_enum game_board_type;
 extern int game_board_size;
 
+#define GAME_NOT_DRAGGING -1
+extern int game_dragging_at_x, game_dragging_at_y;
+
 void game_load_resources(void);
 void game_unload_resources(void);
 void game_new(void);
