@@ -135,7 +135,14 @@ static void queue_dragging_draw(int x, int y) {
     gtk_widget_queue_draw_area(boardDrawingArea, x - 50, y - 50, 100, 100);
 }
 
-static void game_draw(cairo_t *cr, int width, int height) {
+// Following functions are gtk callbacks and all their parameters are required.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
+gboolean drawarea_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
+    int width = gtk_widget_get_allocated_width(widget);
+    int height = gtk_widget_get_allocated_height(widget);
+
     double shorter_side = fmin(width, height);
     offset_x = 0.5 * (width - shorter_side);
     offset_y = 0.5 * (height - shorter_side);
@@ -164,15 +171,7 @@ static void game_draw(cairo_t *cr, int width, int height) {
         cairo_rectangle(cr, 0, 0, 1, 1);
         cairo_fill(cr);
     }
-}
 
-// Following functions are gtk callbacks and all their parameters are required.
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-
-gboolean drawarea_draw(GtkWidget *widget, cairo_t *cr, gpointer user_data) {
-    game_draw(cr, gtk_widget_get_allocated_width(widget),
-              gtk_widget_get_allocated_height(widget));
     return FALSE;
 }
 
