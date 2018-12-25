@@ -26,6 +26,7 @@
 #include "config.h"
 #include "game.h"
 #include "i18n.h"
+#include "render.h"
 #include "share.h"
 
 // Exposed through share.h

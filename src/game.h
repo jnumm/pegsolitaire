@@ -34,15 +34,11 @@ extern int game_moves;
 extern game_board_enum game_board_type;
 extern int game_board_size;
 
-#define GAME_NOT_DRAGGING -1
-extern int game_dragging_at_x, game_dragging_at_y;
+extern bool game_board[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED];
+extern bool game_board_mask[BOARD_SIZE_ADVANCED][BOARD_SIZE_ADVANCED];
 
-void game_load_resources(void);
-void game_unload_resources(void);
 void game_new(void);
 bool is_game_end(void);
-void game_draw(cairo_t *cr, int width, int height);
-GdkPoint widget_coords_to_cell(int x, int y);
 void game_toggle_cell(GdkPoint cell);
 bool game_is_peg_at(GdkPoint cell);
 bool game_move(GdkPoint src, GdkPoint dst);

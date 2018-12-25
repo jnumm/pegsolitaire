@@ -1,6 +1,5 @@
-/*
- *  Copyright (C) 2007-2008 Ben Asselstine
- *  Copyright (C) 2017-2018 Juhani Numminen
+/*  render.h: functions for rendering a peg solitaire game
+ *  Copyright (C) 2018 Juhani Numminen
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,30 +16,22 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef PEGSOLITAIRE_CALLBACKS_H
-#define PEGSOLITAIRE_CALLBACKS_H
+#ifndef PEGSOLITAIRE_RENDER_H
+#define PEGSOLITAIRE_RENDER_H
 
 #include <gtk/gtk.h>
 
-void update_statusbar(void);
+void init_cursors(void);
+void game_load_resources(void);
+void game_unload_resources(void);
 
 // The callback functions are explicitly marked for export due to combining
 // -fvisibility=hidden with -Wl,--export-dynamic.
 #pragma GCC visibility push(default)
-void menu_restart(GtkMenuItem *, gpointer);
-
-void menu_eng_beginner(GtkMenuItem *, gpointer);
-void menu_eng_intermediate(GtkMenuItem *, gpointer);
-void menu_eng_advanced(GtkMenuItem *, gpointer);
-void menu_eur_beginner(GtkMenuItem *, gpointer);
-void menu_eur_intermediate(GtkMenuItem *, gpointer);
-void menu_eur_advanced(GtkMenuItem *, gpointer);
-
-void menu_help(GtkMenuItem *, gpointer);
-void menu_about(GtkMenuItem *, gpointer);
-
-void window_destroy(GObject *, gpointer);
-void menu_quit(GtkMenuItem *, gpointer);
+gboolean drawarea_draw(GtkWidget *, cairo_t *, gpointer);
+gboolean drawarea_motion(GtkWidget *, GdkEventMotion *, gpointer);
+gboolean drawarea_button_press(GtkWidget *, GdkEventButton *, gpointer);
+gboolean drawarea_button_release(GtkWidget *, GdkEventButton *, gpointer);
 #pragma GCC visibility pop
 
-#endif // PEGSOLITAIRE_CALLBACKS_H
+#endif // PEGSOLITAIRE_GAME_H
