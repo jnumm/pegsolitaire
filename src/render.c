@@ -23,8 +23,10 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "callbacks.h"
+#include "data.h"
 #include "game.h"
 #include "i18n.h"
 #include "share.h"
@@ -40,8 +42,8 @@ static GdkCursor *hand_closed_cursor = NULL;
 static GdkCursor *hand_open_cursor = NULL;
 static GdkCursor *default_cursor = NULL;
 
-static cairo_pattern_t *peg_pattern = NULL;
 static cairo_pattern_t *hole_pattern = NULL;
+static cairo_pattern_t *peg_pattern = NULL;
 
 static double offset_x = 0, offset_y = 0;
 static double tile_size = 0;
@@ -73,26 +75,21 @@ static GdkPoint widget_coords_to_cell(int x, int y) {
     return (GdkPoint){(x - offset_x) / tile_size, (y - offset_y) / tile_size};
 }
 
-static RsvgHandle *load_svg(char *filename) {
-    char *full_filename = g_build_filename(PKGDATADIR, filename, NULL);
-
+static RsvgHandle *load_svg(const char *str) {
     GError *err = NULL;
-    RsvgHandle *svg = rsvg_handle_new_from_file(full_filename, &err);
-
+    RsvgHandle *svg =
+        rsvg_handle_new_from_data((const guint8 *)str, strlen(str), &err);
     if (err) {
         GtkDialog *dialog = GTK_DIALOG(gtk_message_dialog_new(
-            GTK_WINDOW(pegSolitaireWindow), GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
-            GTK_BUTTONS_OK,
-            _("Could not load image file %s:\n"
-              "%s\n\n"
-              "Please check that Peg Solitaire is installed correctly."),
-            full_filename, err->message));
+            NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+            _("Something went wrong.\n"
+              "Could not load internal image data:\n"
+              "%s"),
+            err->message));
+        gtk_window_set_title(GTK_WINDOW(dialog), _("Peg Solitaire"));
         gtk_dialog_run(dialog);
-        g_error_free(err);
         exit(1);
     }
-
-    g_free(full_filename);
     return svg;
 }
 
@@ -120,8 +117,8 @@ static cairo_pattern_t *rsvg_to_pattern(RsvgHandle *svg) {
 }
 
 void game_load_resources(void) {
-    peg_pattern = rsvg_to_pattern(load_svg("peg.svg"));
-    hole_pattern = rsvg_to_pattern(load_svg("hole.svg"));
+    hole_pattern = rsvg_to_pattern(load_svg(hole_svg));
+    peg_pattern = rsvg_to_pattern(load_svg(peg_svg));
 }
 
 void game_unload_resources(void) {

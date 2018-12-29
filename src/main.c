@@ -24,6 +24,7 @@
 
 #include "callbacks.h"
 #include "config.h"
+#include "data.h"
 #include "game.h"
 #include "i18n.h"
 #include "render.h"
@@ -56,8 +57,7 @@ int main(int argc, char *argv[]) {
 
     game_load_resources();
 
-    GtkBuilder *builder =
-        gtk_builder_new_from_file(PKGDATADIR "/pegsolitaire.glade");
+    GtkBuilder *builder = gtk_builder_new_from_string(pegsolitaire_glade, -1);
     gtk_builder_connect_signals(builder, NULL);
 
     pegSolitaireWindow =
