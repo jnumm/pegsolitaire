@@ -3,9 +3,9 @@
 http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
 <!ENTITY app "<application>Peg Solitaire</application>">
-<!ENTITY appversion "0.1.1">
+<!ENTITY appversion "0.2">
 <!ENTITY date "Jan 2008">
-<!ENTITY manrevision "0.1.1">
+<!ENTITY manrevision "0.2">
 ]>
 
 <article id="index" lang="en"> 
