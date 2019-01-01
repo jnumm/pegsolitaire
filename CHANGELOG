@@ -1,8 +1,11 @@
-Version 0.2 (2019-01-01)
+Version 0.2 (2019-01-02)
 ========================
 
+ * Updated gtk2 to gtk3.
+ * Image files are loaded from the executable rather than from the file system.
  * Removed -x and -y command-line options that set the window position.
    They were not very useful.
+ * Removed the use of autotools in favor of a single Makefile.
 
 Version 0.1.1 (2018-01-16)
 ==========================
