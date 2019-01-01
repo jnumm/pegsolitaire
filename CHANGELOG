@@ -2,6 +2,7 @@ Version 0.2 (2019-01-02)
 ========================
 
  * Updated gtk2 to gtk3.
+ * The game pieces were made larger and the spaces between them smaller.
  * Image files are loaded from the executable rather than from the file system.
  * Removed -x and -y command-line options that set the window position.
    They were not very useful.
