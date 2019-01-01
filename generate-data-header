@@ -7,7 +7,10 @@ echo "#ifndef DATA_H"
 echo "#define DATA_H"
 for f in $@; do
     token=$(basename $f | tr . _)
-    escaped=$(<$f sed 's/"/\\"/g' | tr -d '\n') # escape " and remove newlines
+    # Remove \n, remove spaces after >, replace multiple spaces with single one,
+    # escape double quote.
+    escaped=$(tr -d '\n' < $f |
+        sed -E -e 's,>[[:space:]]+,>,g' -e 's,[[:space:]]+, ,g' -e 's,",\\",g')
     printf '#define %s "%s"\n' "$token" "$escaped"
 done
 echo "#endif"
