@@ -4,5 +4,6 @@ data/com.github.jnumm.pegsolitaire.desktop.in
 data/com.github.jnumm.pegsolitaire.appdata.xml.in
 data/pegsolitaire.glade
 src/game.c
-src/main.c
 src/callbacks.c
+src/main.c
+src/render.c
