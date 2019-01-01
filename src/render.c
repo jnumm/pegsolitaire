@@ -54,7 +54,7 @@ static GdkCursor *try_cursor_names(const char *names[]) {
     for (int i = 0; names[i] && !cursor; i++)
         cursor = gdk_cursor_new_from_name(display, names[i]);
     if (!cursor)
-        g_warning("The \"%s\" cursor is not available", names[0]);
+        g_warning(_("The \"%s\" cursor is not available"), names[0]);
     return cursor;
 }
 
