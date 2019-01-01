@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pegsolitaire 0.0.4\n"
 "Report-Msgid-Bugs-To: https://github.com/jnumm/pegsolitaire/issues\n"
-"POT-Creation-Date: 2018-01-19 14:34+0200\n"
+"POT-Creation-Date: 2019-01-02 00:05+0200\n"
 "PO-Revision-Date: 2018-01-20 10:39+0100\n"
 "Last-Translator: Markus Enzenberger <enz@users.sourceforge.net>\n"
 "Language-Team: German\n"
@@ -20,8 +20,7 @@ msgstr ""
 
 #: data/com.github.jnumm.pegsolitaire.desktop.in:4
 #: data/com.github.jnumm.pegsolitaire.appdata.xml.in:8
-#: data/pegsolitaire.glade:19 data/pegsolitaire.glade:255
-#: data/pegsolitaire.glade:261
+#: data/pegsolitaire.glade:19 src/render.c:89
 msgid "Peg Solitaire"
 msgstr "Peg Solitaire"
 
@@ -49,149 +48,120 @@ msgstr ""
 "durch legale Züge zu leeren, sodass nur ein einzelner Stift in der Mitte "
 "übrigbleibt."
 
-#: data/pegsolitaire.glade:40
+#: data/pegsolitaire.glade:38
 msgid "_Game"
 msgstr "_Spiel"
 
-#: data/pegsolitaire.glade:48
+#: data/pegsolitaire.glade:46
 msgid "_Restart"
 msgstr "_Neu starten"
 
-#: data/pegsolitaire.glade:68
+#: data/pegsolitaire.glade:66
 msgid "_English Board"
 msgstr "_Englisches Brett"
 
-#: data/pegsolitaire.glade:78 data/pegsolitaire.glade:119
+#: data/pegsolitaire.glade:76 data/pegsolitaire.glade:117
 msgid "Beginner"
 msgstr "Anfänger"
 
-#: data/pegsolitaire.glade:87 data/pegsolitaire.glade:128
+#: data/pegsolitaire.glade:85 data/pegsolitaire.glade:126
 msgid "Intermediate"
 msgstr "Fortgeschritten"
 
-#: data/pegsolitaire.glade:96 data/pegsolitaire.glade:137
+#: data/pegsolitaire.glade:94 data/pegsolitaire.glade:135
 msgid "Advanced"
 msgstr "Profi"
 
-#: data/pegsolitaire.glade:109
+#: data/pegsolitaire.glade:107
 msgid "E_uropean Board"
 msgstr "E_uropäisches Brett"
 
-#: data/pegsolitaire.glade:171
+#: data/pegsolitaire.glade:169
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: data/pegsolitaire.glade:179
+#: data/pegsolitaire.glade:177
 msgid "Contents"
 msgstr "Inhalt"
 
-#: data/pegsolitaire.glade:262
-msgid ""
-"© 2007-2008 Ben Asselstine\n"
-"© 2017-2018 Juhani Numminen"
-msgstr ""
-"© 2007-2008 Ben Asselstine\n"
-"© 2017-2018 Juhani Numminen"
-
-#: data/pegsolitaire.glade:264
-msgid ""
-"This software is dedicated\n"
-" to Mothers everywhere."
-msgstr ""
-"Diese Software ist den\n"
-" Müttern der Welt gewidmet."
+#: data/pegsolitaire.glade:274
+msgid "This software is dedicated to Mothers everywhere."
+msgstr "Diese Software ist den Müttern der Welt gewidmet."
 
 #. TRANSLATORS: Replace this string with your names, one name per line.
-#: data/pegsolitaire.glade:268
+#: data/pegsolitaire.glade:278
 msgid "translator-credits"
 msgstr ""
 "Mario Blättermann <mario.blaettermann@t-online.de>\n"
 "Markus Enzenberger"
 
-#: src/game.c:365
+#: src/game.c:210
 msgid "GENIUS!"
 msgstr "GENIAL!"
 
-#: src/game.c:366
+#: src/game.c:210
 msgid "OUTSTANDING!"
 msgstr "Außergewöhnlich!"
 
-#: src/game.c:367
+#: src/game.c:212
 msgid "Sensational!"
 msgstr "Sensationell!"
 
-#: src/game.c:368
+#: src/game.c:214
 msgid "Excellent!"
 msgstr "Exzellent!"
 
-#: src/game.c:369
+#: src/game.c:216
 msgid "Very Good!"
 msgstr "Sehr gut!"
 
-#: src/game.c:370
+#: src/game.c:218
 msgid "Not Bad!"
 msgstr "Nicht schlecht!"
 
-#: src/game.c:371
+#: src/game.c:220
 msgid "Better Luck Next Time!"
 msgstr "Viel Glück beim nächsten Mal!"
 
 #. TRANSLATORS: This is the number of moves the player has made.
-#: src/main.c:95
+#: src/callbacks.c:31
 #, c-format
 msgid "Moves: %d"
 msgstr "Züge: %d"
 
-#: src/main.c:103
-msgid "X location of window"
-msgstr "X-Fensterposition"
-
-#: src/main.c:104
-msgid "X"
-msgstr "X"
-
-#: src/main.c:105
-msgid "Y location of window"
-msgstr "Y-Fensterposition"
-
-#: src/main.c:106
-msgid "Y"
-msgstr "Y"
-
-#: src/main.c:123
-#, c-format
-msgid ""
-"Could not find the image:\n"
-"%s\n"
-"\n"
-"Please check that Peg Solitaire is installed correctly."
-msgstr ""
-"Konnte Bilddatei nicht finden:\n"
-"%s\n"
-"\n"
-"Bitte überprüfen Sie die korrekte Installation von Peg Solitaire."
-
-#: src/callbacks.c:131
-msgid ""
-"The theme for this game failed to render.\n"
-"\n"
-"Please check that Peg Solitaire is installed correctly."
-msgstr ""
-"Konnte Bilddatei nicht finden:\n"
-"\n"
-"Bitte überprüfen Sie die korrekte Installation von Peg Solitaire."
-
-#: src/callbacks.c:210
+#: src/callbacks.c:83
 #, c-format
 msgid "Cannot show help: %s"
 msgstr "Hilfe wurde nicht gefunden: %s"
 
-#: src/callbacks.c:368
+#: src/main.c:51
+#, c-format
+msgid "pegsolitaire: Could not initialize GTK+.\n"
+msgstr ""
+
+#: src/render.c:57
 #, c-format
 msgid "The \"%s\" cursor is not available"
 msgstr "Der Cursor \"%s\" wurde nicht gefunden"
 
-#: src/callbacks.c:375 src/callbacks.c:383
+#: src/render.c:85
 #, c-format
-msgid "The \"%s\" or \"%s\" cursor is not available"
-msgstr "Der Cursor \"%s\" oder \"%s\" wurde nicht gefunden"
+msgid ""
+"Something went wrong.\n"
+"Could not load internal image data:\n"
+"%s"
+msgstr ""
+
+#~ msgid ""
+#~ "Could not find the image:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please check that Peg Solitaire is installed correctly."
+#~ msgstr ""
+#~ "Konnte Bilddatei nicht finden:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Bitte überprüfen Sie die korrekte Installation von Peg Solitaire."
+
+#~ msgid "The \"%s\" or \"%s\" cursor is not available"
+#~ msgstr "Der Cursor \"%s\" oder \"%s\" wurde nicht gefunden"
