@@ -7,14 +7,14 @@ obj = $(src:.c=.o)
 pofiles = $(wildcard po/*.po)
 mofiles = $(pofiles:.po=.mo)
 
-prefix = /usr/local
-bindir = $(prefix)/bin
-mandir = $(prefix)/share/man
-localedir = $(prefix)/share/locale
-desktopdir = $(prefix)/share/applications
-appdatadir = $(prefix)/share/metainfo
-svgicondir = $(prefix)/share/icons/hicolor/scalable/apps
-helpdir = $(prefix)/share/gnome/help/$(package)/C
+prefix ?= /usr/local
+bindir ?= $(prefix)/bin
+mandir ?= $(prefix)/share/man
+localedir ?= $(prefix)/share/locale
+desktopdir ?= $(prefix)/share/applications
+appdatadir ?= $(prefix)/share/metainfo
+svgicondir ?= $(prefix)/share/icons/hicolor/scalable/apps
+helpdir ?= $(prefix)/share/gnome/help/$(package)/C
 
 deps = gtk+-3.0 gmodule-2.0 librsvg-2.0
 
@@ -27,7 +27,7 @@ pkg_CFLAGS = -Wall -Wextra -Wpedantic -Wmissing-prototypes -Wstrict-prototypes \
 pkg_LDLIBS = -Wl,--as-needed $(shell pkg-config --libs $(deps))
 
 # Non-essential default flags
-CFLAGS = -O2 -g
+CFLAGS ?= -O2 -g
 
 .PHONY: all clean install update-po
 all: pegsolitaire $(mofiles) $(appid).desktop $(appid).appdata.xml
