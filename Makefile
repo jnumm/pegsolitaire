@@ -1,5 +1,5 @@
 package = pegsolitaire
-version = 0.2
+version = 0.3
 appid = com.github.jnumm.pegsolitaire
 
 src = $(wildcard src/*.c)

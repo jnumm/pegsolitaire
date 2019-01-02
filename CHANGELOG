@@ -1,3 +1,8 @@
+Version 0.3 (2019-01-02)
+========================
+
+ * Increased Makefile compatibility with BSD, GNU conventions.
+
 Version 0.2 (2019-01-02)
 ========================
 
