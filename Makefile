@@ -42,14 +42,14 @@ pegsolitaire: $(obj)
 
 # Embedding the required data files in the executable.
 data.h: data/pegsolitaire.glade data/hole.svg data/peg.svg
-	./generate-data-header $^ >$@
+	./generate-data-header $^ > $@
 
 $(appid).desktop: data/$(appid).desktop.in po/LINGUAS
 	msgfmt -c --desktop --template $< -o $@ -d po
 $(appid).appdata.xml: data/$(appid).appdata.xml.in po/LINGUAS
 	msgfmt -c --xml --template $< -o $@ -d po
 po/LINGUAS:
-	echo  $(notdir $(basename $(pofiles))) > $@
+	echo $(notdir $(basename $(pofiles))) > $@
 %.mo: %.po
 	msgfmt -c -o $@ $<
 # The first -k disables all default keywords, because we don't want the
