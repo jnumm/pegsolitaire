@@ -19,7 +19,7 @@ GH_ACCOUNT=	jnumm
 
 USES=		autoreconf gettext gmake pathfix pkgconfig
 GNU_CONFIGURE=	yes
-USE_GNOME=	cairo gtk20 librsvg2
+USE_GNOME=	cairo gtk30 librsvg2
 INSTALLS_ICONS=	yes
 
 .include <bsd.port.mk>
