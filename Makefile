@@ -7,6 +7,9 @@ obj = $(src:.c=.o)
 pofiles = $(wildcard po/*.po)
 mofiles = $(pofiles:.po=.mo)
 
+INSTALL ?= install
+INSTALL_PROGRAM ?= $(INSTALL)
+INSTALL_DATA ?= $(INSTALL) -m644
 prefix ?= /usr/local
 bindir ?= $(prefix)/bin
 mandir ?= $(prefix)/share/man
@@ -66,15 +69,15 @@ clean:
 		$(mofiles) pegsolitaire.pot po/LINGUAS
 
 install: all $(addsuffix -install,$(mofiles))
-	install -d $(DESTDIR)$(bindir) $(DESTDIR)$(desktopdir) \
+	mkdir -p $(DESTDIR)$(bindir) $(DESTDIR)$(desktopdir) \
 		$(DESTDIR)$(appdatadir) $(DESTDIR)$(svgicondir) \
 		$(DESTDIR)$(mandir)/man6 $(DESTDIR)$(helpdir)
-	install -m755 pegsolitaire $(DESTDIR)$(bindir)
-	install -m644 $(appid).desktop $(DESTDIR)$(desktopdir)
-	install -m644 $(appid).appdata.xml $(DESTDIR)$(appdatadir)
-	install -m644 data/pegsolitaire.svg $(DESTDIR)$(svgicondir)
-	install -m644 data/pegsolitaire.6 $(DESTDIR)$(mandir)/man6
-	install -m644 help/* $(DESTDIR)$(helpdir)
+	$(INSTALL_PROGRAM) pegsolitaire $(DESTDIR)$(bindir)
+	$(INSTALL_DATA) $(appid).desktop $(DESTDIR)$(desktopdir)
+	$(INSTALL_DATA) $(appid).appdata.xml $(DESTDIR)$(appdatadir)
+	$(INSTALL_DATA) data/pegsolitaire.svg $(DESTDIR)$(svgicondir)
+	$(INSTALL_DATA) data/pegsolitaire.6 $(DESTDIR)$(mandir)/man6
+	$(INSTALL_DATA) help/* $(DESTDIR)$(helpdir)
 %.mo-install: %.mo
-	install -d $(DESTDIR)$(localedir)/$(notdir $*)/LC_MESSAGES
-	install -m644 $< $(DESTDIR)$(localedir)/$(notdir $*)/LC_MESSAGES/$(package).mo
+	mkdir -p $(DESTDIR)$(localedir)/$(notdir $*)/LC_MESSAGES
+	$(INSTALL_DATA) $< $(DESTDIR)$(localedir)/$(notdir $*)/LC_MESSAGES/$(package).mo
