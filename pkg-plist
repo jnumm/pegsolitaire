@@ -1,11 +1,8 @@
 bin/pegsolitaire
 man/man6/pegsolitaire.6.gz
-share/applications/pegsolitaire.desktop
+share/applications/com.github.jnumm.pegsolitaire.desktop
 share/gnome/help/pegsolitaire/C/legal.xml
 share/gnome/help/pegsolitaire/C/pegsolitaire.xml
 share/icons/hicolor/scalable/apps/pegsolitaire.svg
 share/locale/de/LC_MESSAGES/pegsolitaire.mo
 share/metainfo/com.github.jnumm.pegsolitaire.appdata.xml
-%%DATADIR%%/hole.svg
-%%DATADIR%%/peg.svg
-%%DATADIR%%/pegsolitaire.glade
