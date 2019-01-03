@@ -3,7 +3,7 @@
 
 PORTNAME=	pegsolitaire
 DISTVERSIONPREFIX=	v
-DISTVERSION=	0.2
+DISTVERSION=	0.3
 CATEGORIES=	games
 
 MAINTAINER=	juhaninumminen0@gmail.com
