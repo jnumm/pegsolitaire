@@ -19,6 +19,7 @@ USES=		gettext gmake pkgconfig
 USE_GNOME=	cairo gtk30 librsvg2
 INSTALLS_ICONS=	yes
 
-MAKE_ARGS=	prefix=${PREFIX} mandir=${MANPREFIX}/man
+MAKE_ARGS=	prefix=${PREFIX} mandir=${MANPREFIX}/man \
+		INSTALL_PROGRAM="${INSTALL_PROGRAM}"
 
 .include <bsd.port.mk>
