@@ -8,7 +8,7 @@ URL:            https://github.com/jnumm/pegsolitaire
 Source0:        https://github.com/jnumm/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  pkgconfig(gtk+-3.0) pkgconfig(librsvg-2.0)
-BuildRequires:  gettext
+BuildRequires:  /usr/bin/msgfmt
 BuildRequires:  desktop-file-utils libappstream-glib
 
 %description
