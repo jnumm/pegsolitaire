@@ -43,5 +43,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 %{_mandir}/man6/*
 
 %changelog
+* Sun Jan 06 2019 Juhani Numminen <juhaninumminen0@gmail.com> - 0.3-0
+- Updated to version 0.3.
+
 * Sat Jan 20 2018 Juhani Numminen <juhaninumminen0@gmail.com> - 0.1.1-0
 - Initial RPM package.
