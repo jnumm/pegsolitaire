@@ -1,5 +1,5 @@
 Name:           pegsolitaire
-Version:        0.1.1
+Version:        0.3
 Release:        0%{?dist}
 Summary:        Game for one player involving movement of pegs on a board
 
