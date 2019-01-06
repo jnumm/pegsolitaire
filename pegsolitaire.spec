@@ -21,6 +21,7 @@ except for a solitary peg in the central hole.
 %autosetup
 
 %build
+%set_build_flags
 %make_build prefix=%{_prefix}
 
 %install
