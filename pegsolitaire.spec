@@ -7,8 +7,8 @@ License:        GPLv2+
 URL:            https://github.com/jnumm/pegsolitaire
 Source0:        https://github.com/jnumm/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires:  autoconf autoconf-archive automake gettext-devel
-BuildRequires:  pkgconfig(gtk+-2.0) pkgconfig(librsvg-2.0)
+BuildRequires:  pkgconfig(gtk+-3.0) pkgconfig(librsvg-2.0)
+BuildRequires:  gettext
 BuildRequires:  desktop-file-utils libappstream-glib
 
 %description
