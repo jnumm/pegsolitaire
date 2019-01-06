@@ -21,12 +21,10 @@ except for a solitary peg in the central hole.
 %autosetup
 
 %build
-./autogen.sh
-%configure
-%make_build
+%make_build prefix=%{_prefix}
 
 %install
-%make_install
+%make_install prefix=%{_prefix}
 %find_lang %{name}
 
 %check
