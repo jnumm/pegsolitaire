@@ -37,7 +37,6 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 %license COPYING
 %doc CHANGELOG
 %{_bindir}/*
-%{_datadir}/%{name}/
 %{_datadir}/applications/*
 %{_datadir}/gnome/help/%{name}/
 %{_datadir}/icons/hicolor/*/*/*
